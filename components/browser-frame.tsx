@@ -53,7 +53,7 @@ export default function BrowserFrame({
         onDragEnd={() => setIsDragging(false)}
       >
         <ResizablePanel defaultSize={100} minSize={30} maxSize={100}>
-          <div className="h-[calc(60vh-3.25rem)]">{children}</div>
+          <div className="h-[calc(70vh-3.25rem)] min-h-[500px]">{children}</div>
         </ResizablePanel>
         <ResizableHandle
           className={cn(
