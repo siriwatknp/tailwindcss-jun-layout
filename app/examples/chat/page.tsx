@@ -82,6 +82,18 @@ export default function ChatExample() {
           />
         </div>
       </div>
+      <footer className="jun-footer">
+        <div className="flex w-full gap-2 bg-white p-4">
+          <input
+            type="text"
+            placeholder="Type a message..."
+            className="flex-1 rounded-lg border px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button className="inline-flex items-center rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
+            <span className="inline-block h-4 w-10 rounded bg-white opacity-20" />
+          </button>
+        </div>
+      </footer>
     </div>
   );
 }
