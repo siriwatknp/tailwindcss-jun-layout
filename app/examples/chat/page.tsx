@@ -66,7 +66,7 @@ export default function ChatExample() {
         id="left-sidebar"
         className="jun-edgeSidebar jun-edgeSidebar-drawer jun-edgeSidebar-w-[370px] md:jun-edgeSidebar-permanent md:jun-edgeSidebar-w-[88px] lg:jun-edgeSidebar-w-[288px] xl:jun-edgeSidebar-w-[360px]"
       >
-        <div className="jun-edgeContent bg-white">
+        <div className="jun-edgeContent bg-white dark:bg-gray-900">
           <ConversationsList
             conversations={Array.from({ length: 100 }, (_, i) => ({
               id: i + 1,
@@ -83,14 +83,14 @@ export default function ChatExample() {
         </div>
       </div>
       <footer className="jun-footer">
-        <div className="flex w-full gap-2 bg-white p-4">
+        <div className="flex w-full gap-2 bg-white dark:bg-gray-900 p-4">
           <input
             type="text"
             placeholder="Type a message..."
-            className="flex-1 rounded-lg border px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 rounded-lg border dark:border-gray-700 px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100"
           />
           <button className="inline-flex items-center rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
-            <span className="inline-block h-4 w-10 rounded bg-white opacity-20" />
+            <span className="inline-block h-4 w-10 rounded bg-white/20 dark:bg-white/30" />
           </button>
         </div>
       </footer>
@@ -123,7 +123,7 @@ const Header = ({
   <div className="flex h-full items-center justify-between px-4">
     <div className="flex items-center space-x-3">
       {mobileNavTrigger}
-      <div className="h-6 w-24 rounded bg-gray-200" />
+      <div className="h-6 w-24 rounded bg-gray-200 dark:bg-gray-700" />
     </div>
   </div>
 );
@@ -140,21 +140,21 @@ const ConversationItem = ({
   <button
     onClick={onClick}
     className={`flex w-full items-center space-x-3 rounded-lg p-3 ${
-      isSelected ? "bg-gray-100" : ""
+      isSelected ? "bg-gray-100 dark:bg-gray-800" : ""
     }`}
   >
     <div className="relative">
-      <div className="h-12 w-12 rounded-full bg-gray-200" />
+      <div className="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-700" />
       {conversation.isOnline && (
-        <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green-500" />
+        <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white dark:border-gray-900 bg-green-500" />
       )}
     </div>
     <div className="flex-1">
       <div className="flex justify-between">
-        <div className="h-4 w-24 rounded bg-gray-200" />
-        <div className="h-4 w-12 rounded bg-gray-200" />
+        <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700" />
+        <div className="h-4 w-12 rounded bg-gray-200 dark:bg-gray-700" />
       </div>
-      <div className="mt-1 h-4 w-32 rounded bg-gray-200" />
+      <div className="mt-1 h-4 w-32 rounded bg-gray-200 dark:bg-gray-700" />
     </div>
     {conversation.unread && (
       <div className="h-5 w-5 rounded-full bg-blue-500" />
@@ -173,7 +173,7 @@ const ConversationsList = ({
 }) => (
   <div className="flex h-full flex-col">
     <div className="p-4">
-      <div className="h-10 w-full rounded-full bg-gray-200" />
+      <div className="h-10 w-full rounded-full bg-gray-200 dark:bg-gray-700" />
     </div>
     <div className="min-h-0 flex-1 space-y-2 overflow-y-auto p-2">
       {conversations.map((conversation) => (
@@ -194,14 +194,14 @@ const ChatMessage = ({ message }: { message: Message }) => (
   >
     <div
       className={`max-w-[70%] rounded-2xl px-4 py-2 ${
-        message.sender === "me" ? "bg-blue-500" : "bg-gray-200"
+        message.sender === "me" ? "bg-blue-500" : "bg-gray-200 dark:bg-gray-700"
       }`}
     >
       <div
-        className={`h-4 w-32 rounded ${message.sender === "me" ? "bg-blue-400" : "bg-gray-300"}`}
+        className={`h-4 w-32 rounded ${message.sender === "me" ? "bg-blue-400/50" : "bg-gray-300 dark:bg-gray-600"}`}
       />
       <div
-        className={`mt-1 h-3 w-16 rounded ${message.sender === "me" ? "bg-blue-400" : "bg-gray-300"}`}
+        className={`mt-1 h-3 w-16 rounded ${message.sender === "me" ? "bg-blue-400/50" : "bg-gray-300 dark:bg-gray-600"}`}
       />
     </div>
   </div>
@@ -217,13 +217,13 @@ const ChatArea = ({ moreButton }: { moreButton: React.ReactNode }) => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="border-b p-4">
+      <div className="border-b dark:border-gray-800 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-full bg-gray-200" />
+            <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700" />
             <div className="space-y-1">
-              <div className="h-4 w-24 rounded bg-gray-200" />
-              <div className="h-3 w-16 rounded bg-gray-200" />
+              <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700" />
+              <div className="h-3 w-16 rounded bg-gray-200 dark:bg-gray-700" />
             </div>
           </div>
           {moreButton}
@@ -244,9 +244,9 @@ const ChatSettings = ({ mobileClose }: { mobileClose: React.ReactNode }) => {
       title: "Profile",
       content: (
         <div className="text-center">
-          <div className="mx-auto h-24 w-24 rounded-full bg-gray-200" />
-          <div className="mt-2 h-6 w-32 mx-auto rounded bg-gray-200" />
-          <div className="mt-1 h-4 w-24 mx-auto rounded bg-gray-200" />
+          <div className="mx-auto h-24 w-24 rounded-full bg-gray-200 dark:bg-gray-700" />
+          <div className="mt-2 h-6 w-32 mx-auto rounded bg-gray-200 dark:bg-gray-700" />
+          <div className="mt-1 h-4 w-24 mx-auto rounded bg-gray-200 dark:bg-gray-700" />
         </div>
       ),
     },
@@ -256,8 +256,8 @@ const ChatSettings = ({ mobileClose }: { mobileClose: React.ReactNode }) => {
         <div className="grid grid-cols-4 gap-4">
           {Array.from({ length: 4 }, (_, i) => (
             <div key={i} className="flex flex-col items-center space-y-2">
-              <div className="h-12 w-12 rounded-lg bg-gray-200" />
-              <div className="h-3 w-12 rounded bg-gray-200" />
+              <div className="h-12 w-12 rounded-lg bg-gray-200 dark:bg-gray-700" />
+              <div className="h-3 w-12 rounded bg-gray-200 dark:bg-gray-700" />
             </div>
           ))}
         </div>
@@ -268,7 +268,10 @@ const ChatSettings = ({ mobileClose }: { mobileClose: React.ReactNode }) => {
       content: (
         <div className="grid grid-cols-3 gap-2">
           {Array.from({ length: 9 }, (_, i) => (
-            <div key={i} className="aspect-square rounded-lg bg-gray-200" />
+            <div
+              key={i}
+              className="aspect-square rounded-lg bg-gray-200 dark:bg-gray-700"
+            />
           ))}
         </div>
       ),
@@ -280,10 +283,10 @@ const ChatSettings = ({ mobileClose }: { mobileClose: React.ReactNode }) => {
           {Array.from({ length: 3 }, (_, i) => (
             <div
               key={i}
-              className="flex items-center justify-between rounded-lg bg-gray-200 p-3"
+              className="flex items-center justify-between rounded-lg bg-gray-200 dark:bg-gray-700 p-3"
             >
-              <div className="h-5 w-24 rounded bg-gray-300" />
-              <div className="h-5 w-12 rounded bg-gray-300" />
+              <div className="h-5 w-24 rounded bg-gray-300 dark:bg-gray-600" />
+              <div className="h-5 w-12 rounded bg-gray-300 dark:bg-gray-600" />
             </div>
           ))}
         </div>
@@ -292,17 +295,17 @@ const ChatSettings = ({ mobileClose }: { mobileClose: React.ReactNode }) => {
   ];
 
   return (
-    <div className="flex h-full flex-col bg-white">
-      <div className="border-b p-4">
+    <div className="flex h-full flex-col bg-white dark:bg-gray-900">
+      <div className="border-b dark:border-gray-800 p-4">
         <div className="flex items-center justify-between">
-          <div className="h-6 w-24 rounded bg-gray-200" />
+          <div className="h-6 w-24 rounded bg-gray-200 dark:bg-gray-700" />
           {mobileClose}
         </div>
       </div>
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {sections.map((section) => (
           <div key={section.title} className="space-y-4">
-            <div className="h-5 w-32 rounded bg-gray-200" />
+            <div className="h-5 w-32 rounded bg-gray-200 dark:bg-gray-700" />
             {section.content}
           </div>
         ))}

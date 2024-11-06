@@ -66,14 +66,21 @@ export const docsConfig: DocsConfig = {
       title: "Examples",
       items: [
         {
-          title: "AI Propmt",
-          href: "/examples/ai-prompt",
-          label: "Soon",
-          disabled: true,
-        },
-        {
           title: "Blog",
           href: "/examples/blog",
+          label: "Soon",
+        },
+        {
+          title: "Chat",
+          href: "/examples/chat",
+        },
+        {
+          title: "Ecommerce",
+          href: "/examples/ecommerce",
+        },
+        {
+          title: "AI Propmt",
+          href: "/examples/ai-prompt",
           label: "Soon",
           disabled: true,
         },
@@ -100,14 +107,6 @@ export const docsConfig: DocsConfig = {
           href: "/examples/documentation",
           label: "Soon",
           disabled: true,
-        },
-        {
-          title: "Chat",
-          href: "/examples/chat",
-        },
-        {
-          title: "Ecommerce",
-          href: "/examples/ecommerce",
         },
       ],
     },
