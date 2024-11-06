@@ -1,5 +1,5 @@
 "use client";
-import { triggerEdgeDrawerRight } from "@/packages/tailwindcss-jun-layout/dist";
+import { triggerEdgeDrawerRight } from "@/packages/tailwindcss-jun-layout";
 import { ShoppingCart } from "lucide-react";
 
 export default function EcommerceExample() {

@@ -8,7 +8,6 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import NumberTicker from "@/registry/default/magicui/number-ticker";
 import { MobileNavTrigger } from "./mobile-nav";
 
 export async function SiteHeader() {

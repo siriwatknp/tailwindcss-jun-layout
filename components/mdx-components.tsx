@@ -15,7 +15,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Event } from "@/lib/events";
 import { cn } from "@/lib/utils";
-import TweetCard from "@/registry/default/magicui/tweet-card";
+import TweetCard from "@/components/tweet-card";
 
 import { ComponentPreview } from "./component-preview";
 import { ComponentSource } from "./component-source";
