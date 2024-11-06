@@ -1,0 +1,13 @@
+{
+  "name": "content-inset-sidebar",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/content-inset-sidebar.tsx",
+      "content": "export default function ContentInsetSidebarDemo() {\n  return (\n    <div className=\"w-full border-4 rounded bg-background\">\n      <div className=\"jun-layout jun-layout-h-[240px] jun-layout-standalone \">\n        <main className=\"jun-content container\">\n          <div className=\"jun-insetSidebar border-r bg-sidebar\">\n            <div className=\"jun-insetContent\">Inset Sidebar Left</div>\n          </div>\n\n          <div className=\"text-center\">Main Content</div>\n\n          <div className=\"jun-insetSidebar bg-sidebar border-l\">\n            <div className=\"jun-insetContent\">Inset Sidebar Right</div>\n          </div>\n        </main>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

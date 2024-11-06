@@ -1,0 +1,13 @@
+{
+  "name": "edgeSidebar-responsive",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/edgeSidebar-responsive.tsx",
+      "content": "import {\n  triggerEdgeDrawer,\n  triggerEdgeCollapse,\n} from \"@/packages/tailwindcss-jun-layout\";\nimport { Menu, PanelRightClose } from \"lucide-react\";\n\nexport default function EdgeSidebarResponsiveDemo() {\n  return (\n    <div className=\"w-full max-w-[400px] border-4 rounded bg-background overflow-hidden\">\n      <div className=\"jun-layout jun-layout-h-[300px] jun-layout-standalone\">\n        <header className=\"jun-header\">\n          <button\n            className=\"jun-edgeDrawerTrigger p-2 ml-1 rounded hover:bg-neutral-200\"\n            onClick={() =>\n              triggerEdgeDrawer({\n                sidebarId: \"edgeSidebar-responsive-demo\", // this is for demo purpose only because the demo page has more than one sidebars.\n              })\n            }\n          >\n            <Menu />\n          </button>\n          <button\n            className=\"jun-edgeCollapseTrigger p-2 ml-1 rounded hover:bg-neutral-200\"\n            onClick={(event) =>\n              triggerEdgeCollapse({\n                event,\n                sidebarId: \"edgeSidebar-responsive-demo\", // this is for demo purpose only because the demo page has more than one sidebars.\n              })\n            }\n          >\n            <PanelRightClose />\n          </button>\n        </header>\n        <aside\n          id=\"edgeSidebar-responsive-demo\"\n          className=\"jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent\"\n        >\n          <div className=\"jun-edgeContent bg-sidebar\">Edge sidebar</div>\n        </aside>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

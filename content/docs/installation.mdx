@@ -1,0 +1,40 @@
+---
+title: Installation
+description: Learn how to install and set up Jun Layout, a Tailwind CSS plugin for building flexible layouts.
+---
+
+## Requirements
+
+- [Tailwind CSS v3.x](https://tailwindcss.com/)
+- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+
+## Package
+
+```bash
+npm install -D tailwindcss-jun-layout
+```
+
+Then add the plugin to your `tailwind.config.js`:
+
+```js
+// tailwind.config.js;
+module.exports = {
+  content: [
+    // ...
+  ],
+  plugins: [
+    // ...
+    require("tailwindcss-jun-layout"),
+  ],
+};
+```
+
+Now, type `jun-` in the class. If you see the autocompletion like the image below, you are good to go.
+
+<img
+  width="598"
+  alt="image"
+  src="https://github.com/user-attachments/assets/33e57b5f-86e3-457b-a1ba-af2b69136da1"
+/>
+
+> Note: you must have [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) installed first.

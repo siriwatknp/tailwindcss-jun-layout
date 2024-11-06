@@ -1,0 +1,45 @@
+---
+title: Basic Usage
+description: Learn the core concepts and basic usage patterns of Jun Layout to create flexible layouts with Tailwind CSS.
+---
+
+The plugin adds classes with the prefix of `jun-` to Tailwind utilities for building dynamic layout.
+
+The available jun layout classes are:
+
+- `jun-layout` **(required)**: The root container that establishes the layout grid. It creates a flexible layout structure with support for header, footer, edge sidebars, and main content areas.
+
+- `jun-header`: The header of the layout.
+
+- `jun-edgeSidebar`: A sidebar component that can be placed on either edge of the layout. Supports multiple modes:
+
+  - Drawer mode for mobile (toggleable)
+  - Permanent mode for desktop
+  - Collapsible functionality
+  - Auto-collapse at specified breakpoints
+  - Customizable widths for different states
+
+- `jun-content`: The main content area of the layout. Automatically adjusts its width and position based on the presence and state of edge sidebars. Provides proper spacing and padding while maintaining content flow.
+
+- `jun-insetSidebar`: A secondary sidebar that lives within the content area rather than at the layout edges. Useful for secondary navigation, filters, or table of contents.
+
+- `jun-footer`: The header of the layout.
+
+Every layout **MUST** be wrapped with `jun-layout` to work properly, so here is a basic dashboard layout:
+
+```js
+<div className="jun-layout">
+  <header className="jun-header">...</header>
+  <main className="jun-content"></main>
+  <aside className="jun-edgeSidebar">
+    <div className="jun-edgeContent">...</div>
+  </aside>
+  <footer className="jun-footer">...</footer>
+</div>
+```
+
+<ComponentPreview name="basic-usage" preview />
+
+Because `jun-layout` is a CSS grid, it's required for header, content, edgeSidebar, and footer to be direct children.
+
+The insetSidebar is exceptional because it's designed to be used within the `jun-content`.

@@ -1,0 +1,51 @@
+---
+title: Header
+description: Utilities for setting the header of the layout
+---
+
+## Usage
+
+By applying `jun-header`, the element become [sticky](https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky) by default.
+The header is a `flex items-center` by default.
+
+```js
+<header className="jun-header">...</header>
+```
+
+<Callout title="⚠️ Warning">
+  **DON'T** change the position of the header to `fixed`.
+</Callout>
+
+## Controlling height
+
+Use `jun-header-h-[*]` to customize the height of the header:
+
+```js
+<div classname="jun-header jun-header-h-[3.5rem] lg:jun-header-h-[4rem]">
+```
+
+## Clipping
+
+Use these classes to make the header stay on top of the edge sidebars:
+
+- `jun-header-clip`: clip both left and right edge sidebars.
+- `jun-header-clip-left`: clip left edge sidebar.
+- `jun-header-clip-right`: clip right edge sidebar.
+
+```js
+<div className="jun-header jun-header-clip">
+```
+
+<ComponentPreview name="header-clip" preview />
+
+## Modifiers
+
+| Modifier                | Default | Description                                           |
+| ----------------------- | ------- | ----------------------------------------------------- |
+| `jun-header` \*         |         | Set as header                                         |
+| `jun-header-h-[*]`      | `3rem`  | The height of the header                              |
+| `jun-header-clip`       |         | Make the header stay on top of both edge sidebars     |
+| `jun-header-clip-left`  |         | Make the header stay on top of the left edge sidebar  |
+| `jun-header-clip-right` |         | Make the header stay on top of the right edge sidebar |
+
+\* = required

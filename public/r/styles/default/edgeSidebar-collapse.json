@@ -1,0 +1,13 @@
+{
+  "name": "edgeSidebar-collapse",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/edgeSidebar-collapse.tsx",
+      "content": "import { triggerEdgeCollapse } from \"@/packages/tailwindcss-jun-layout\";\nimport { PanelLeftClose, PanelRightClose } from \"lucide-react\";\n\nexport default function EdgeSidebarCollapseDemo() {\n  return (\n    <div className=\"w-full border-4 rounded bg-background\">\n      <div className=\"jun-layout jun-layout-h-[300px] jun-layout-standalone\">\n        <header className=\"jun-header\">Header</header>\n        <aside\n          id=\"edgeSidebar-collapse-demo\"\n          className=\"jun-edgeSidebar jun-edgeSidebar-collapsed-w-[80px]\"\n        >\n          <div className=\"jun-edgeContent bg-sidebar\">\n            <button\n              className=\"jun-edgeCollapseTrigger p-4 hover:bg-neutral-200\"\n              onClick={(event) =>\n                triggerEdgeCollapse({\n                  event,\n                  sidebarId: \"edgeSidebar-collapse-demo\", // this is for demo purpose only because the demo page has more than one sidebars.\n                })\n              }\n            >\n              <PanelRightClose className=\"jun-edgeCollapsed-visible\" />\n              <PanelLeftClose className=\"jun-edgeUncollapsed-visible\" />\n            </button>\n          </div>\n        </aside>\n        <main className=\"jun-content\">Content</main>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

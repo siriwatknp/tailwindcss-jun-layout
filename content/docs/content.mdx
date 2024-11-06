@@ -1,0 +1,65 @@
+---
+title: Content
+description: Utilities for setting the content of the layout
+---
+
+## Usage
+
+```jsx
+<main className="jun-content">
+```
+
+## Container
+
+Use `container` (built-in Tailwind class) to limit the max width of the content.
+
+```jsx
+<main className="jun-content container"></main>
+```
+
+## Secondary sidebar
+
+To render a sidebar within the Content, use [`jun-insetSidebar`](/docs/inset-sidebar).
+The inset sidebar must be either first child (left) or last child (right) of the Content to function properly.
+
+```jsx
+<div className="jun-content">
+  <div className="jun-insetSidebar">
+    <div className="jun-insetContent">...</div>
+  </div>
+
+  <div>...main content</div>
+
+  {/* The inset sidebar could be placed here too */}
+</div>
+```
+
+<ComponentPreview name="content-inset-sidebar" preview />
+
+<Callout title="Important!">
+  The sibling of the inset sidebar should be a valid DOM element, not a string
+  or undefined. The code below won't work:
+
+```js
+// ❌ the sibling of inset sidebar should be an element, e.g. <div>
+<div className="jun-content">
+  <div className="jun-insetSidebar">
+    <div className="jun-insetContent">...</div>
+  </div>
+
+  main content
+</div>
+
+// ❌ When show is false, the element will disappear. The sibling must always exist.
+<div className="jun-content">
+  <div className="jun-insetSidebar">
+    <div className="jun-insetContent">...</div>
+  </div>
+
+  {show && (
+    <div>...</div>
+  )}
+</div>
+```
+
+</Callout>

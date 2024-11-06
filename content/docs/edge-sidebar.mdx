@@ -1,0 +1,248 @@
+---
+title: Edge Sidebar
+description: Utilities for setting the edge sidebar of the layout
+---
+
+## Usage
+
+An edge sidebar requires a structure of:
+
+- `jun-edgeSidebar`: the sidebar container
+  - `jun-edgeContent`: the sidebar body (background should be set to this element)
+
+```jsx
+<aside className="jun-edgeSidebar">
+  <div className="jun-edgeContent">navigation...</div>
+</aside>
+```
+
+## Controlling width
+
+Use `jun-edgeSidebar-w-[*]` to change the width of the sidebar:
+
+```jsx
+<aside className="jun-edgeSidebar jun-edgeSidebar-w-[200px] lg:jun-edgeSidebar-w-[300px]">
+  <div className="jun-edgeContent">navigation...</div>
+</aside>
+```
+
+## Permanent mode
+
+This is the default mode of the edge sidebar unless switched to [drawer mode](#drawer-mode).
+
+<Callout title="🧠 Note">
+  The modifiers with `jun-edgeSidebar-permanent-*` does **NOT** take effect in
+  [drawer mode](#drawer-mode).
+</Callout>
+
+### Hidden/Visible
+
+To hide the sidebar initially, use `jun-edgeSidebar-permanent-hidden` and then use `[breakpoint]:jun-edgeSidebar-permanent-visible` to make the sidebar visible.
+
+```js
+<aside className="jun-edgeSidebar jun-edgeSidebar-permanent-hidden md:jun-edgeSidebar-permanent-visible">
+  <div className="jun-edgeContent">navigation...</div>
+</aside>
+```
+
+{/* Demo */}
+
+<ComponentPreview preview name="edgeSidebar-visibility" />
+
+### Collapsible
+
+Create a button with class `jun-edgeCollapseTrigger` and then call the `triggerEdgeCollapse({ event })` on click:
+
+```jsx
+import { toggleEdgeCollapse } from "tailwindcss-jun-layout";
+
+<div className="jun-edgeSidebar">
+  <div className="jun-edgeContent">
+    <button
+      className="jun-edgeCollapseTrigger"
+      onClick={(event) => triggerEdgeCollapse({ event })}
+    >
+      Toggle
+    </button>
+  </div>
+</div>;
+```
+
+To customize the width of the sidebar in **collapsed** state, use `jun-edgeSidebar-collapsed-w-[*]`:
+
+```jsx
+<div className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[80px]">
+  <div className="jun-edgeContent">...</div>
+</div>
+```
+
+{/* Demo */}
+
+<ComponentPreview preview name="edgeSidebar-collapse" />
+
+### Collapsed Icon
+
+To display icon between collapsed/uncollapsed state:
+
+- Use `jun-edgeCollapsed-visible` to show the icon when the sidebar is **collapsed**.
+- Use `jun-edgeUncollapsed-visible` to show the icon when the sidebar is in **normal state**.
+
+```jsx
+<button
+  className="jun-edgeCollapseTrigger"
+  onClick={(event) => triggerEdgeCollapse({ event })}
+>
+  <MoreVertical className="jun-edgeCollapsed-visible" />
+  <SidebarOpen className="jun-edgeUncollapsed-visible" />
+</button>
+```
+
+### Hover to expand
+
+To make the collapsed sidebar expand when hover, use `jun-edgeSidebar-hoverExpand`:
+
+```jsx
+<div className="jun-edgeSidebar jun-edgeSidebar-permanent-hoverExpand">
+  <div className="jun-edgeContent">...</div>
+</div>
+```
+
+{/* Demo */}
+
+<ComponentPreview preview name="edgeSidebar-hoverExpand" />
+
+### Auto Collapse
+
+Use `jun-edgeSidebar-permanent-autoCollapse-[breakpoint]` to make the sidebar collapsed automatically when the viewport is below the specified breakpoint:
+
+```jsx
+<div className="jun-edgeSidebar jun-edgeSidebar-permanent-autoCollapse-lg">
+  <div className="jun-edgeContent">...</div>
+</div>
+```
+
+With the snippet above, when the viewport is below [`lg`](https://tailwindcss.com/docs/responsive-design) (1024px), the sidebar will collapsed automatically.
+
+## Drawer mode
+
+Use `jun-edgeSidebar-drawer` to turn the sidebar from permanent to drawer mode:
+
+- The sidebar is hidden by default and can be visible by calling `triggerEdgeDrawer` function.
+- When the sidebar is visibile, the overlay of the sidebar will cover the whole screen. Clicking on the overlay will close the drawer.
+
+```js
+<div className="jun-edgeSidebar jun-edgeSidebar-drawer">
+  <div className="jun-edgeContent">...</div>
+</div>
+```
+
+{/* Demo */}
+
+<ComponentPreview preview name="edgeSidebar-drawer" />
+
+### Triggering drawer
+
+Create a button with class `jun-edgeCollapseTrigger` and then call the `triggerEdgeDrawer()` on click:
+
+```jsx
+import { triggerEdgeDrawer } from "tailwindcss-jun-layout";
+
+<div className="jun-layout">
+  <header>
+    <button
+      className="jun-edgeCollapseTrigger"
+      onClick={() => triggerEdgeDrawer()}
+    >
+      Toggle
+    </button>
+  </header>
+  <div className="jun-edgeSidebar jun-edgeSidebar-drawer">
+    <div className="jun-edgeContent"></div>
+  </div>
+</div>;
+```
+
+### Open/closed icon
+
+To display icon between open/closed state:
+
+- Use `jun-edgeDrawerOpen-visible` to show the icon when the drawer is **open**.
+- Use `jun-edgeDrawerClosed-visible` to show the icon when the drawer is **closed**.
+
+```jsx
+<button className="jun-edgeDrawerTrigger" onClick={() => triggerEdgeDrawer()}>
+  <PanelLeftClose className="jun-edgeDrawerOpen-visible" />
+  <PanelRightClose className="jun-edgeDrawerClosed-visible" />
+</button>
+```
+
+### Without overlay
+
+Use `jun-edgeSidebar-drawer-withoutOverlay` to remove the overlay when the drawer sidebar is visible:
+
+```js
+<div className="jun-edgeSidebar jun-edgeSidebar-drawer-withoutOverlay">
+  <div className="jun-edgeContent">...</div>
+</div>
+```
+
+{/* Demo */}
+
+<ComponentPreview preview name="edgeSidebar-drawer-withoutOverlay" />
+
+## Responsive sidebar
+
+Use Tailwind CSS responsive variants to create a drawer sidebar on mobile and switch to permanent sidebar on desktop:
+
+```js
+<div className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent">
+  <div className="jun-edgeContent">...</div>
+</div>
+```
+
+{/* Demo */}
+
+<ComponentPreview preview name="edgeSidebar-responsive" />
+
+## Right sidebar
+
+To create a right edge sidebar, use `jun-edgeSidebarR-[*]` with all the modifiers above to build a drawer and a permanent sidebar.
+The `jun-edgeSidebar` is still required to function properly.
+
+```js
+<div className="jun-edgeSidebar jun-edgeSidebarR">
+  <div className="jun-edgeContent">...</div>
+</div>
+```
+
+{/* Demo */}
+
+<ComponentPreview preview name="edgeSidebar-right" />
+
+## API
+
+| Class                                                  | Description                                                 |
+| ------------------------------------------------------ | ----------------------------------------------------------- |
+| `jun-edgeSidebar`                                      | The root container for the edge sidebar (Required)          |
+| `jun-edgeContent`                                      | The content container of the sidebar (Required)             |
+| `jun-edgeSidebar-w-[*]`                                | Sets the width of the sidebar                               |
+| `jun-edgeSidebar-collapsed-w-[*]`                      | Sets the width of the sidebar when collapsed                |
+| `jun-edgeSidebar-permanent-hidden`                     | Hides the sidebar in permanent mode                         |
+| `jun-edgeSidebar-permanent-visible`                    | Shows the sidebar in permanent mode                         |
+| `jun-edgeSidebar-permanent-hoverExpand`                | Makes the collapsed sidebar expand on hover                 |
+| `jun-edgeSidebar-permanent-autoCollapse-[breakpoint]`  | Auto collapses the sidebar below specified breakpoint       |
+| `jun-edgeSidebar-drawer`                               | Enables drawer mode for the sidebar                         |
+| `jun-edgeSidebar-drawer-withoutOverlay`                | Removes the overlay in drawer mode                          |
+| `jun-edgeSidebarR`                                     | Creates a right-aligned sidebar                             |
+| `jun-edgeSidebarR-w-[*]`                               | Sets the width of the right sidebar                         |
+| `jun-edgeSidebarR-drawer`                              | Enables drawer mode for the right sidebar                   |
+| `jun-edgeSidebarR-permanent`                           | Enables permanent mode for the right sidebar                |
+| `jun-edgeSidebarR-permanent-hidden`                    | Hides the right sidebar in permanent mode                   |
+| `jun-edgeSidebarR-permanent-visible`                   | Shows the right sidebar in permanent mode                   |
+| `jun-edgeSidebarR-permanent-autoCollapse-[breakpoint]` | Auto collapses the right sidebar below specified breakpoint |
+| `jun-edgeCollapseTrigger`                              | Button class to trigger sidebar collapse                    |
+| `jun-edgeDrawerTrigger`                                | Button class to trigger drawer open/close                   |
+| `jun-edgeDrawerTriggerR`                               | Button class to trigger right drawer open/close             |
+| `jun-edgeCollapseTriggerR`                             | Button class to trigger right sidebar collapse              |
+| `jun-edgeCollapsed-visible`                            | Shows element only when sidebar is collapsed                |
+| `jun-edgeUncollapsed-visible`                          | Shows element only when sidebar is expanded                 |

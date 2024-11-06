@@ -1,0 +1,13 @@
+{
+  "name": "edgeSidebar-visibility",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/edgeSidebar-visibility.tsx",
+      "content": "export default function EdgeSidebarVisibilityDemo() {\n  return (\n    <div className=\"w-full border-4 rounded bg-background\">\n      <div className=\"jun-layout jun-layout-h-[300px] jun-layout-standalone\">\n        <header className=\"jun-header\">Header</header>\n        <aside className=\"jun-edgeSidebar jun-edgeSidebar-permanent-hidden md:jun-edgeSidebar-permanent-visible\">\n          <div className=\"jun-edgeContent bg-sidebar\">Edge Sidebar</div>\n        </aside>\n        <main className=\"jun-content\">Content</main>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "header-clip",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/header-clip.tsx",
+      "content": "export default function HeaderClipDemo() {\n  return (\n    <div className=\"w-full border-4 rounded bg-background\">\n      <div className=\"jun-layout jun-layout-h-[300px] jun-layout-standalone \">\n        <header className=\"jun-header jun-header-clip\">Header</header>\n        <aside className=\"jun-edgeSidebar\">\n          <div className=\"jun-edgeContent bg-sidebar\">Edge Sidebar L</div>\n        </aside>\n        <aside className=\"jun-edgeSidebar jun-edgeSidebarR\">\n          <div className=\"jun-edgeContent bg-sidebar\">Edge Sidebar R</div>\n        </aside>\n        <main className=\"jun-content\">Content</main>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

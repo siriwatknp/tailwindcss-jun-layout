@@ -1,0 +1,34 @@
+---
+title: Footer
+description: Utilities for setting the footer of the layout
+---
+
+## Usage
+
+```jsx
+<footer className="jun-footer">
+```
+
+## Container
+
+Insert a `container` (built-in Tailwind class) as a child of the footer to limit the max width of the content.
+
+```jsx
+<footer className="jun-footer">
+  <div className="container">...</div>
+</footer>
+```
+
+## Inset Sidebar void space
+
+If the [inset sidebar](/docs/inset-sidebar) is `fixed` or `absolute`, it will cover the footer.
+
+To make the content of the footer avoid the cut, place `jun-insetAvoidingView` inside the Footer:
+
+```jsx
+<footer className="jun-footer">
+  <div className="jun-insetAvoidingView">footer content...</div>
+</footer>
+```
+
+<ComponentPreview name="footer-avoiding-view" preview />

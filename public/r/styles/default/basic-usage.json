@@ -1,0 +1,13 @@
+{
+  "name": "basic-usage",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/basic-usage.tsx",
+      "content": "export default function BasicUsageDemo() {\n  return (\n    <div className=\"w-full border-4 rounded bg-background\">\n      <div className=\"jun-layout jun-layout-h-[400px] jun-layout-standalone \">\n        <header className=\"jun-header\">Header</header>\n        <aside className=\"jun-edgeSidebar\">\n          <div className=\"jun-edgeContent bg-sidebar\">Edge Sidebar</div>\n        </aside>\n        <main className=\"jun-content\">Content</main>\n        <footer className=\"jun-footer\">Footer</footer>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+---
+title: Layout
+description: Utilities for setting the root layout
+---
+
+## Usage
+
+A required class to set up a layout system.
+
+```js
+<div className="jun-layout">
+```
+
+## Modifiers
+
+### Controlling height
+
+Use `jun-layout-h-[*]` to change the height of the layout (default as `100lvh`).
+
+```js
+<div className="jun-layout jun-layout-h-[500px] lg:jun-layout-h-[800px]">
+```
+
+<Callout title="⚠️ Warning">
+  Don't use `h-[*]` directly because the layout uses CSS variables to control
+  other parts of the layout.
+</Callout>
+
+### Standalone app
+
+Use `jun-layout-standalone` to create apps like POS (Point of Sale) or chat applications where the layout fits to the screen.
+
+```js
+<div className="jun-layout jun-layout-standalone">
+```
+
+## API
+
+| Class                   | Description                                                                                      |
+| ----------------------- | ------------------------------------------------------------------------------------------------ |
+| `jun-layout`            | Set as root layout `(Required)`                                                                  |
+| `jun-layout-h-[*]`      | Custom the height of the layout                                                                  |
+| `jun-layout-standalone` | Make the layout fixed to its height, useful for building standalone app like a POS or a chat app |
