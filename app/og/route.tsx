@@ -5,19 +5,19 @@ import { capitalize } from "@/lib/utils";
 export const runtime = "edge";
 
 const inter600 = fetch(
-  new URL(`../../assets/fonts/Inter-SemiBold.ttf`, import.meta.url),
+  new URL(`../../assets/fonts/Inter-SemiBold.ttf`, import.meta.url)
 ).then((res) => res.arrayBuffer());
 
 const inter700 = fetch(
-  new URL(`../../assets/fonts/Inter-Bold.ttf`, import.meta.url),
+  new URL(`../../assets/fonts/Inter-Bold.ttf`, import.meta.url)
 ).then((res) => res.arrayBuffer());
 
 const image = fetch(
-  new URL("../../assets/images/og-bg-2.jpg", import.meta.url),
+  new URL("../../assets/images/og-bg-2.jpg", import.meta.url)
 ).then((res) => res.arrayBuffer());
 
 const logo = fetch(new URL("../../app/icon.png", import.meta.url)).then((res) =>
-  res.arrayBuffer(),
+  res.arrayBuffer()
 );
 
 export async function GET(req: Request) {
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
       .split(" ")
       .slice(0, 3)
       .join(" ")
-      .substring(0, 20),
+      .substring(0, 20)
   );
 
   try {
@@ -79,7 +79,7 @@ export async function GET(req: Request) {
                 ...font("Inter 700"),
               }}
             >
-              Magic UI
+              Tailwind Jun Layout
             </span>
           </h1>
 
@@ -122,14 +122,14 @@ export async function GET(req: Request) {
                 ...font("Inter 700"),
               }}
             >
-              Create magical landing pages in minutes.
+              Build layout in minutes, not weeks.
             </span>
           </h1>
         </div>
       ),
       {
-        width: 1200,
-        height: 630,
+        width: 1080,
+        height: 566,
         fonts: [
           {
             name: "Inter 600",
@@ -140,7 +140,7 @@ export async function GET(req: Request) {
             data: await inter700,
           },
         ],
-      },
+      }
     );
   } catch (e: any) {
     console.log(`${e.message}`);

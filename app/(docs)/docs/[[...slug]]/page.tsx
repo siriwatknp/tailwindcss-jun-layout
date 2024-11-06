@@ -34,41 +34,41 @@ async function getDocFromParams({ params }: DocPageProps) {
   return doc;
 }
 
-// export async function generateMetadata({
-//   params,
-// }: DocPageProps): Promise<Metadata> {
-//   const doc = await getDocFromParams({ params });
+export async function generateMetadata({
+  params,
+}: DocPageProps): Promise<Metadata> {
+  const doc = await getDocFromParams({ params });
 
-//   if (!doc) {
-//     return {};
-//   }
+  if (!doc) {
+    return {};
+  }
 
-//   return {
-//     title: `${doc.title} | Jun Layout`,
-//     description: doc.description,
-//     openGraph: {
-//       title: doc.title,
-//       description: doc.description,
-//       type: "article",
-//       url: absoluteUrl(doc.slug),
-//       images: [
-//         {
-//           url: doc.image,
-//           width: 1200,
-//           height: 630,
-//           alt: siteConfig.name,
-//         },
-//       ],
-//     },
-//     twitter: {
-//       card: "summary_large_image",
-//       title: doc.title,
-//       description: doc.description,
-//       images: [doc.image],
-//       creator: "@dillionverma",
-//     },
-//   };
-// }
+  return {
+    title: `${doc.title} | Jun Layout`,
+    description: doc.description,
+    openGraph: {
+      title: doc.title,
+      description: doc.description,
+      type: "article",
+      url: absoluteUrl(doc.slug),
+      images: [
+        {
+          url: doc.image,
+          width: 1200,
+          height: 630,
+          alt: siteConfig.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: doc.title,
+      description: doc.description,
+      images: [doc.image],
+      creator: "@dillionverma",
+    },
+  };
+}
 
 export async function generateStaticParams(): Promise<
   DocPageProps["params"][]
