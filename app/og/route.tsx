@@ -12,17 +12,17 @@ const inter700 = fetch(
   new URL(`../../assets/fonts/Inter-Bold.ttf`, import.meta.url)
 ).then((res) => res.arrayBuffer());
 
-const image = fetch(
-  new URL("../../assets/images/og-bg-2.jpg", import.meta.url)
-).then((res) => res.arrayBuffer());
+// const image = fetch(
+//   new URL("../../assets/images/og-bg-2.jpg", import.meta.url)
+// ).then((res) => res.arrayBuffer());
 
-const logo = fetch(new URL("../../app/icon.png", import.meta.url)).then((res) =>
-  res.arrayBuffer()
-);
+// const logo = fetch(new URL("../../app/icon.png", import.meta.url)).then((res) =>
+//   res.arrayBuffer()
+// );
 
 export async function GET(req: Request) {
-  const imageData = await image;
-  const logoData = await logo;
+  // const imageData = await image;
+  // const logoData = await logo;
 
   const url = new URL(req.url);
   const params = Object.fromEntries(url.searchParams);
@@ -39,12 +39,12 @@ export async function GET(req: Request) {
     return new ImageResponse(
       (
         <div tw="flex justify-center flex-col relative w-full h-full items-center bg-white">
-          <img
+          {/* <img
             tw="absolute inset-0 w-full h-full"
             alt={title}
             // @ts-ignore
             src={imageData}
-          />
+          /> */}
 
           {/* Lighting Effects */}
           {/* <div
@@ -59,12 +59,12 @@ export async function GET(req: Request) {
           ></div> */}
 
           <h1 tw="absolute inset-0 flex justify-center items-center mb-57 flex-row">
-            <img
+            {/* <img
               tw="h-10 w-10"
               alt={title}
               // @ts-ignore
               src={logoData}
-            />
+            /> */}
             <span
               tw="ml-3"
               style={{
