@@ -68,7 +68,6 @@ export const docsConfig: DocsConfig = {
         {
           title: "Blog",
           href: "/examples/blog",
-          label: "Soon",
         },
         {
           title: "Chat",

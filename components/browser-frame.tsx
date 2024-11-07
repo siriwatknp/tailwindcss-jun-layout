@@ -24,12 +24,7 @@ export default function BrowserFrame({
   const [isDragging, setIsDragging] = useState(false);
 
   return (
-    <div
-      className={cn(
-        "overflow-hidden rounded-lg border bg-background shadow-md",
-        className
-      )}
-    >
+    <div className={cn("rounded-lg border bg-background shadow-md", className)}>
       <div className="border-b px-4 py-3">
         <div className="flex items-center">
           <div className="flex items-center gap-4">

@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body className={`${fontSans.variable} overscroll-none font-sans`}>
+      <body className={`${fontSans.variable} font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <TooltipProvider>
             {children}
