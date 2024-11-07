@@ -15,7 +15,7 @@ export async function SiteHeader() {
 
   try {
     const response = await fetch(
-      "https://api.github.com/repos/magicuidesign/magicui",
+      "https://api.github.com/repos/siriwatknp/tailwindcss-jun-layout",
       {
         headers: process.env.GITHUB_OAUTH_TOKEN
           ? {

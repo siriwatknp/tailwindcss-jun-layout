@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/_next/", "/public/"],
     },
-    sitemap: "https://magicui.design/sitemap.xml",
+    sitemap: "https://tailwindcss-jun-layout.vercel.app/sitemap.xml",
   };
 }

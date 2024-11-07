@@ -12,9 +12,9 @@ import type { Viewport } from "next";
 import { Metadata } from "next";
 
 export const metadata: Metadata = constructMetadata({
-  title: "Magic UI",
+  title: "Jun Layout - Tailwind CSS",
   description:
-    "Beautiful UI components and templates to make your landing page look stunning.",
+    "A powerful Tailwind CSS plugin for building dynamic layouts with ease",
   image: absoluteUrl("/og"),
 });
 

@@ -38,7 +38,7 @@ export const fetcher = (...args: Parameters<typeof fetch>) =>
  */
 export const capitalize = (str: string, lower = false) =>
   (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, (match) =>
-    match.toUpperCase(),
+    match.toUpperCase()
   );
 
 export function formatDate(input: string | number): string {
@@ -55,8 +55,8 @@ export function absoluteUrl(path: string) {
 }
 
 export function constructMetadata({
-  title = "Magic UI - Modern React + Tailwind CSS components & Templates",
-  description = "Magic UI is a curated collection of the best landing page components built using React + Tailwind CSS + Framer Motion",
+  title = "Jun Layout - Layout system for Tailwind CSS",
+  description = "Jun Layout is a powerful Tailwind CSS plugin for building dynamic layouts with ease",
   image = absoluteUrl("/og"),
   ...props
 }: {
@@ -97,7 +97,7 @@ export function constructMetadata({
       creator: "@dillionverma",
     },
     icons: "/favicon.ico",
-    metadataBase: new URL("https://magicui.design"),
+    metadataBase: new URL("https://tailwindcss-jun-layout.vercel.app/"),
     authors: [
       {
         name: "dillionverma",
