@@ -1,4 +1,3 @@
-import { SiteBanner } from "@/components/site-banner";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -11,7 +10,6 @@ export default async function MarketingLayout({
 }: MarketingLayoutProps) {
   return (
     <div className="jun-layout">
-      <SiteBanner />
       <SiteHeader />
       <main className="flex-1 jun-content">{children}</main>
       <SiteFooter />

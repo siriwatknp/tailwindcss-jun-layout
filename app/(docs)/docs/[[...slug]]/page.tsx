@@ -14,7 +14,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Contribute } from "@/components/contribute";
 import { TableOfContents } from "@/components/toc";
 
 interface DocPageProps {
@@ -142,7 +141,6 @@ export default async function DocPage({ params }: DocPageProps) {
             <ScrollArea className="pb-10">
               <div className="sticky top-16 -mt-10 space-y-4 py-12">
                 <TableOfContents toc={toc} />
-                <Contribute doc={doc} />
               </div>
             </ScrollArea>
           </div>
