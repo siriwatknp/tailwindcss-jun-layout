@@ -3,41 +3,27 @@
     Tailwind plugin for building any web layout.
 </p>
 <div align="center">
-  <a href="https://github.com/magicuidesign/magicui/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/magicuidesign/magicui"></a>
-  <a href="https://twitter.com/magicuidesign"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/magicuidesign"></a>
-  <a href="https://github.com/magicuidesign/magicui/blob/main/LICENSE.md"><img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
-  <img alt="Discord" src="https://img.shields.io/discord/1151315619246002176">
+  <a href="https://github.com/siriwatknp/tailwindcss-jun-layout/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/siriwatknp/tailwindcss-jun-layout"></a>
+  <a href="https://twitter.com/siriwatknp"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/siriwatknp"></a>
+  <a href="https://github.com/siriwatknp/tailwindcss-jun-layout/blob/main/LICENSE.md"><img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
   
 </div>
 
-## Documentation
+## Usage
 
-Visit https://magicui.design/docs to view the documentation.
-
-## Contributing
-
-Visit our [contributing guide](https://github.com/magicuidesign/magicui/blob/main/CONTRIBUTING.md) to learn how to contribute. It only takes ~5 minutes to add your own!
-
-## Let's talk
-
-<a href="https://cal.com/dillionverma/magicui?utm_source=banner&utm_campaign=oss"><img alt="Book us with Cal.com" src="https://cal.com/book-with-cal-dark.svg" /></a>
+- [Documentation](https://tailwindcss-jun-layout.vercel.app/docs)
+- [Examples](https://tailwindcss-jun-layout.vercel.app/#examples)
 
 ## Authors
 
-<a href="https://github.com/magicuidesign/magicui/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=magicuidesign/magicui" />
+<a href="https://github.com/siriwatknp/tailwindcss-jun-layout/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=siriwatknp/tailwindcss-jun-layout" />
 </a>
-
-## Deploy
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmagicuidesign%2Fmagicui)
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/kd94U5?referralCode=xaYd2G)
 
 ## Stats
 
-![Alt](https://repobeats.axiom.co/api/embed/38b63c4514a8a4cd7d1307985af2889c78d67bcc.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/015ca07620eb90d45837aba67f3d20874b4d4869.svg "Repobeats analytics image")
 
 ## License
 
-Licensed under the [MIT license](https://github.com/magicuidesign/magicui/blob/main/LICENSE.md).
+Licensed under the [MIT license](https://github.com/siriwatknp/tailwindcss-jun-layout/blob/main/LICENSE.md).
