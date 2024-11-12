@@ -63,6 +63,15 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
+      title: "Integration",
+      items: [
+        {
+          title: "Shadcn Sidebar",
+          href: "/docs/shadcn-sidebar",
+        },
+      ],
+    },
+    {
       title: "Examples",
       items: [
         {
@@ -76,6 +85,10 @@ export const docsConfig: DocsConfig = {
         {
           title: "Ecommerce",
           href: "/examples/ecommerce",
+        },
+        {
+          title: "Shadcn Sidebar",
+          href: "/examples/shadcn-sidebar",
         },
         {
           title: "AI Propmt",

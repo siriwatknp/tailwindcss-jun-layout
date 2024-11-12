@@ -381,7 +381,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       jun: () => ({
         "--_overflow": "var(--content-overflow)",
-        minHeight: "0px",
         overflow: "var(--_overflow)",
         [`&:has(.${layoutClasses.InsetSidebar}-absolute)`]: {
           "--_overflow": "unset",
@@ -390,7 +389,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        content: layoutClasses.Content,
+        content: true,
       },
     }
   );
@@ -398,11 +397,12 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       jun: () => ({
         gridArea: layoutClasses.Content,
+        minHeight: "0px",
       }),
     },
     {
       values: {
-        content: layoutClasses.Content,
+        content: true,
       },
     }
   );
@@ -539,9 +539,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             gridArea: layoutClasses.EdgeSidebar,
             width: `var(--drawer, 0)
                 var(--permanent, var(--_permanentWidth))`,
-            borderRight:
-              "var(--permanent, min(var(--EdgeSidebar-sidelineWidth), 1 * var(--SidebarContent-width)) solid)",
-            borderColor: "var(--EdgeSidebar-sidelineColor)",
             "&::after": {
               border: "inherit",
               left: "0",
@@ -559,7 +556,21 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        edgeSidebar: layoutClasses.EdgeSidebar,
+        edgeSidebar: true,
+      },
+    }
+  );
+  matchComponents(
+    {
+      jun: () => ({
+        borderRight:
+          "var(--permanent, min(var(--EdgeSidebar-sidelineWidth), 1 * var(--SidebarContent-width)) solid)",
+        borderColor: "var(--EdgeSidebar-sidelineColor)",
+      }),
+    },
+    {
+      values: {
+        edgeSidebar: true,
       },
     }
   );

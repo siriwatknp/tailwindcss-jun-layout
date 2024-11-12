@@ -1,0 +1,84 @@
+---
+title: Shadcn Sidebar
+description: Learn how to integrate with Shadcn Sidebar
+---
+
+## Shadcn Sidebar
+
+[Shadcn Sidebar](https://ui.shadcn.com/docs/components/sidebar) is a group of components for building sidebar of the application.
+
+However, the Shadcn sidebar is limited to some features, for example:
+
+- only left or right sidebar is supported at a time.
+- the header cannot clip the sidebar
+- the components require React context.
+
+## Demo
+
+Here is the [example demo](/examples/shadcn-sidebar) using Jun Layout and Shadcn Sidebar together.
+
+The right-EdgeSidebar is added to the example to demonstrate the seamless integration.
+
+## Integration
+
+Here is the basic setup of Shadcn sidebar:
+
+```jsx showLineNumbers
+<SidebarProvider>
+  <Sidebar>...</Sidebar>
+  <SidebarInset>
+    <header>...</header>
+    <div>...</div>
+  </SidebarInset>
+</SidebarProvider>
+```
+
+### Step 1: Layout system
+
+insert `.jun-layout` in between
+
+```jsx {2,8} showLineNumbers
+<SidebarProvider>
+  <div className="jun-layout">
+    <Sidebar>...</Sidebar>
+    <SidebarInset>
+      <header>...</header>
+      <div>...</div>
+    </SidebarInset>
+  </div>
+</SidebarProvider>
+```
+
+### Step 2: Header and Content
+
+Move header out of `SidebarInset` and apply classes:
+
+```jsx {4-5} showLineNumbers
+<SidebarProvider>
+  <div className="jun-layout">
+    <Sidebar>...</Sidebar>
+    <header className="jun-header">...</header>
+    <SidebarInset className="jun-content">...</SidebarInset>
+  </div>
+</SidebarProvider>
+```
+
+### Step 3: configure EdgeSidebar
+
+Wrap `Sidebar` with `.jun-edgeSidebar`:
+
+```jsx {3-4,6-7} showLineNumbers
+<SidebarProvider>
+  <div className="jun-layout">
+    <div className="jun-edgeSidebar">
+      <div className="jun-edgeContent">
+        <Sidebar>...</Sidebar>
+      </div>
+    </div>
+    <header className="jun-header">...</header>
+    <SidebarInset className="jun-content">...</SidebarInset>
+  </div>
+</SidebarProvider>
+```
+
+That's it, Jun Layout works automatically with [Shadcn sidebar collapse feature](https://ui.shadcn.com/docs/components/sidebar#collapsible).
