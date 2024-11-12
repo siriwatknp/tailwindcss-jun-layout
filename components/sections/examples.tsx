@@ -78,10 +78,7 @@ export default function Examples() {
                 id={example.href!.replace(/^\/examples\//, "")}
                 className="scroll-m-20 text-xl font-semibold"
               >
-                <AnchorHeading
-                  id={example.href!.replace(/^\/examples\//, "")}
-                  className="ml-4"
-                >
+                <AnchorHeading id={example.href!.replace(/^\/examples\//, "")}>
                   {example.title}
                 </AnchorHeading>
               </h3>
