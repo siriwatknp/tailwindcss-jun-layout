@@ -41,7 +41,7 @@ export default function Examples() {
       ) ?? [];
 
   return (
-    <section className="container px-4 py-16">
+    <section className="container max-w-screen-xl px-4 py-16">
       <div className="mb-16 text-center">
         <div className="flex justify-center">
           <AnchorHeading id="examples">
