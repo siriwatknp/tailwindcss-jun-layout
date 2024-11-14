@@ -35,6 +35,8 @@ const layoutClasses = {
   SidebarMenuAction: "jun-sidebarMenuAction",
   SidebarText: "jun-sidebarText",
   SidebarGroupText: "jun-sidebarGroupText",
+  SidebarIcon: "jun-sidebarIcon",
+  SidebarTooltip: "jun-sidebarTooltip",
 };
 
 function internalCollapseSidebar(options: {
@@ -207,7 +209,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // Root
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.Root]: () => ({
         "--Root-height": "100lvh",
         "--Header-height": "0px",
         "--Header-clipHeight": "0px",
@@ -243,16 +245,16 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         },
       }),
     },
-    { values: { layout: true } }
+    { values: { DEFAULT: true } }
   );
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.Root]: () => ({
         backgroundColor: theme("colors.background"),
       }),
     },
     {
-      values: { layout: true },
+      values: { DEFAULT: true },
     }
   );
   matchUtilities(
@@ -288,20 +290,20 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // Header
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.Header]: () => ({
         gridArea: layoutClasses.Header,
         height: "var(--Header-height)", // better than `min-height` because user can set height to 0
       }),
     },
     {
       values: {
-        header: true,
+        DEFAULT: true,
       },
     }
   );
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.Header]: () => ({
         alignContent: "center",
         display: "flex",
         alignItems: "center",
@@ -314,7 +316,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        header: true,
+        DEFAULT: true,
       },
     }
   );
@@ -383,7 +385,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // Content
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.Content]: () => ({
         "--_overflow": "var(--content-overflow)",
         overflow: "var(--_overflow)",
         [`&:has(.${layoutClasses.InsetSidebar}-absolute)`]: {
@@ -393,20 +395,20 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        content: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.Content]: () => ({
         gridArea: layoutClasses.Content,
         minHeight: "0px",
       }),
     },
     {
       values: {
-        content: true,
+        DEFAULT: true,
       },
     }
   );
@@ -414,19 +416,19 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // Footer
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.Footer]: () => ({
         gridArea: layoutClasses.Footer,
       }),
     },
     {
       values: {
-        footer: true,
+        DEFAULT: true,
       },
     }
   );
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.Footer]: () => ({
         transition: "all 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, color 0s",
         background: theme("colors.background"),
         borderTop: `1px solid ${theme("colors.border")}`,
@@ -434,7 +436,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        footer: true,
+        DEFAULT: true,
       },
     }
   );
@@ -442,7 +444,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // Shared EdgeSidebar
   matchUtilities(
     {
-      jun: () =>
+      [layoutClasses.EdgeSidebar]: () =>
         ({
           "--anchorLeft": "var(--EdgeSidebar-anchor,)",
           "--anchorRight": "var(--EdgeSidebar-anchor,)",
@@ -564,13 +566,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        edgeSidebar: true,
+        DEFAULT: true,
       },
     }
   );
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.EdgeSidebar]: () => ({
         borderRight:
           "var(--permanent, min(var(--EdgeSidebar-sidelineWidth), 1 * var(--SidebarContent-width)) solid)",
         borderColor: "var(--EdgeSidebar-sidelineColor)",
@@ -578,13 +580,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        edgeSidebar: true,
+        DEFAULT: true,
       },
     }
   );
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.EdgeSidebarContent]: () => ({
         background: theme("colors.sidebar.DEFAULT"),
         boxShadow:
           "var(--EdgeSidebarContent-shadow, var(--SidebarContent-shadow))", // --SidebarContent-shadow is internal.
@@ -596,13 +598,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        edgeContent: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      jun: () =>
+      [layoutClasses.EdgeSidebarContent]: () =>
         ({
           "--SidebarContent-transitionDelay": "0s",
           opacity: `var(--_drawer, var(--EdgeSidebar-drawerOpen))
@@ -638,20 +640,22 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        edgeContent: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.EdgeSidebarCollapsedVisible]: () => ({
+        boxSizing: "border-box",
+      }),
+      [layoutClasses.EdgeSidebarUncollapsedVisible]: () => ({
         boxSizing: "border-box",
       }),
     },
     {
       values: {
-        "edgeCollapsed-visible": layoutClasses.EdgeSidebarCollapsedVisible,
-        "edgeUncollapsed-visible": layoutClasses.EdgeSidebarUncollapsedVisible,
+        DEFAULT: true,
       },
     }
   );
@@ -659,7 +663,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // Left EdgeSidebar
   matchUtilities(
     {
-      [layoutClasses.EdgeSidebar]: () =>
+      [`${layoutClasses.EdgeSidebar}-drawer`]: () =>
         ({
           zIndex: "var(--_drawer, var(--drawer-z)) var(--_permanent, 1)",
           "--EdgeSidebar-drawerWidth": "0px",
@@ -695,13 +699,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        drawer: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      [layoutClasses.EdgeSidebar]: () => ({
+      [`${layoutClasses.EdgeSidebar}-drawer-withoutOverlay`]: () => ({
         "--drawer-h": "calc(var(--Root-height) - var(--Header-clipHeight))",
         "&::before": {
           display: "none",
@@ -710,7 +714,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        "drawer-withoutOverlay": true,
+        DEFAULT: true,
       },
     }
   );
@@ -833,7 +837,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // DrawerClose
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.DrawerEdgeSidebarClose]: () => ({
         position: "fixed",
         width: "40px",
         height: "40px",
@@ -852,13 +856,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        edgeDrawerClose: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      jun: () =>
+      [layoutClasses.DrawerEdgeSidebarClose]: () =>
         ({
           display: "var(--_drawer, flex) var(--_permanent, none)",
           visibility: "hidden",
@@ -876,7 +880,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        edgeDrawerClose: true,
+        DEFAULT: true,
       },
     }
   );
@@ -884,16 +888,22 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // EdgeSidebarCollapser & Trigger
   matchUtilities(
     {
-      jun: (value) => ({
-        [`--${value}`]: "1",
+      [layoutClasses.EdgeSidebarCollapser]: () => ({
+        boxSizing: "border-box",
+      }),
+      [layoutClasses.DrawerEdgeSidebarTrigger]: () => ({
+        boxSizing: "border-box",
+      }),
+      [layoutClasses.EdgeSidebarRightCollapser]: () => ({
+        boxSizing: "border-box",
+      }),
+      [layoutClasses.DrawerEdgeSidebarRightTrigger]: () => ({
+        boxSizing: "border-box",
       }),
     },
     {
       values: {
-        edgeCollapseTrigger: layoutClasses.EdgeSidebarCollapser,
-        edgeDrawerTrigger: layoutClasses.DrawerEdgeSidebarTrigger,
-        edgeCollapseTriggerR: layoutClasses.EdgeSidebarRightCollapser,
-        edgeDrawerTriggerR: layoutClasses.DrawerEdgeSidebarRightTrigger,
+        DEFAULT: true,
       },
     }
   );
@@ -901,7 +911,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // SidebarMenuItem
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.SidebarMenuItem]: () => ({
         "--action-size": "1.5rem",
         display: "flex",
         position: "relative",
@@ -909,14 +919,14 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        sidebarMenuItem: true,
+        DEFAULT: true,
       },
     }
   );
   // SidebarMenuButton
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.SidebarMenuButton]: () => ({
         textAlign: "left",
         alignItems: "center",
         gap: "var(--_drawer, 0.5rem) var(--_permanent, var(--_collapsed, 0px) var(--_uncollapsed, 0.5rem))",
@@ -940,13 +950,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        sidebarMenuButton: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.SidebarMenuButton]: () => ({
         display: "grid",
         gridTemplateColumns:
           "var(--_drawer, auto 1fr) var(--_permanent, var(--_collapsed, auto 0px) var(--_uncollapsed, auto 1fr))",
@@ -954,27 +964,33 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        sidebarMenuButton: true,
+        DEFAULT: true,
       },
     }
   );
   // SidebarText
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.SidebarText]: () => ({
         textOverflow: "ellipsis",
         transition: "opacity 0.6s",
       }),
     },
     {
       values: {
-        sidebarText: true,
+        DEFAULT: true,
       },
     }
   );
-  matchComponents(
+  matchUtilities(
     {
       [layoutClasses.SidebarText]: () => ({
+        opacity:
+          "var(--_drawer, 1) var(--_permanent, var(--_collapsed, 0) var(--_uncollapsed, 1))",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+      }),
+      [`${layoutClasses.SidebarText}-collapsedHeight`]: () => ({
         height:
           "var(--_drawer, 1lh) var(--_permanent, var(--_collapsed, 0) var(--_uncollapsed, 1lh))",
         transition: "height 0.3s",
@@ -982,41 +998,26 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        collapsedHeight: true,
-      },
-    }
-  );
-  matchUtilities(
-    {
-      jun: () => ({
-        opacity:
-          "var(--_drawer, 1) var(--_permanent, var(--_collapsed, 0) var(--_uncollapsed, 1))",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-      }),
-    },
-    {
-      values: {
-        sidebarText: true,
+        DEFAULT: true,
       },
     }
   );
   // SidebarGroupText
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.SidebarGroupText]: () => ({
         transition: "grid-template-rows 0.4s",
       }),
     },
     {
       values: {
-        sidebarGroupText: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.SidebarGroupText]: () => ({
         display: "grid",
         whiteSpace: "nowrap",
         gridTemplateRows:
@@ -1028,14 +1029,14 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        sidebarGroupText: true,
+        DEFAULT: true,
       },
     }
   );
   // SidebarMenuAction
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.SidebarMenuAction]: () => ({
         position: "absolute",
         right:
           "var(--_drawer, 0px) var(--permanent, var(--_collapsed, -100%) var(--_uncollapsed, 0px))", // equal to the SidebarMenuButton padding
@@ -1058,13 +1059,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        sidebarMenuAction: true,
+        DEFAULT: true,
       },
     }
   );
   matchComponents(
     {
-      [layoutClasses.SidebarMenuAction]: () => ({
+      [`${layoutClasses.SidebarMenuAction}-hoverAppear`]: () => ({
         opacity: "0",
         "&:focus-visible": {
           opacity: "1",
@@ -1076,14 +1077,14 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        hoverAppear: true,
+        DEFAULT: true,
       },
     }
   );
   // SidebarIcon
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.SidebarIcon]: () => ({
         "--size": "1rem",
         "--collapsed-size": "1.25rem",
         minWidth:
@@ -1097,20 +1098,20 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        sidebarIcon: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.SidebarTooltip]: () => ({
         display:
           "var(--_drawer, none) var(--_permanent, var(--_collapsed, block) var(--_uncollapsed, none))",
       }),
     },
     {
       values: {
-        sidebarTooltip: true,
+        DEFAULT: true,
       },
     }
   );
@@ -1118,7 +1119,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // Right EdgeSidebar
   matchUtilities(
     {
-      jun: () =>
+      [layoutClasses.EdgeSidebarRight]: () =>
         ({
           [`.${layoutClasses.Root}:has(>&)`]: {
             /** Root default settings */
@@ -1197,13 +1198,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        edgeSidebarR: layoutClasses.EdgeSidebarRight,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      [layoutClasses.EdgeSidebarRight]: () =>
+      [`${layoutClasses.EdgeSidebarRight}-drawer`]: () =>
         ({
           zIndex: "var(--_drawer, var(--drawer-z)) var(--_permanent, 1)",
           "--EdgeSidebar-drawerWidth": "0px",
@@ -1239,13 +1240,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        drawer: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      [layoutClasses.EdgeSidebarRight]: () => ({
+      [`${layoutClasses.EdgeSidebarRight}-drawer-withoutOverlay`]: () => ({
         "--drawer-h": "calc(var(--Root-height) - var(--Header-clipHeight))",
         "&::before": {
           display: "none",
@@ -1254,7 +1255,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        "drawer-withoutOverlay": true,
+        DEFAULT: true,
       },
     }
   );
@@ -1377,7 +1378,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // InsetSidebar
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.InsetSidebarContent]: () => ({
         boxSizing: "var(--fixed, content-box) var(--absolute, border-box)",
         position: "var(--fixed, fixed) var(--absolute, absolute)",
         height:
@@ -1397,13 +1398,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        insetContent: true,
+        DEFAULT: true,
       },
     }
   );
   matchComponents(
     {
-      jun: () => ({
+      [layoutClasses.InsetSidebarContent]: () => ({
         display: "flex",
         flexDirection: "column",
         backgroundColor: "inherit",
@@ -1412,20 +1413,20 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        insetContent: true,
+        DEFAULT: true,
       },
     }
   );
   matchUtilities(
     {
-      jun: () => ({
+      [layoutClasses.InsetAvoidingView]: () => ({
         marginRight: "var(--InsetSidebarR-width)",
         marginLeft: "var(--InsetSidebarL-width)",
       }),
     },
     {
       values: {
-        insetAvoidingView: layoutClasses.InsetAvoidingView,
+        DEFAULT: true,
       },
     }
   );
@@ -1437,7 +1438,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   };
   matchUtilities(
     {
-      jun: () =>
+      [layoutClasses.InsetSidebar]: () =>
         ({
           "*:has(>&)": {
             display: "flex",
@@ -1471,7 +1472,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     },
     {
       values: {
-        insetSidebar: layoutClasses.InsetSidebar,
+        DEFAULT: true,
       },
     }
   );
