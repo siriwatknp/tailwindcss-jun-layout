@@ -30,6 +30,11 @@ const layoutClasses = {
   InsetSidebar: "jun-insetSidebar",
   InsetAvoidingView: "jun-insetAvoidingView",
   InsetSidebarContent: "jun-insetContent",
+  SidebarMenuItem: "jun-sidebarMenuItem",
+  SidebarMenuButton: "jun-sidebarMenuButton",
+  SidebarMenuAction: "jun-sidebarMenuAction",
+  SidebarText: "jun-sidebarText",
+  SidebarGroupText: "jun-sidebarGroupText",
 };
 
 function internalCollapseSidebar(options: {
@@ -41,7 +46,6 @@ function internalCollapseSidebar(options: {
   const { state, document: d, selector, event } = options || {};
   const doc = d ?? document;
   const sidebar = doc.querySelector(selector) as HTMLElement;
-  console.log("sidebar", sidebar);
   if (sidebar) {
     const currentCollapsed =
       window
@@ -446,6 +450,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           transition: "width 0.3s",
           display: "flex",
           flexDirection: "column",
+          padding: "0px", // prevent user from customizing it
+          margin: "0px", // prevent user from customizing it
           // ==============================
           // To keep the EdgeSidebar fixed when the Content is scrollable
           position: "var(--_permanent, sticky)",
@@ -536,6 +542,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             "--SidebarContent-width": "var(--_permanentWidth, 0px)",
             "--_drawer": "var(--drawer)",
             "--_permanent": "var(--permanent)",
+            "--_collapsed": "var(--collapsed)",
+            "--_uncollapsed": "var(--uncollapsed)",
             gridArea: layoutClasses.EdgeSidebar,
             width: `var(--drawer, 0)
                 var(--permanent, var(--_permanentWidth))`,
@@ -601,6 +609,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         var(--_permanent, 1)`,
           visibility: `var(--_drawer, hidden)
            var(--_permanent, visible)`,
+          padding: "0px", // prevent user from customizing it
+          margin: "0px", // prevent user from customizing it
           position:
             "var(--_drawer, var(--drawer-pos)) var(--_permanent, relative)",
           zIndex: "2",
@@ -888,6 +898,223 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     }
   );
 
+  // SidebarMenuItem
+  matchUtilities(
+    {
+      jun: () => ({
+        "--action-size": "1.5rem",
+        display: "flex",
+        position: "relative",
+      }),
+    },
+    {
+      values: {
+        sidebarMenuItem: true,
+      },
+    }
+  );
+  // SidebarMenuButton
+  matchComponents(
+    {
+      jun: () => ({
+        textAlign: "left",
+        alignItems: "center",
+        gap: "var(--_drawer, 0.5rem) var(--_permanent, var(--_collapsed, 0px) var(--_uncollapsed, 0.5rem))",
+        width: "100%",
+        fontSize: "0.875rem",
+        lineHeight: "1.25rem",
+        paddingInline: "0.5rem",
+        minHeight: "1.75rem",
+        borderRadius: theme("borderRadius.sm"),
+        color: theme("colors.sidebar.foreground"),
+        cursor: "pointer",
+        [`&:has(~.${layoutClasses.SidebarMenuAction})`]: {
+          paddingRight:
+            "var(--_drawer, 0.5rem) var(--_permanent, var(--_collapsed, 0.5rem) var(--_uncollapsed, calc(0.5rem + var(--action-size))))",
+        },
+        "&:hover": {
+          color: theme("colors.sidebar.accent-foreground"),
+          background: theme("colors.sidebar.accent"), // TODO: use theme token
+        },
+      }),
+    },
+    {
+      values: {
+        sidebarMenuButton: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      jun: () => ({
+        display: "grid",
+        gridTemplateColumns:
+          "var(--_drawer, auto 1fr) var(--_permanent, var(--_collapsed, auto 0px) var(--_uncollapsed, auto 1fr))",
+      }),
+    },
+    {
+      values: {
+        sidebarMenuButton: true,
+      },
+    }
+  );
+  // SidebarText
+  matchComponents(
+    {
+      jun: () => ({
+        textOverflow: "ellipsis",
+        transition: "opacity 0.6s",
+      }),
+    },
+    {
+      values: {
+        sidebarText: true,
+      },
+    }
+  );
+  matchComponents(
+    {
+      [layoutClasses.SidebarText]: () => ({
+        height:
+          "var(--_drawer, 1lh) var(--_permanent, var(--_collapsed, 0) var(--_uncollapsed, 1lh))",
+        transition: "height 0.3s",
+      }),
+    },
+    {
+      values: {
+        collapsedHeight: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      jun: () => ({
+        opacity:
+          "var(--_drawer, 1) var(--_permanent, var(--_collapsed, 0) var(--_uncollapsed, 1))",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+      }),
+    },
+    {
+      values: {
+        sidebarText: true,
+      },
+    }
+  );
+  // SidebarGroupText
+  matchComponents(
+    {
+      jun: () => ({
+        transition: "grid-template-rows 0.4s",
+      }),
+    },
+    {
+      values: {
+        sidebarGroupText: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      jun: () => ({
+        display: "grid",
+        whiteSpace: "nowrap",
+        gridTemplateRows:
+          "var(--_drawer, 1fr) var(--permanent, var(--_collapsed, 0fr) var(--_uncollapsed, 1fr))",
+        "& > *": {
+          overflow: "hidden",
+        },
+      }),
+    },
+    {
+      values: {
+        sidebarGroupText: true,
+      },
+    }
+  );
+  // SidebarMenuAction
+  matchComponents(
+    {
+      jun: () => ({
+        position: "absolute",
+        right:
+          "var(--_drawer, 0px) var(--permanent, var(--_collapsed, -100%) var(--_uncollapsed, 0px))", // equal to the SidebarMenuButton padding
+        width: "var(--action-size)",
+        height: "var(--action-size)",
+        display: "inline-flex",
+        visibility:
+          "var(--_drawer, visible) var(--_permanent, var(--_collapsed, hidden) var(--_uncollapsed, visible))",
+        justifyContent: "center",
+        alignItems: "center",
+        top: "50%",
+        transform: "translateY(-50%)",
+        color: theme("colors.sidebar.foreground"),
+        transition: "right 0.5s",
+        borderRadius: theme("borderRadius.sm"),
+        "&:hover": {
+          background: theme("colors.sidebar.accent"),
+        },
+      }),
+    },
+    {
+      values: {
+        sidebarMenuAction: true,
+      },
+    }
+  );
+  matchComponents(
+    {
+      [layoutClasses.SidebarMenuAction]: () => ({
+        opacity: "0",
+        "&:focus-visible": {
+          opacity: "1",
+        },
+        [`.${layoutClasses.SidebarMenuItem}:hover &`]: {
+          opacity: "1",
+        },
+      }),
+    },
+    {
+      values: {
+        hoverAppear: true,
+      },
+    }
+  );
+  // SidebarIcon
+  matchUtilities(
+    {
+      jun: () => ({
+        "--size": "1rem",
+        "--collapsed-size": "1.25rem",
+        minWidth:
+          "var(--_drawer, 1em) var(--_permanent, var(--_collapsed, 100%) var(--_uncollapsed, 1em))",
+        height: "1em",
+        fontSize:
+          "var(--_drawer, var(--size)) var(--_permanent, var(--_collapsed, var(--collapsed-size)) var(--_uncollapsed, var(--size)))",
+        transition:
+          "var(--_drawer,) var(--_permanent, var(--_collapsed, min-width 0.6s 0.2s, font-size 0.2s) var(--_uncollapsed, font-size 0.3s))",
+      }),
+    },
+    {
+      values: {
+        sidebarIcon: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      jun: () => ({
+        display:
+          "var(--_drawer, none) var(--_permanent, var(--_collapsed, block) var(--_uncollapsed, none))",
+      }),
+    },
+    {
+      values: {
+        sidebarTooltip: true,
+      },
+    }
+  );
+
   // Right EdgeSidebar
   matchUtilities(
     {
@@ -946,6 +1173,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           "--SidebarContent-width": "var(--_permanentWidth-R, 0px)",
           "--_drawer": "var(--drawer-R)",
           "--_permanent": "var(--permanent-R)",
+          "--_collapsed": "var(--collapsed-R)",
+          "--_uncollapsed": "var(--uncollapsed-R)",
           gridArea: layoutClasses.EdgeSidebarRight,
           width: `var(--drawer-R, 0)
               var(--permanent-R, var(--_permanentWidth-R))`,
