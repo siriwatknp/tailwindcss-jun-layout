@@ -141,5 +141,49 @@
         "type": "registry:ui"
       }
     ]
+  },
+  {
+    "name": "sidebar-menus",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/sidebar-menus.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "sidebar-menu-action",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/sidebar-menu-action.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "sidebar-menu-tooltip",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/sidebar-menu-tooltip.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "sidebar-menu-groupText",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/sidebar-menu-groupText.tsx",
+        "type": "registry:ui"
+      }
+    ]
   }
 ]

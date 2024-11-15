@@ -31,12 +31,14 @@ const layoutClasses = {
   InsetAvoidingView: "jun-insetAvoidingView",
   InsetSidebarContent: "jun-insetContent",
   SidebarMenuItem: "jun-sidebarMenuItem",
+  SidebarMenu: "jun-sidebarMenu",
   SidebarMenuButton: "jun-sidebarMenuButton",
   SidebarMenuAction: "jun-sidebarMenuAction",
   SidebarText: "jun-sidebarText",
   SidebarGroupText: "jun-sidebarGroupText",
   SidebarIcon: "jun-sidebarIcon",
   SidebarTooltip: "jun-sidebarTooltip",
+  SidebarCompensate: "jun-sidebarCompensate",
 };
 
 function internalCollapseSidebar(options: {
@@ -667,6 +669,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         ({
           zIndex: "var(--_drawer, var(--drawer-z)) var(--_permanent, 1)",
           "--EdgeSidebar-drawerWidth": "0px",
+          "--_collapsed": "",
+          "--_uncollapsed": "var(--_)",
           [`.${layoutClasses.Root}:has(>&)`]: {
             "--EdgeSidebar-variant": "var(--drawer)",
             [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
@@ -749,6 +753,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           permanent: {
             "--SidebarContent-shadow": "none",
             "--SidebarContent-width": "var(--_permanentWidth, 0px)",
+            "--_collapsed": "var(--collapsed)",
+            "--_uncollapsed": "var(--uncollapsed)",
             [`.${layoutClasses.Root}:has(>&)`]: {
               "--EdgeSidebar-variant": "var(--permanent)",
               [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
@@ -777,10 +783,14 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             },
           },
           "permanent-hoverExpand": {
+            [`&:has(.${layoutClasses.EdgeSidebarContent}:hover)`]: {
+              "--_collapsed": "",
+              "--_uncollapsed": "var(--_)",
+            },
             [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
               "--SidebarContent-width": "var(--EdgeSidebar-permanentWidth)",
               // TODO: make the `transitionDelay` and `shadow` configurable from theme
-              "--SidebarContent-transitionDelay": "0.3s",
+              "--SidebarContent-transitionDelay": "0s",
               "--SidebarContent-shadow": `var(--collapsed, 0 0 10px rgba(0,0,0,0.1), var(--EdgeSidebar-sidelineWidth) 0 var(--EdgeSidebar-sidelineColor))`,
             },
           },
@@ -908,11 +918,45 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     }
   );
 
+  // SidebarMenu
+  matchComponents(
+    {
+      [layoutClasses.SidebarMenu]: () => ({
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.25rem",
+      }),
+      [`${layoutClasses.SidebarMenu}-relax`]: () => ({
+        gap: "0.5rem",
+        "--item-gap": "0.75rem",
+        "--item-h": "2.5rem",
+        "--item-fs": "1rem",
+        "--item-lh": "1.5rem",
+        "--item-px": "0.75rem",
+        "--action-size": "2rem",
+        "--icon-size": "1.25rem",
+      }),
+      [`${layoutClasses.SidebarMenu}-spacious`]: () => ({
+        gap: "0.5rem",
+        "--item-gap": "1rem",
+        "--item-h": "3rem",
+        "--item-fs": "1.125rem",
+        "--item-lh": "1.5rem",
+        "--item-px": "0.75rem",
+        "--action-size": "2.5rem",
+        "--icon-size": "1.5rem",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
   // SidebarMenuItem
   matchUtilities(
     {
       [layoutClasses.SidebarMenuItem]: () => ({
-        "--action-size": "1.5rem",
         display: "flex",
         position: "relative",
       }),
@@ -929,19 +973,17 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [layoutClasses.SidebarMenuButton]: () => ({
         textAlign: "left",
         alignItems: "center",
-        gap: "var(--_drawer, 0.5rem) var(--_permanent, var(--_collapsed, 0px) var(--_uncollapsed, 0.5rem))",
+        gap: "var(--_collapsed, 0px) var(--_uncollapsed, var(--item-gap, 0.5rem))",
         width: "100%",
-        fontSize: "0.875rem",
-        lineHeight: "1.25rem",
-        paddingInline: "0.5rem",
-        minHeight: "1.75rem",
+        fontSize: "var(--item-fs, 0.875rem)",
+        lineHeight: "var(--item-lh, 1.25rem)",
+        paddingInline: "var(--item-px, 0.5rem)",
+        // paddingBlock:
+        //   "var(--_collapsed, var(--item-px, 0.5rem)) var(--_uncollapsed, 0px)",
+        minHeight: "var(--item-h, 1.75rem)",
         borderRadius: theme("borderRadius.sm"),
         color: theme("colors.sidebar.foreground"),
         cursor: "pointer",
-        [`&:has(~.${layoutClasses.SidebarMenuAction})`]: {
-          paddingRight:
-            "var(--_drawer, 0.5rem) var(--_permanent, var(--_collapsed, 0.5rem) var(--_uncollapsed, calc(0.5rem + var(--action-size))))",
-        },
         "&:hover": {
           color: theme("colors.sidebar.accent-foreground"),
           background: theme("colors.sidebar.accent"), // TODO: use theme token
@@ -959,7 +1001,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [layoutClasses.SidebarMenuButton]: () => ({
         display: "grid",
         gridTemplateColumns:
-          "var(--_drawer, auto 1fr) var(--_permanent, var(--_collapsed, auto 0px) var(--_uncollapsed, auto 1fr))",
+          "var(--_collapsed, auto 0px) var(--_uncollapsed, auto 1fr)",
       }),
     },
     {
@@ -968,12 +1010,25 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       },
     }
   );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-spacing`]: (spacing) => ({
+        gap: `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
+        paddingInline: spacing,
+        paddingBlock: spacing,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
   // SidebarText
   matchComponents(
     {
       [layoutClasses.SidebarText]: () => ({
         textOverflow: "ellipsis",
-        transition: "opacity 0.6s",
+        transition:
+          "var(--_uncollapsed, opacity calc(0.6s + var(--_damp, 0s)))",
       }),
     },
     {
@@ -985,15 +1040,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchUtilities(
     {
       [layoutClasses.SidebarText]: () => ({
-        opacity:
-          "var(--_drawer, 1) var(--_permanent, var(--_collapsed, 0) var(--_uncollapsed, 1))",
+        opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
         whiteSpace: "nowrap",
         overflow: "hidden",
-      }),
-      [`${layoutClasses.SidebarText}-collapsedHeight`]: () => ({
-        height:
-          "var(--_drawer, 1lh) var(--_permanent, var(--_collapsed, 0) var(--_uncollapsed, 1lh))",
-        transition: "height 0.3s",
       }),
     },
     {
@@ -1006,7 +1055,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchComponents(
     {
       [layoutClasses.SidebarGroupText]: () => ({
+        "--_damp": "0.2s", // make the text opacity transition longer for smooth transition
         transition: "grid-template-rows 0.4s",
+      }),
+      [`${layoutClasses.SidebarText}-collapsedHeight`]: () => ({
+        // for group label
+        height: "var(--_collapsed, 0) var(--_uncollapsed, 1lh)",
+        transition: "height 0.3s",
       }),
     },
     {
@@ -1020,8 +1075,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [layoutClasses.SidebarGroupText]: () => ({
         display: "grid",
         whiteSpace: "nowrap",
-        gridTemplateRows:
-          "var(--_drawer, 1fr) var(--permanent, var(--_collapsed, 0fr) var(--_uncollapsed, 1fr))",
+        gridTemplateRows: "var(--_collapsed, 0fr) var(--_uncollapsed, 1fr)",
         "& > *": {
           overflow: "hidden",
         },
@@ -1038,13 +1092,11 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.SidebarMenuAction]: () => ({
         position: "absolute",
-        right:
-          "var(--_drawer, 0px) var(--permanent, var(--_collapsed, -100%) var(--_uncollapsed, 0px))", // equal to the SidebarMenuButton padding
-        width: "var(--action-size)",
-        height: "var(--action-size)",
+        right: "var(--_collapsed, -100%) var(--_uncollapsed, 0.25rem)", // equal to the SidebarMenuButton padding
+        width: "var(--action-size, 1.5rem)",
+        height: "var(--action-size, 1.5rem)",
         display: "inline-flex",
-        visibility:
-          "var(--_drawer, visible) var(--_permanent, var(--_collapsed, hidden) var(--_uncollapsed, visible))",
+        visibility: "var(--_collapsed, hidden) var(--_uncollapsed, visible)",
         justifyContent: "center",
         alignItems: "center",
         top: "50%",
@@ -1054,6 +1106,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         borderRadius: theme("borderRadius.sm"),
         "&:hover": {
           background: theme("colors.sidebar.accent"),
+        },
+        "& svg": {
+          width: "var(--icon-size, 1rem)",
+          height: "var(--icon-size, 1rem)",
         },
       }),
     },
@@ -1085,15 +1141,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchUtilities(
     {
       [layoutClasses.SidebarIcon]: () => ({
-        "--size": "1rem",
-        "--collapsed-size": "1.25rem",
-        minWidth:
-          "var(--_drawer, 1em) var(--_permanent, var(--_collapsed, 100%) var(--_uncollapsed, 1em))",
         height: "1em",
-        fontSize:
-          "var(--_drawer, var(--size)) var(--_permanent, var(--_collapsed, var(--collapsed-size)) var(--_uncollapsed, var(--size)))",
-        transition:
-          "var(--_drawer,) var(--_permanent, var(--_collapsed, min-width 0.6s 0.2s, font-size 0.2s) var(--_uncollapsed, font-size 0.3s))",
+        width: "1em",
+        fontSize: "var(--icon-size, 1rem)",
+        transition: "font-size 0.3s",
       }),
     },
     {
@@ -1102,11 +1153,26 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       },
     }
   );
+  // SidebarTooltip
   matchUtilities(
     {
       [layoutClasses.SidebarTooltip]: () => ({
-        display:
-          "var(--_drawer, none) var(--_permanent, var(--_collapsed, block) var(--_uncollapsed, none))",
+        display: "var(--_collapsed, block) var(--_uncollapsed, none)",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // SidebarCompensateHeight
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarCompensate}-h`]: (value) => ({
+        width: "100%",
+        height: `var(--_collapsed, ${value}) var(--_uncollapsed, 0px)`,
+        transition: "height 0.4s",
       }),
     },
     {
@@ -1208,6 +1274,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         ({
           zIndex: "var(--_drawer, var(--drawer-z)) var(--_permanent, 1)",
           "--EdgeSidebar-drawerWidth": "0px",
+          "--_collapsed": "",
+          "--_uncollapsed": "var(--_)",
           [`.${layoutClasses.Root}:has(>&)`]: {
             "--EdgeSidebar-R-variant": "var(--drawer-R)",
             [`&:is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}, ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
@@ -1290,6 +1358,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           permanent: {
             "--SidebarContent-shadow": "none",
             "--SidebarContent-width": "var(--_permanentWidth-R, 0px)",
+            "--_collapsed": "var(--collapsed-R)",
+            "--_uncollapsed": "var(--uncollapsed-R)",
             [`.${layoutClasses.Root}:has(>&)`]: {
               "--EdgeSidebar-R-variant": "var(--permanent-R)",
               [`&:is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}, ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
@@ -1318,10 +1388,14 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             },
           },
           "permanent-hoverExpand": {
+            [`&:has(.${layoutClasses.EdgeSidebarContent}:hover)`]: {
+              "--_collapsed": "",
+              "--_uncollapsed": "var(--_)",
+            },
             [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
               "--SidebarContent-width": "var(--EdgeSidebar-R-permanentWidth)",
               // TODO: make the `transitionDelay` and `shadow` configurable from theme
-              "--SidebarContent-transitionDelay": "0.3s",
+              "--SidebarContent-transitionDelay": "0s",
               "--SidebarContent-shadow": `var(--collapsed-R, 0 0 10px rgba(0,0,0,0.1), var(--EdgeSidebar-sidelineWidth) 0 var(--EdgeSidebar-R-sidelineColor))`,
             },
           },

@@ -148,6 +148,50 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
+    "sidebar-menus": {
+      name: "sidebar-menus",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/sidebar-menus.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/sidebar-menus.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "sidebar-menu-action": {
+      name: "sidebar-menu-action",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/sidebar-menu-action.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/sidebar-menu-action.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "sidebar-menu-tooltip": {
+      name: "sidebar-menu-tooltip",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/sidebar-menu-tooltip.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/sidebar-menu-tooltip.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "sidebar-menu-groupText": {
+      name: "sidebar-menu-groupText",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/sidebar-menu-groupText.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/sidebar-menu-groupText.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
     "utils": {
       name: "utils",
       type: "registry:lib",

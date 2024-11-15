@@ -79,4 +79,28 @@ export const demos: Registry = [
     dependencies: [],
     files: ["demo/insetSidebar-absolute.tsx"],
   },
+  {
+    name: "sidebar-menus",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/sidebar-menus.tsx"],
+  },
+  {
+    name: "sidebar-menu-action",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/sidebar-menu-action.tsx"],
+  },
+  {
+    name: "sidebar-menu-tooltip",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/sidebar-menu-tooltip.tsx"],
+  },
+  {
+    name: "sidebar-menu-groupText",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/sidebar-menu-groupText.tsx"],
+  },
 ];

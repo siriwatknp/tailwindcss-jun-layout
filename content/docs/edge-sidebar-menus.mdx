@@ -1,0 +1,113 @@
+---
+title: Edge Sidebar Menus
+description: Utilities for building menus for Edge Sidebar
+---
+
+## Prerequisite
+
+You need to create an [EdgeSidebar](/docs/edge-sidebar) first because the classes below require
+CSS variables from the EdgeSidebar.
+
+The menu classes can be used within left and right EdgeSidebar.
+
+## Menus
+
+Follow the structure below, when the EdgeSidebar is collapsed the texts will disappear leaving only icons.
+
+<img
+  src="https://github.com/user-attachments/assets/cc112fc5-a0e6-4c74-b2d3-84c739583dc0"
+  style={{ maxWidth: 800, margin: "auto" }}
+/>
+
+<ComponentPreview preview name="sidebar-menus" />
+
+```jsx
+<ul className="jun-sidebarMenu">
+  <li className="jun-sidebarMenuItem">
+    <a className="jun-sidebarMenuButton">
+      <svg className="jun-sidebarIcon" />
+      <span className="jun-sidebarText">Dashboard</span>
+    </a>
+  </li>
+  {/* ...rest menu items */}
+</ul>
+```
+
+<Callout>
+  If the menu is not a link, use `button` instead of anchor tag.
+</Callout>
+
+## Menu group text
+
+If the menu has more than one text elements, wrap those texts with `.jun-sidebarGroupText`.
+The layout will collapse the texts when EdgeSidebar is in collapsed state.
+
+You can control the spacing of the menu button using a modifier `.jun-sidebarMenuButton-spacing-[*]`.
+
+```jsx
+<a className="jun-sidebarMenuButton jun-sidebarMenuButton-spacing-3.5">
+  <svg className="jun-sidebarIcon" />
+  <div className="jun-sidebarGroupText">
+    <div>
+      <span className="jun-sidebarText">Primary text</span>
+      <span className="jun-sidebarText">Secondary text</span>
+      <span className="jun-sidebarText">Tertiary text</span>
+    </div>
+  </div>
+</a>
+```
+
+<ComponentPreview preview name="sidebar-menu-groupText" />
+
+<Callout title="⚠️ Warning">
+  The extra `div` under the `.jun-sidebarGroupText` is require to make the
+  collapse working properly.
+</Callout>
+
+## Menu action
+
+To add a secondary action to a menu, create a button with `.jun-sidebarMenuAction`:
+
+```jsx
+<li className="jun-sidebarMenuItem">
+  <a className="jun-sidebarMenuButton">
+    <svg className="jun-sidebarIcon" />
+    <span className="jun-sidebarText">Dashboard</span>
+  </a>
+  <button className="jun-sidebarMenuAction">
+    <MoreHorizontal />
+  </button>
+</li>
+```
+
+<Callout title="⚠️ Warning">
+  The button **must** be a direct child of the `.jun-sidebarMenuItem`. **Do
+  not** put the action inside `.jun-sidebarMenuButton`.
+</Callout>
+
+Append `.jun-sidebarMenuAction-hoverAppear`, if you want the action to appear when users hover on the item.
+The action also appears on keyboard focus.
+
+<ComponentPreview preview name="sidebar-menu-action" />
+
+## Menu tooltip
+
+To show a tooltip only when the permanent EdgeSidebar is collapsed, use `.jun-sidebarTooltip` to the [TooltipContent](https://www.radix-ui.com/primitives/docs/components/tooltip#content):
+
+```jsx
+<li className="jun-sidebarMenuItem">
+  <Tooltip>
+    <TooltipTrigger>
+      <a className="jun-sidebarMenuButton">
+        <svg className="jun-sidebarIcon" />
+        <span className="jun-sidebarText">Dashboard</span>
+      </a>
+    </TooltipTrigger>
+    <TooltipContent side="right" align="center" className="jun-sidebarTooltip">
+      <p>Dashboard</p>
+    </TooltipContent>
+  </Tooltip>
+</li>
+```
+
+<ComponentPreview preview name="sidebar-menu-tooltip" />

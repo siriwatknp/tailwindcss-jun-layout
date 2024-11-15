@@ -72,21 +72,22 @@ export default function PlaygroundPage() {
 
       {/* Sidebar */}
       <TooltipProvider delayDuration={0}>
-        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[72px] md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg">
+        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[65px] md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg md:jun-edgeSidebar-permanent-hoverExpand">
           <div className="jun-edgeContent">
-            <div className="flex flex-col gap-4 p-4 @container">
+            <div className="flex flex-col gap-4 p-4 transition-all @container">
               {/* App Switcher */}
               <div className="jun-sidebarMenuButton gap-4 rounded-lg border p-3">
                 <Building2 className="" />
-                <div className="jun-sidebarGroupText">
-                  <div>
-                    <div className="font-medium">Acme Corp</div>
-                    <div className="text-sm text-muted-foreground">
-                      Switch workspace
-                    </div>
+                <div>
+                  <div className="jun-sidebarText font-medium">Acme Corp</div>
+                  <div className="jun-sidebarText text-sm text-muted-foreground">
+                    Switch workspace
                   </div>
                 </div>
+                {/* <div className="jun-sidebarGroupText"></div> */}
               </div>
+
+              {/* <div className="jun-sidebarCompensate-h-[16px]" /> */}
 
               {/* Collapse Button */}
               <button
@@ -100,26 +101,28 @@ export default function PlaygroundPage() {
               {/* Menu Groups */}
               <div className="flex-1 space-y-6">
                 {menuGroups.map((group, index) => (
-                  <div key={index} className="flex flex-col gap-2">
-                    <div className="jun-sidebarText  text-xs text-muted-foreground ml-2 mb-2 uppercase tracking-widest">
+                  <div key={index}>
+                    <div className="jun-sidebarText text-xs text-muted-foreground ml-2 mb-2 uppercase tracking-widest">
                       {group.label}
                     </div>
-                    {group.items.map((item, itemIndex) => {
-                      const Icon = item.icon;
-                      return (
-                        <div key={itemIndex} className="jun-sidebarMenuItem">
-                          <button className="jun-sidebarMenuButton">
-                            <Icon className="jun-sidebarIcon" />
-                            <span className="jun-sidebarText">
-                              {item.label}
-                            </span>
-                          </button>
-                          <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </button>
-                        </div>
-                      );
-                    })}
+                    <div className="jun-sidebarMenu">
+                      {group.items.map((item, itemIndex) => {
+                        const Icon = item.icon;
+                        return (
+                          <div key={itemIndex} className="jun-sidebarMenuItem">
+                            <button className="jun-sidebarMenuButton">
+                              <Icon className="jun-sidebarIcon" />
+                              <span className="jun-sidebarText">
+                                {item.label}
+                              </span>
+                            </button>
+                            <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 ))}
               </div>
