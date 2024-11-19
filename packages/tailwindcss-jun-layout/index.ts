@@ -38,7 +38,6 @@ const layoutClasses = {
   SidebarGroupText: "jun-sidebarGroupText",
   SidebarIcon: "jun-sidebarIcon",
   SidebarTooltip: "jun-sidebarTooltip",
-  SidebarCompensate: "jun-sidebarCompensate",
 };
 
 function internalCollapseSidebar(options: {
@@ -936,16 +935,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         "--action-size": "2rem",
         "--icon-size": "1.25rem",
       }),
-      [`${layoutClasses.SidebarMenu}-spacious`]: () => ({
-        gap: "0.5rem",
-        "--item-gap": "1rem",
-        "--item-h": "3rem",
-        "--item-fs": "1.125rem",
-        "--item-lh": "1.5rem",
-        "--item-px": "0.75rem",
-        "--action-size": "2.5rem",
-        "--icon-size": "1.5rem",
-      }),
     },
     {
       values: {
@@ -978,8 +967,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         fontSize: "var(--item-fs, 0.875rem)",
         lineHeight: "var(--item-lh, 1.25rem)",
         paddingInline: "var(--item-px, 0.5rem)",
-        // paddingBlock:
-        //   "var(--_collapsed, var(--item-px, 0.5rem)) var(--_uncollapsed, 0px)",
         minHeight: "var(--item-h, 1.75rem)",
         borderRadius: theme("borderRadius.sm"),
         color: theme("colors.sidebar.foreground"),
@@ -1022,6 +1009,17 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       values: theme("spacing"),
     }
   );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-collapsed-h`]: (size) => ({
+        minHeight: `var(--_collapsed, ${size}) var(--_uncollapsed, var(--item-h, 1.75rem))`,
+        transition: "min-height 0.3s",
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
   // SidebarText
   matchComponents(
     {
@@ -1057,11 +1055,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [layoutClasses.SidebarGroupText]: () => ({
         "--_damp": "0.2s", // make the text opacity transition longer for smooth transition
         transition: "grid-template-rows 0.4s",
-      }),
-      [`${layoutClasses.SidebarText}-collapsedHeight`]: () => ({
-        // for group label
-        height: "var(--_collapsed, 0) var(--_uncollapsed, 1lh)",
-        transition: "height 0.3s",
       }),
     },
     {
@@ -1138,7 +1131,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     }
   );
   // SidebarIcon
-  matchUtilities(
+  matchComponents(
     {
       [layoutClasses.SidebarIcon]: () => ({
         height: "1em",
@@ -1153,26 +1146,21 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       },
     }
   );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarIcon}-collapsed-size`]: (size) => ({
+        fontSize: `var(--_collapsed, ${size}) var(--_uncollapsed, var(--icon-size, 1rem))`,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
   // SidebarTooltip
   matchUtilities(
     {
       [layoutClasses.SidebarTooltip]: () => ({
         display: "var(--_collapsed, block) var(--_uncollapsed, none)",
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  // SidebarCompensateHeight
-  matchUtilities(
-    {
-      [`${layoutClasses.SidebarCompensate}-h`]: (value) => ({
-        width: "100%",
-        height: `var(--_collapsed, ${value}) var(--_uncollapsed, 0px)`,
-        transition: "height 0.4s",
       }),
     },
     {

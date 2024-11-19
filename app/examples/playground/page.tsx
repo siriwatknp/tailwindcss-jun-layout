@@ -72,22 +72,30 @@ export default function PlaygroundPage() {
 
       {/* Sidebar */}
       <TooltipProvider delayDuration={0}>
-        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[65px] md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg md:jun-edgeSidebar-permanent-hoverExpand">
+        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[73px] md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg md:jun-edgeSidebar-permanent-hoverExpand">
           <div className="jun-edgeContent">
             <div className="flex flex-col gap-4 p-4 transition-all @container">
               {/* App Switcher */}
               <div className="jun-sidebarMenuButton gap-4 rounded-lg border p-3">
                 <Building2 className="" />
-                <div>
-                  <div className="jun-sidebarText font-medium">Acme Corp</div>
-                  <div className="jun-sidebarText text-sm text-muted-foreground">
-                    Switch workspace
+                <div className="jun-sidebarGroupText">
+                  <div>
+                    <div className="jun-sidebarText font-medium">Acme Corp</div>
+                    <div className="jun-sidebarText text-sm text-muted-foreground">
+                      Switch workspace
+                    </div>
+                    <div className="jun-sidebarText text-sm text-muted-foreground">
+                      Switch workspace
+                    </div>
+                    <div className="jun-sidebarText text-sm text-muted-foreground">
+                      Switch workspace
+                    </div>
+                    <div className="jun-sidebarText text-sm text-muted-foreground">
+                      Switch workspace
+                    </div>
                   </div>
                 </div>
-                {/* <div className="jun-sidebarGroupText"></div> */}
               </div>
-
-              {/* <div className="jun-sidebarCompensate-h-[16px]" /> */}
 
               {/* Collapse Button */}
               <button
@@ -110,14 +118,14 @@ export default function PlaygroundPage() {
                         const Icon = item.icon;
                         return (
                           <div key={itemIndex} className="jun-sidebarMenuItem">
-                            <button className="jun-sidebarMenuButton">
-                              <Icon className="jun-sidebarIcon" />
+                            <button className="jun-sidebarMenuButton jun-sidebarMenuButton-collapsed-h-[2.5rem]">
+                              <Icon className="jun-sidebarIcon jun-sidebarIcon-collapsed-size-6" />
                               <span className="jun-sidebarText">
                                 {item.label}
                               </span>
                             </button>
                             <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
-                              <MoreHorizontal className="h-4 w-4" />
+                              <MoreHorizontal />
                             </button>
                           </div>
                         );
