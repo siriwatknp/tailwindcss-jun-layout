@@ -99,7 +99,7 @@ function internalToggleSidebar(options: {
     const nextOpen = state === undefined ? !currentOpen : state;
     if (nextOpen) {
       sidebar.setAttribute(layoutAttrs.isDrawerOpen, "");
-      sidebar.style.setProperty("--EdgeSidebar-drawerOpen", "1");
+      sidebar.style.setProperty("--jun-ES-drawerOpen", "1");
       function handleOutsideClick(event: MouseEvent) {
         const closer = doc.querySelector(
           `.${layoutClasses.DrawerEdgeSidebarClose}`
@@ -130,7 +130,7 @@ function internalToggleSidebar(options: {
       setTimeout(() => {
         sidebar.removeAttribute(layoutAttrs.isDrawerClosing);
       }, 300);
-      sidebar.style.setProperty("--EdgeSidebar-drawerOpen", "");
+      sidebar.style.setProperty("--jun-ES-drawerOpen", "");
     }
   }
 }
@@ -205,22 +205,22 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   /** Match Shadcn Sidebar */
   const SIDEBAR_WIDTH = "var(--sidebar-width, 16rem)";
   const SIDEBAR_WIDTH_MOBILE = "18rem";
-  const SIDEBAR_WIDTH_ICON = "var(sidebar-width-icon, 3rem)";
+  const SIDEBAR_WIDTH_ICON = "var(--sidebar-width-icon, 3rem)";
 
   // Root
   matchUtilities(
     {
       [layoutClasses.Root]: () => ({
-        "--Root-height": "100lvh",
-        "--Header-height": "0px",
-        "--Header-clipHeight": "0px",
-        "--EdgeSidebar-sidelineWidth": "1px",
-        "--EdgeSidebar-sidelineColor": theme("colors.border"),
-        "--InsetSidebarL-width": "0px",
-        "--InsetSidebarR-width": "0px",
+        "--jun-h": "100lvh",
+        "--jun-H-h": "0px",
+        "--jun-H-clip-h": "0px",
+        "--jun-ES-line-w": "1px",
+        "--jun-ES-line-color": theme("colors.border") || "transparent",
+        "--jun-ISL-w": "0px",
+        "--jun-ISR-w": "0px",
         "--drawer-pos": "fixed",
         "--drawer-z": "999",
-        minHeight: "var(--Root-height)",
+        minHeight: "var(--jun-h)",
         display: "grid",
         flex: "auto", // integrating with Shadcn sidebar
         position: "relative",
@@ -234,15 +234,15 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         "${layoutClasses.EdgeSidebar} ${layoutClasses.Footer} ${layoutClasses.EdgeSidebarRight}"
       `,
         [`&:where(:has(>.${layoutClasses.Header}))`]: {
-          "--Header-height": HEADER_HEIGHT,
+          "--jun-H-h": HEADER_HEIGHT,
         },
         [`&:has(>.${layoutClasses.EdgeSidebar})`]: {
           "--_start-col": "max-content",
-          "--EdgeSidebar-drawerOpen": "0",
+          "--jun-ES-drawerOpen": "0",
         },
         [`&:has(>.${layoutClasses.EdgeSidebarRight})`]: {
           "--_end-col": "max-content",
-          "--EdgeSidebar-drawerOpen": "0",
+          "--jun-ES-drawerOpen": "0",
         },
       }),
     },
@@ -264,7 +264,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         "--drawer-pos": "absolute", // make edge sidebar (drawer) stay within the layout
         "--drawer-z": "5",
         "--content-overflow": "auto",
-        maxHeight: "var(--Root-height)",
+        maxHeight: "var(--jun-h)",
       }),
     },
     {
@@ -276,9 +276,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchUtilities(
     {
       [`${layoutClasses.Root}-h`]: (height) => ({
-        "--Root-height": height,
-        "--Inset-absolute-height":
-          "calc(var(--Root-height) - var(--Header-height))",
+        "--jun-h": height,
+        "--jun-IC-absolute-h": "calc(var(--jun-h) - var(--jun-H-h))",
       }),
     },
     {
@@ -293,7 +292,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.Header]: () => ({
         gridArea: layoutClasses.Header,
-        height: "var(--Header-height)", // better than `min-height` because user can set height to 0
+        height: "var(--jun-H-h)", // better than `min-height` because user can set height to 0
       }),
     },
     {
@@ -333,7 +332,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
                 "${layoutClasses.EdgeSidebar} ${layoutClasses.Content} ${layoutClasses.EdgeSidebarRight}"
                 "${layoutClasses.EdgeSidebar} ${layoutClasses.Footer} ${layoutClasses.EdgeSidebarRight}"
               `,
-              "--Header-clipHeight": "var(--Header-height)",
+              "--jun-H-clip-h": "var(--jun-H-h)",
             }),
             ...(value === "left" && {
               gridTemplateAreas: `
@@ -343,7 +342,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
               `,
               [`& .${layoutClasses.EdgeSidebar}:not(.${layoutClasses.EdgeSidebarRight})`]:
                 {
-                  "--Header-clipHeight": "var(--Header-height)",
+                  "--jun-H-clip-h": "var(--jun-H-h)",
                 },
             }),
             ...(value === "right" && {
@@ -353,7 +352,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
                 "${layoutClasses.EdgeSidebar} ${layoutClasses.Footer} ${layoutClasses.EdgeSidebarRight}"
               `,
               [`& .${layoutClasses.EdgeSidebarRight}`]: {
-                "--Header-clipHeight": "var(--Header-height)",
+                "--jun-H-clip-h": "var(--jun-H-h)",
               },
             }),
           },
@@ -372,7 +371,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [`${layoutClasses.Header}-h`]: (height) => ({
         height,
         [`.${layoutClasses.Root}:has(>&)`]: {
-          "--Header-height": height,
+          "--jun-H-h": height,
         },
       }),
     },
@@ -447,9 +446,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.EdgeSidebar]: () =>
         ({
-          "--anchorLeft": "var(--EdgeSidebar-anchor,)",
-          "--anchorRight": "var(--EdgeSidebar-anchor,)",
-          "--drawer-h": "var(--Root-height)",
+          "--anchorLeft": "var(--jun-ES-anchor,)",
+          "--anchorRight": "var(--jun-ES-anchor,)",
+          "--drawer-h": "var(--jun-h)",
           transition: "width 0.3s",
           display: "flex",
           flexDirection: "column",
@@ -458,10 +457,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           // ==============================
           // To keep the EdgeSidebar fixed when the Content is scrollable
           position: "var(--_permanent, sticky)",
-          top: "var(--_permanent, var(--Header-clipHeight))",
+          top: "var(--_permanent, var(--jun-H-clip-h))",
           zIndex: "var(--_drawer, 2) var(--_permanent, 1)",
-          height:
-            "var(--_permanent, calc(var(--Root-height) - var(--Header-clipHeight)))",
+          height: "var(--_permanent, calc(var(--jun-h) - var(--jun-H-clip-h)))",
           // ==============================
           "&::before": {
             position: "absolute",
@@ -472,7 +470,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             zIndex: "1",
             transition: "opacity 0.4s, visibility 0.4s",
             visibility: "hidden",
-            opacity: "var(--EdgeSidebar-drawerOpen, 0)",
+            opacity: "var(--jun-ES-drawerOpen, 0)",
           },
           [`&[${layoutAttrs.isDrawerOpen}]`]: {
             "&::before": {
@@ -487,25 +485,25 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             position: "absolute",
             content: '""',
             display: "block",
-            width: "var(--_permanent, var(--SidebarContent-width))",
-            height: "var(--Header-clipHeight)",
-            top: "calc(-1 * var(--Header-clipHeight))",
+            width: "var(--_permanent, var(--jun-EC-width))",
+            height: "var(--jun-H-clip-h)",
+            top: "calc(-1 * var(--jun-H-clip-h))",
           },
           [`&:where(:not(.${layoutClasses.EdgeSidebarRight}))`]: {
             [`.${layoutClasses.Root}:has(>&)`]: {
               /** Root default settings */
-              "--EdgeSidebar-variant": "var(--permanent)",
-              "--EdgeSidebar-permanentWidth": SIDEBAR_WIDTH,
-              "--EdgeSidebar-collapsible": "var(--uncollapsed)",
-              "--EdgeSidebar-collapsedWidth": SIDEBAR_WIDTH_ICON,
+              "--jun-ES-variant": "var(--permanent)",
+              "--jun-ES-permanentWidth": SIDEBAR_WIDTH,
+              "--jun-ES-collapsible": "var(--uncollapsed)",
+              "--jun-ES-collapsedWidth": SIDEBAR_WIDTH_ICON,
 
               /** DO NOT OVERRIDE, internal variables */
-              "--drawer": "var(--EdgeSidebar-variant,)",
-              "--permanent": "var(--EdgeSidebar-variant,)",
-              "--_permanentWidth": `var(--uncollapsed, var(--EdgeSidebar-permanentWidth))
-                              var(--collapsed, var(--EdgeSidebar-collapsedWidth, 0px))`,
-              "--collapsed": "var(--EdgeSidebar-collapsible,)",
-              "--uncollapsed": "var(--EdgeSidebar-collapsible,)",
+              "--drawer": "var(--jun-ES-variant,)",
+              "--permanent": "var(--jun-ES-variant,)",
+              "--_permanentWidth": `var(--uncollapsed, var(--jun-ES-permanentWidth))
+                              var(--collapsed, var(--jun-ES-collapsedWidth, 0px))`,
+              "--collapsed": "var(--jun-ES-collapsible,)",
+              "--uncollapsed": "var(--jun-ES-collapsible,)",
 
               /** Collapsible feature */
               [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
@@ -526,23 +524,23 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             /** Collapsible feature */
             [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarCollapsed}])`]:
               {
-                "--EdgeSidebar-collapsible": "var(--collapsed)",
+                "--jun-ES-collapsible": "var(--collapsed)",
               },
             /** Collapsible feature integration with Shadcn sidebar */
             [`.${layoutClasses.Root}:has(>& [data-state="collapsed"])`]: {
-              "--EdgeSidebar-collapsible": "var(--collapsed)",
+              "--jun-ES-collapsible": "var(--collapsed)",
             },
             [`.${layoutClasses.Root}:has(>& [data-collapsible="icon"])`]: {
-              "--EdgeSidebar-collapsedWidth": "var(--sidebar-width-icon)",
+              "--jun-ES-collapsedWidth": "var(--sidebar-width-icon)",
             },
             [`.${layoutClasses.Root}:has(>&:empty), .${layoutClasses.Root}:has(>& .${layoutClasses.EdgeSidebarContent}:empty)`]:
               {
-                "--EdgeSidebar-permanentWidth": "0px",
+                "--jun-ES-permanentWidth": "0px",
               },
 
             /** EdgeSidebar default settings */
-            "--EdgeSidebar-anchor": "var(--anchorLeft)",
-            "--SidebarContent-width": "var(--_permanentWidth, 0px)",
+            "--jun-ES-anchor": "var(--anchorLeft)",
+            "--jun-EC-width": "var(--_permanentWidth, 0px)",
             "--_drawer": "var(--drawer)",
             "--_permanent": "var(--permanent)",
             "--_collapsed": "var(--collapsed)",
@@ -574,9 +572,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchComponents(
     {
       [layoutClasses.EdgeSidebar]: () => ({
-        borderRight:
-          "var(--permanent, min(var(--EdgeSidebar-sidelineWidth), 1 * var(--SidebarContent-width)) solid)",
-        borderColor: "var(--EdgeSidebar-sidelineColor)",
+        boxShadow: "var(--jun-ES-line-w) 0px var(--jun-ES-line-color)",
       }),
     },
     {
@@ -589,8 +585,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.EdgeSidebarContent]: () => ({
         background: theme("colors.sidebar.DEFAULT"),
-        boxShadow:
-          "var(--EdgeSidebarContent-shadow, var(--SidebarContent-shadow))", // --SidebarContent-shadow is internal.
+        boxShadow: "var(--jun-EC-shadow)",
         display: "flex",
         flexDirection: "column",
         flex: "1",
@@ -607,8 +602,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.EdgeSidebarContent]: () =>
         ({
-          "--SidebarContent-transitionDelay": "0s",
-          opacity: `var(--_drawer, var(--EdgeSidebar-drawerOpen))
+          "--jun-EC-transitionDelay": "0s",
+          opacity: `var(--_drawer, var(--jun-ES-drawerOpen))
         var(--_permanent, 1)`,
           visibility: `var(--_drawer, hidden)
            var(--_permanent, visible)`,
@@ -618,14 +613,14 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             "var(--_drawer, var(--drawer-pos)) var(--_permanent, relative)",
           zIndex: "2",
           width:
-            "var(--_drawer, var(--EdgeSidebar-drawerWidth)) var(--_permanent, calc(var(--SidebarContent-width) - var(--EdgeSidebar-sidelineWidth, 0px)))",
+            "var(--_drawer, var(--jun-ES-drawerWidth)) var(--_permanent, var(--jun-EC-width))",
           height: "var(--_drawer, var(--drawer-h))",
-          top: "var(--_drawer, calc(var(--Root-height) - var(--drawer-h)))",
+          top: "var(--_drawer, calc(var(--jun-h) - var(--drawer-h)))",
           overflowY: "var(--_drawer, auto)",
           transition: `var(--_drawer, opacity 0.3s, transform 0.3s)
-           var(--_permanent, opacity 0.4s, width 0.3s var(--SidebarContent-transitionDelay, 0s), transform 0.3s var(--SidebarContent-transitionDelay, 0s), box-shadow 0.3s var(--SidebarContent-transitionDelay, 0s))`,
-          transform: `var(--_drawer, var(--anchorLeft, translateX(calc((1 - var(--EdgeSidebar-drawerOpen)) * -100%))) var(--anchorRight, translateX(calc(var(--EdgeSidebar-drawerOpen) * -100%))))
-           var(--_permanent, translateX(var(--EdgeSidebar-permanentSlide, 0)))`,
+           var(--_permanent, opacity 0.4s, width 0.3s var(--jun-EC-transitionDelay, 0s), transform 0.3s var(--jun-EC-transitionDelay, 0s), box-shadow 0.3s var(--jun-EC-transitionDelay, 0s))`,
+          transform: `var(--_drawer, var(--anchorLeft, translateX(calc((1 - var(--jun-ES-drawerOpen)) * -100%))) var(--anchorRight, translateX(calc(var(--jun-ES-drawerOpen) * -100%))))
+           var(--_permanent, translateX(var(--jun-ES-permanentSlide, 0)))`,
           [`[${layoutAttrs.isEdgeSidebarContentHidden}] &`]: {
             visibility: "hidden",
             opacity: "0",
@@ -667,11 +662,11 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [`${layoutClasses.EdgeSidebar}-drawer`]: () =>
         ({
           zIndex: "var(--_drawer, var(--drawer-z)) var(--_permanent, 1)",
-          "--EdgeSidebar-drawerWidth": "0px",
+          "--jun-ES-drawerWidth": "0px",
           "--_collapsed": "",
           "--_uncollapsed": "var(--_)",
           [`.${layoutClasses.Root}:has(>&)`]: {
-            "--EdgeSidebar-variant": "var(--drawer)",
+            "--jun-ES-variant": "var(--drawer)",
             [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
               {
                 display: "none",
@@ -696,7 +691,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             },
           [`&[${layoutAttrs.isDrawerOpen}], &[${layoutAttrs.isDrawerClosing}]`]:
             {
-              "--EdgeSidebar-drawerWidth": SIDEBAR_WIDTH_MOBILE,
+              "--jun-ES-drawerWidth": SIDEBAR_WIDTH_MOBILE,
             },
         }) as CSSRuleObject,
     },
@@ -709,7 +704,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchUtilities(
     {
       [`${layoutClasses.EdgeSidebar}-drawer-withoutOverlay`]: () => ({
-        "--drawer-h": "calc(var(--Root-height) - var(--Header-clipHeight))",
+        "--drawer-h": "calc(var(--jun-h) - var(--jun-H-clip-h))",
         "&::before": {
           display: "none",
         },
@@ -727,15 +722,15 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         ({
           [`&[${layoutAttrs.isDrawerOpen}], &[${layoutAttrs.isDrawerClosing}]`]:
             {
-              "--EdgeSidebar-drawerWidth": width,
+              "--jun-ES-drawerWidth": width,
             },
           [`.${layoutClasses.Root}:has(>&)`]: {
-            "--EdgeSidebar-permanentWidth": width,
+            "--jun-ES-permanentWidth": width,
           },
         }) as CSSRuleObject,
       [`${layoutClasses.EdgeSidebar}-collapsed-w`]: (collapsedWidth) => ({
         [`.${layoutClasses.Root}:has(>&)`]: {
-          "--EdgeSidebar-collapsedWidth": collapsedWidth,
+          "--jun-ES-collapsedWidth": collapsedWidth,
         },
       }),
     },
@@ -750,12 +745,12 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [layoutClasses.EdgeSidebar]: (value) =>
         ({
           permanent: {
-            "--SidebarContent-shadow": "none",
-            "--SidebarContent-width": "var(--_permanentWidth, 0px)",
+            "--jun-EC-shadow": "none",
+            "--jun-EC-width": "var(--_permanentWidth, 0px)",
             "--_collapsed": "var(--collapsed)",
             "--_uncollapsed": "var(--uncollapsed)",
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-variant": "var(--permanent)",
+              "--jun-ES-variant": "var(--permanent)",
               [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
                 {
                   display: "var(--display, inline-flex)",
@@ -767,18 +762,18 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             },
             [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarUncollapsed}])`]:
               {
-                "--EdgeSidebar-collapsible": "var(--uncollapsed)",
+                "--jun-ES-collapsible": "var(--uncollapsed)",
               },
           },
           "permanent-hidden": {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-collapsedWidth": "0px",
-              "--EdgeSidebar-collapsible": "var(--collapsed)",
+              "--jun-ES-collapsedWidth": "0px",
+              "--jun-ES-collapsible": "var(--collapsed)",
             },
           },
           "permanent-visible": {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-collapsible": "var(--uncollapsed)",
+              "--jun-ES-collapsible": "var(--uncollapsed)",
             },
           },
           "permanent-hoverExpand": {
@@ -787,10 +782,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
               "--_uncollapsed": "var(--_)",
             },
             [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
-              "--SidebarContent-width": "var(--EdgeSidebar-permanentWidth)",
+              "--jun-EC-width": "var(--jun-ES-permanentWidth)",
               // TODO: make the `transitionDelay` and `shadow` configurable from theme
-              "--SidebarContent-transitionDelay": "0s",
-              "--SidebarContent-shadow": `var(--collapsed, 0 0 10px rgba(0,0,0,0.1), var(--EdgeSidebar-sidelineWidth) 0 var(--EdgeSidebar-sidelineColor))`,
+              "--jun-EC-transitionDelay": "0s",
+              "--jun-EC-shadow": `var(--collapsed, 0 0 10px rgba(0,0,0,0.1), var(--jun-ES-line-w) 0 var(--jun-ES-line-color))`,
             },
           },
         })[value] as CSSRuleObject,
@@ -819,7 +814,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           },
           [`@media (max-width:${autoCollapse})`]: {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-collapsible": "var(--collapsed)",
+              "--jun-ES-collapsible": "var(--collapsed)",
             },
           },
           [`@media (min-width:${autoCollapse})`]: {
@@ -833,7 +828,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
                 "--_in-autoCollapse": "1",
               },
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-collapsible": "var(--uncollapsed)",
+              "--jun-ES-collapsible": "var(--uncollapsed)",
             },
           },
         };
@@ -1177,18 +1172,18 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         ({
           [`.${layoutClasses.Root}:has(>&)`]: {
             /** Root default settings */
-            "--EdgeSidebar-R-variant": "var(--permanent-R)",
-            "--EdgeSidebar-R-permanentWidth": SIDEBAR_WIDTH,
-            "--EdgeSidebar-R-collapsible": "var(--uncollapsed-R)",
-            "--EdgeSidebar-R-collapsedWidth": SIDEBAR_WIDTH_ICON,
+            "--jun-ESR-variant": "var(--permanent-R)",
+            "--jun-ESR-permanentWidth": SIDEBAR_WIDTH,
+            "--jun-ESR-collapsible": "var(--uncollapsed-R)",
+            "--jun-ESR-collapsedWidth": SIDEBAR_WIDTH_ICON,
 
             /** DO NOT OVERRIDE, internal variables */
-            "--drawer-R": "var(--EdgeSidebar-R-variant,)",
-            "--permanent-R": "var(--EdgeSidebar-R-variant,)",
-            "--_permanentWidth-R": `var(--uncollapsed-R, var(--EdgeSidebar-R-permanentWidth))
-                            var(--collapsed-R, var(--EdgeSidebar-R-collapsedWidth, 0px))`,
-            "--collapsed-R": "var(--EdgeSidebar-R-collapsible,)",
-            "--uncollapsed-R": "var(--EdgeSidebar-R-collapsible,)",
+            "--drawer-R": "var(--jun-ESR-variant,)",
+            "--permanent-R": "var(--jun-ESR-variant,)",
+            "--_permanentWidth-R": `var(--uncollapsed-R, var(--jun-ESR-permanentWidth))
+                            var(--collapsed-R, var(--jun-ESR-collapsedWidth, 0px))`,
+            "--collapsed-R": "var(--jun-ESR-collapsible,)",
+            "--uncollapsed-R": "var(--jun-ESR-collapsible,)",
 
             /** Collapsible feature */
             [`&:is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}, ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
@@ -1209,23 +1204,23 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           /** Collapsible feature */
           [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarCollapsed}])`]:
             {
-              "--EdgeSidebar-R-collapsible": "var(--collapsed-R)",
+              "--jun-ESR-collapsible": "var(--collapsed-R)",
             },
           /** Collapsible feature integration with Shadcn sidebar */
           [`.${layoutClasses.Root}:has(>& [data-state="collapsed"])`]: {
-            "--EdgeSidebar-R-collapsible": "var(--collapsed-R)",
+            "--jun-ESR-collapsible": "var(--collapsed-R)",
           },
           [`.${layoutClasses.Root}:has(>& [data-collapsible="icon"])`]: {
-            "--EdgeSidebar-R-collapsedWidth": "var(--sidebar-width-icon)",
+            "--jun-ESR-collapsedWidth": "var(--sidebar-width-icon)",
           },
           [`.${layoutClasses.Root}:has(>&:empty), .${layoutClasses.Root}:has(>& .${layoutClasses.EdgeSidebarContent}:empty)`]:
             {
-              "--EdgeSidebar-R-permanentWidth": "0px",
+              "--jun-ESR-permanentWidth": "0px",
             },
 
           /** EdgeSidebar default settings */
-          "--EdgeSidebar-anchor": "var(--anchorRight)",
-          "--SidebarContent-width": "var(--_permanentWidth-R, 0px)",
+          "--jun-ES-anchor": "var(--anchorRight)",
+          "--jun-EC-width": "var(--_permanentWidth-R, 0px)",
           "--_drawer": "var(--drawer-R)",
           "--_permanent": "var(--permanent-R)",
           "--_collapsed": "var(--collapsed-R)",
@@ -1233,9 +1228,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           gridArea: layoutClasses.EdgeSidebarRight,
           width: `var(--drawer-R, 0)
               var(--permanent-R, var(--_permanentWidth-R))`,
-          borderLeft:
-            "var(--permanent, min(var(--EdgeSidebar-sidelineWidth), 1 * var(--SidebarContent-width)) solid)",
-          borderColor: "var(--EdgeSidebar-sidelineColor)",
           "&::after": {
             border: "inherit",
             right: "0", // prevent Root overflow
@@ -1256,16 +1248,29 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       },
     }
   );
+  matchComponents(
+    {
+      [layoutClasses.EdgeSidebarRight]: () => ({
+        boxShadow:
+          "calc(-1 * var(--jun-ES-line-w)) 0px var(--jun-ES-line-color)",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
   matchUtilities(
     {
       [`${layoutClasses.EdgeSidebarRight}-drawer`]: () =>
         ({
           zIndex: "var(--_drawer, var(--drawer-z)) var(--_permanent, 1)",
-          "--EdgeSidebar-drawerWidth": "0px",
+          "--jun-ES-drawerWidth": "0px",
           "--_collapsed": "",
           "--_uncollapsed": "var(--_)",
           [`.${layoutClasses.Root}:has(>&)`]: {
-            "--EdgeSidebar-R-variant": "var(--drawer-R)",
+            "--jun-ESR-variant": "var(--drawer-R)",
             [`&:is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}, ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
               {
                 display: "none",
@@ -1290,7 +1295,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             },
           [`&[${layoutAttrs.isDrawerOpen}], &[${layoutAttrs.isDrawerClosing}]`]:
             {
-              "--EdgeSidebar-drawerWidth": SIDEBAR_WIDTH_MOBILE,
+              "--jun-ES-drawerWidth": SIDEBAR_WIDTH_MOBILE,
             },
         }) as CSSRuleObject,
     },
@@ -1303,7 +1308,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchUtilities(
     {
       [`${layoutClasses.EdgeSidebarRight}-drawer-withoutOverlay`]: () => ({
-        "--drawer-h": "calc(var(--Root-height) - var(--Header-clipHeight))",
+        "--drawer-h": "calc(var(--jun-h) - var(--jun-H-clip-h))",
         "&::before": {
           display: "none",
         },
@@ -1321,15 +1326,15 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         ({
           [`&[${layoutAttrs.isDrawerOpen}], &[${layoutAttrs.isDrawerClosing}]`]:
             {
-              "--EdgeSidebar-drawerWidth": width,
+              "--jun-ES-drawerWidth": width,
             },
           [`.${layoutClasses.Root}:has(>&)`]: {
-            "--EdgeSidebar-R-permanentWidth": width,
+            "--jun-ESR-permanentWidth": width,
           },
         }) as CSSRuleObject,
       [`${layoutClasses.EdgeSidebarRight}-collapsed-w`]: (collapsedWidth) => ({
         [`.${layoutClasses.Root}:has(>&)`]: {
-          "--EdgeSidebar-R-collapsedWidth": collapsedWidth,
+          "--jun-ESR-collapsedWidth": collapsedWidth,
         },
       }),
     },
@@ -1344,12 +1349,12 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [layoutClasses.EdgeSidebarRight]: (value) =>
         ({
           permanent: {
-            "--SidebarContent-shadow": "none",
-            "--SidebarContent-width": "var(--_permanentWidth-R, 0px)",
+            "--jun-EC-shadow": "none",
+            "--jun-EC-width": "var(--_permanentWidth-R, 0px)",
             "--_collapsed": "var(--collapsed-R)",
             "--_uncollapsed": "var(--uncollapsed-R)",
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-R-variant": "var(--permanent-R)",
+              "--jun-ESR-variant": "var(--permanent-R)",
               [`&:is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}, ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
                 {
                   display: "var(--display, inline-flex)",
@@ -1361,18 +1366,18 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             },
             [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarUncollapsed}])`]:
               {
-                "--EdgeSidebar-R-collapsible": "var(--uncollapsed-R)",
+                "--jun-ESR-collapsible": "var(--uncollapsed-R)",
               },
           },
           "permanent-hidden": {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-R-collapsedWidth": "0px",
-              "--EdgeSidebar-R-collapsible": "var(--collapsed-R)",
+              "--jun-ESR-collapsedWidth": "0px",
+              "--jun-ESR-collapsible": "var(--collapsed-R)",
             },
           },
           "permanent-visible": {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-R-collapsible": "var(--uncollapsed-R)",
+              "--jun-ESR-collapsible": "var(--uncollapsed-R)",
             },
           },
           "permanent-hoverExpand": {
@@ -1381,10 +1386,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
               "--_uncollapsed": "var(--_)",
             },
             [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
-              "--SidebarContent-width": "var(--EdgeSidebar-R-permanentWidth)",
+              "--jun-EC-width": "var(--jun-ESR-permanentWidth)",
               // TODO: make the `transitionDelay` and `shadow` configurable from theme
-              "--SidebarContent-transitionDelay": "0s",
-              "--SidebarContent-shadow": `var(--collapsed-R, 0 0 10px rgba(0,0,0,0.1), var(--EdgeSidebar-sidelineWidth) 0 var(--EdgeSidebar-R-sidelineColor))`,
+              "--jun-EC-transitionDelay": "0s",
+              "--jun-EC-shadow": `var(--collapsed-R, 0 0 10px rgba(0,0,0,0.1), var(--jun-ES-line-w) 0 var(--jun-ESR-sidelineColor))`,
             },
           },
         })[value] as CSSRuleObject,
@@ -1413,7 +1418,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           },
           [`@media (max-width:${autoCollapse})`]: {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-R-collapsible": "var(--collapsed-R)",
+              "--jun-ESR-collapsible": "var(--collapsed-R)",
             },
           },
           [`@media (min-width:${autoCollapse})`]: {
@@ -1427,7 +1432,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
                 "--_in-autoCollapse": "1",
               },
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--EdgeSidebar-R-collapsible": "var(--uncollapsed-R)",
+              "--jun-ESR-collapsible": "var(--uncollapsed-R)",
             },
           },
         };
@@ -1444,7 +1449,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         boxSizing: "var(--fixed, content-box) var(--absolute, border-box)",
         position: "var(--fixed, fixed) var(--absolute, absolute)",
         height:
-          "var(--fixed, calc(100% - var(--Header-height, 0px))) var(--absolute, var(--Inset-absolute-height, 100%))",
+          "var(--fixed, calc(100% - var(--jun-H-h, 0px))) var(--absolute, var(--jun-IC-absolute-h, 100%))",
         width: "var(--fixed, inherit) var(--absolute, 100%)",
         top: "0px",
         marginLeft:
@@ -1455,7 +1460,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           "var(--fixed, var(--anchor-right, -9999px)) var(--absolute, initial)",
         paddingRight:
           "var(--fixed, var(--anchor-right, 9999px)) var(--absolute, initial)",
-        marginTop: "var(--fixed, var(--Header-height))",
+        marginTop: "var(--fixed, var(--jun-H-h))",
       }),
     },
     {
@@ -1482,8 +1487,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchUtilities(
     {
       [layoutClasses.InsetAvoidingView]: () => ({
-        marginRight: "var(--InsetSidebarR-width)",
-        marginLeft: "var(--InsetSidebarL-width)",
+        marginRight: "var(--jun-ISR-w)",
+        marginLeft: "var(--jun-ISL-w)",
       }),
     },
     {
@@ -1494,9 +1499,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   );
   const insetSidebarSticky = {
     position: "sticky",
-    height: "var(--sticky, calc(var(--Root-height) - var(--Header-height)))",
+    height: "var(--sticky, calc(var(--jun-h) - var(--jun-H-h)))",
     overflow: "var(--sticky, auto)",
-    top: "var(--sticky, var(--Header-height))",
+    top: "var(--sticky, var(--jun-H-h))",
   };
   matchUtilities(
     {
@@ -1515,20 +1520,20 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
               flexGrow: "1 !important",
               overflow: "auto",
             },
-          "--InsetSidebar-position": `var(--sticky,)`,
+          "--jun-IS-position": `var(--sticky,)`,
           /** DO NOT OVERRIDE, internal variables */
-          "--fixed": "var(--InsetSidebar-position,)",
-          "--absolute": "var(--InsetSidebar-position,)",
-          "--sticky": "var(--InsetSidebar-position,)",
-          "--anchor-right": "var(--InsetSidebar-anchor,)",
-          "--anchor-left": "var(--InsetSidebar-anchor,)",
+          "--fixed": "var(--jun-IS-position,)",
+          "--absolute": "var(--jun-IS-position,)",
+          "--sticky": "var(--jun-IS-position,)",
+          "--anchor-right": "var(--jun-IS-anchor,)",
+          "--anchor-left": "var(--jun-IS-anchor,)",
           ...insetSidebarSticky,
           flex: "none",
           "&:first-child": {
-            "--InsetSidebar-anchor": "var(--anchor-left)",
+            "--jun-IS-anchor": "var(--anchor-left)",
           },
           "&:last-child": {
-            "--InsetSidebar-anchor": "var(--anchor-right)",
+            "--jun-IS-anchor": "var(--anchor-right)",
           },
         }) as CSSRuleObject,
     },
@@ -1542,7 +1547,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.InsetSidebar]: (value): CSSRuleObject => {
         return {
-          "--InsetSidebar-position": `var(--${value},)`,
+          "--jun-IS-position": `var(--${value},)`,
           ...(value === "sticky" && insetSidebarSticky),
           ...((value === "absolute" || value === "fixed") && {
             position: "relative",
@@ -1566,13 +1571,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         ({
           width,
           [`.${layoutClasses.Root}:has(> .${layoutClasses.Content} > &:first-child) > .${layoutClasses.Footer}`]:
-            { "--InsetSidebarL-width": width },
+            { "--jun-ISL-w": width },
           [`.${layoutClasses.Root}:has(> .${layoutClasses.Content} > * > &:first-child) > .${layoutClasses.Footer}`]:
-            { "--InsetSidebarL-width": width },
+            { "--jun-ISL-w": width },
           [`.${layoutClasses.Root}:has(> .${layoutClasses.Content} > &:last-child) > .${layoutClasses.Footer}`]:
-            { "--InsetSidebarR-width": width },
+            { "--jun-ISR-w": width },
           [`.${layoutClasses.Root}:has(> .${layoutClasses.Content} > * > &:last-child) > .${layoutClasses.Footer}`]:
-            { "--InsetSidebarR-width": width },
+            { "--jun-ISR-w": width },
         }) as CSSRuleObject,
     },
     {
