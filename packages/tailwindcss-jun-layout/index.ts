@@ -776,7 +776,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
               "--jun-ES-collapsible": "var(--uncollapsed)",
             },
           },
-          "permanent-hoverExpand": {
+          "permanent-hoverUncollapse": {
             [`&:has(.${layoutClasses.EdgeSidebarContent}:hover)`]: {
               "--_collapsed": "",
               "--_uncollapsed": "var(--_)",
@@ -795,7 +795,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         permanent: "permanent",
         "permanent-hidden": "permanent-hidden",
         "permanent-visible": "permanent-visible",
-        "permanent-hoverExpand": "permanent-hoverExpand",
+        "permanent-hoverUncollapse": "permanent-hoverUncollapse",
       },
     }
   );
@@ -892,17 +892,18 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // EdgeSidebarCollapser & Trigger
   matchUtilities(
     {
+      // no meaning, just for intellisense
       [layoutClasses.EdgeSidebarCollapser]: () => ({
-        boxSizing: "border-box",
+        "--collapser": "1",
       }),
       [layoutClasses.DrawerEdgeSidebarTrigger]: () => ({
-        boxSizing: "border-box",
+        "--drawer-trigger": "1",
       }),
       [layoutClasses.EdgeSidebarRightCollapser]: () => ({
-        boxSizing: "border-box",
+        "--collapserR": "1",
       }),
       [layoutClasses.DrawerEdgeSidebarRightTrigger]: () => ({
-        boxSizing: "border-box",
+        "--drawer-triggerR": "1",
       }),
     },
     {
@@ -957,7 +958,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [layoutClasses.SidebarMenuButton]: () => ({
         textAlign: "left",
         alignItems: "center",
-        gap: "var(--_collapsed, 0px) var(--_uncollapsed, var(--item-gap, 0.5rem))",
         width: "100%",
         fontSize: "var(--item-fs, 0.875rem)",
         lineHeight: "var(--item-lh, 1.25rem)",
@@ -984,6 +984,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         display: "grid",
         gridTemplateColumns:
           "var(--_collapsed, auto 0px) var(--_uncollapsed, auto 1fr)",
+        gap: "var(--_collapsed, 0px) var(--_uncollapsed, var(--item-gap, 0.5rem))",
       }),
     },
     {
@@ -998,6 +999,26 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         gap: `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
         paddingInline: spacing,
         paddingBlock: spacing,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-h`]: (size) => ({
+        "--item-h": size,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-gap`]: (size) => ({
+        "--item-gap": size,
       }),
     },
     {
@@ -1380,7 +1401,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
               "--jun-ESR-collapsible": "var(--uncollapsed-R)",
             },
           },
-          "permanent-hoverExpand": {
+          "permanent-hoverUncollapse": {
             [`&:has(.${layoutClasses.EdgeSidebarContent}:hover)`]: {
               "--_collapsed": "",
               "--_uncollapsed": "var(--_)",
@@ -1399,7 +1420,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         permanent: "permanent",
         "permanent-hidden": "permanent-hidden",
         "permanent-visible": "permanent-visible",
-        "permanent-hoverExpand": "permanent-hoverExpand",
+        "permanent-hoverUncollapse": "permanent-hoverUncollapse",
       },
     }
   );

@@ -38,10 +38,10 @@ export const demos: Registry = [
     files: ["demo/edgeSidebar-collapse.tsx"],
   },
   {
-    name: "edgeSidebar-hoverExpand",
+    name: "edgeSidebar-hoverUncollapse",
     type: "registry:ui",
     dependencies: [],
-    files: ["demo/edgeSidebar-hoverExpand.tsx"],
+    files: ["demo/edgeSidebar-hoverUncollapse.tsx"],
   },
   {
     name: "edgeSidebar-drawer",

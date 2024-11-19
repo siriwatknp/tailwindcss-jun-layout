@@ -64,7 +64,7 @@ export default function ChatExample() {
       </div>
       <div
         id="left-sidebar"
-        className="jun-edgeSidebar jun-edgeSidebar-drawer jun-edgeSidebar-w-[370px] md:jun-edgeSidebar-permanent md:jun-edgeSidebar-w-[88px] lg:jun-edgeSidebar-w-[288px] xl:jun-edgeSidebar-w-[360px]"
+        className="jun-edgeSidebar jun-edgeSidebar-drawer jun-edgeSidebar-w-[370px] md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[88px] jun-edgeSidebar-permanent-autoCollapse-lg lg:jun-edgeSidebar-w-[288px] xl:jun-edgeSidebar-w-[360px]"
       >
         <div className="jun-edgeContent bg-white dark:bg-gray-900">
           <ConversationsList
@@ -139,25 +139,27 @@ const ConversationItem = ({
 }) => (
   <button
     onClick={onClick}
-    className={`flex w-full items-center space-x-3 rounded-lg p-3 ${
+    className={`jun-sidebarMenuButton jun-sidebarMenuButton-h-[72px] relative flex w-full items-center rounded-lg p-3 ${
       isSelected ? "bg-gray-100 dark:bg-gray-800" : ""
     }`}
   >
     <div className="relative">
-      <div className="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-700" />
+      <div className="jun-sidebarIcon h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-700" />
       {conversation.isOnline && (
         <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white dark:border-gray-900 bg-green-500" />
       )}
     </div>
-    <div className="flex-1">
-      <div className="flex justify-between">
-        <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700" />
-        <div className="h-4 w-12 rounded bg-gray-200 dark:bg-gray-700" />
+    <div className="jun-sidebarText">
+      <div>
+        <div className="flex justify-between">
+          <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700" />
+          <div className="h-4 w-12 rounded bg-gray-200 dark:bg-gray-700" />
+        </div>
+        <div className="mt-1 h-4 w-32 rounded bg-gray-200 dark:bg-gray-700" />
       </div>
-      <div className="mt-1 h-4 w-32 rounded bg-gray-200 dark:bg-gray-700" />
     </div>
     {conversation.unread && (
-      <div className="h-5 w-5 rounded-full bg-blue-500" />
+      <div className="absolute bottom-1 right-1 h-5 w-5 rounded-full bg-blue-500" />
     )}
   </button>
 );
@@ -175,7 +177,7 @@ const ConversationsList = ({
     <div className="p-4">
       <div className="h-10 w-full rounded-full bg-gray-200 dark:bg-gray-700" />
     </div>
-    <div className="min-h-0 flex-1 space-y-2 overflow-y-auto p-2">
+    <div className="jun-sidebarMenu min-h-0 flex-1 space-y-2 overflow-y-auto p-2">
       {conversations.map((conversation) => (
         <ConversationItem
           key={conversation.id}

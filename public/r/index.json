@@ -66,12 +66,12 @@
     ]
   },
   {
-    "name": "edgeSidebar-hoverExpand",
+    "name": "edgeSidebar-hoverUncollapse",
     "type": "registry:ui",
     "dependencies": [],
     "files": [
       {
-        "path": "demo/edgeSidebar-hoverExpand.tsx",
+        "path": "demo/edgeSidebar-hoverUncollapse.tsx",
         "type": "registry:ui"
       }
     ]

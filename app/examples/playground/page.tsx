@@ -72,7 +72,7 @@ export default function PlaygroundPage() {
 
       {/* Sidebar */}
       <TooltipProvider delayDuration={0}>
-        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[73px] md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg md:jun-edgeSidebar-permanent-hoverExpand">
+        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[72px] md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg md:jun-edgeSidebar-permanent-hoverUncollapse">
           <div className="jun-edgeContent">
             <div className="flex flex-col gap-4 p-4 transition-all @container">
               {/* App Switcher */}
@@ -81,15 +81,6 @@ export default function PlaygroundPage() {
                 <div className="jun-sidebarGroupText">
                   <div>
                     <div className="jun-sidebarText font-medium">Acme Corp</div>
-                    <div className="jun-sidebarText text-sm text-muted-foreground">
-                      Switch workspace
-                    </div>
-                    <div className="jun-sidebarText text-sm text-muted-foreground">
-                      Switch workspace
-                    </div>
-                    <div className="jun-sidebarText text-sm text-muted-foreground">
-                      Switch workspace
-                    </div>
                     <div className="jun-sidebarText text-sm text-muted-foreground">
                       Switch workspace
                     </div>
@@ -119,7 +110,7 @@ export default function PlaygroundPage() {
                         return (
                           <div key={itemIndex} className="jun-sidebarMenuItem">
                             <button className="jun-sidebarMenuButton jun-sidebarMenuButton-collapsed-h-[2.5rem]">
-                              <Icon className="jun-sidebarIcon jun-sidebarIcon-collapsed-size-6" />
+                              <Icon className="jun-sidebarIcon jun-sidebarIcon-collapsed-size-5" />
                               <span className="jun-sidebarText">
                                 {item.label}
                               </span>

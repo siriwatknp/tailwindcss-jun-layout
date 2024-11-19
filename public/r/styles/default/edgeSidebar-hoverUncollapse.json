@@ -1,0 +1,13 @@
+{
+  "name": "edgeSidebar-hoverUncollapse",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/edgeSidebar-hoverUncollapse.tsx",
+      "content": "import { triggerEdgeCollapse } from \"@/packages/tailwindcss-jun-layout\";\nimport { PanelLeftClose, PanelRightClose } from \"lucide-react\";\n\nexport default function EdgeSidebarhoverUncollapseDemo() {\n  return (\n    <div className=\"w-full border-4 rounded bg-background\">\n      <div className=\"jun-layout jun-layout-h-[300px] jun-layout-standalone\">\n        <header className=\"jun-header\">\n          <div className=\"p-3\">\n            <div className=\"h-4 w-32 rounded bg-muted\" />\n          </div>\n        </header>\n        <aside\n          id=\"edgeSidebar-hoverUncollapse-demo\"\n          className=\"jun-edgeSidebar jun-edgeSidebar-collapsed-w-[80px] jun-edgeSidebar-permanent-hoverUncollapse\"\n        >\n          <div className=\"jun-edgeContent bg-sidebar\">\n            <button\n              className=\"jun-edgeCollapseTrigger p-4 hover:bg-neutral-200\"\n              onClick={(event) =>\n                triggerEdgeCollapse({\n                  event,\n                  sidebarId: \"edgeSidebar-hoverUncollapse-demo\",\n                })\n              }\n            >\n              <PanelRightClose className=\"jun-edgeCollapsed-visible\" />\n              <PanelLeftClose className=\"jun-edgeUncollapsed-visible\" />\n            </button>\n            <div className=\"p-4 space-y-2\">\n              <div className=\"h-4 w-32 rounded bg-muted\" />\n              <div className=\"h-4 w-24 rounded bg-muted\" />\n            </div>\n          </div>\n        </aside>\n        <main className=\"jun-content\">\n          <div className=\"p-4\">\n            <div className=\"h-4 w-48 rounded bg-muted\" />\n          </div>\n        </main>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

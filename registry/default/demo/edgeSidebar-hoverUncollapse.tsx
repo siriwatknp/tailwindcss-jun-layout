@@ -1,7 +1,7 @@
 import { triggerEdgeCollapse } from "@/packages/tailwindcss-jun-layout";
 import { PanelLeftClose, PanelRightClose } from "lucide-react";
 
-export default function EdgeSidebarHoverExpandDemo() {
+export default function EdgeSidebarhoverUncollapseDemo() {
   return (
     <div className="w-full border-4 rounded bg-background">
       <div className="jun-layout jun-layout-h-[300px] jun-layout-standalone">
@@ -11,8 +11,8 @@ export default function EdgeSidebarHoverExpandDemo() {
           </div>
         </header>
         <aside
-          id="edgeSidebar-hoverExpand-demo"
-          className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[80px] jun-edgeSidebar-permanent-hoverExpand"
+          id="edgeSidebar-hoverUncollapse-demo"
+          className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[80px] jun-edgeSidebar-permanent-hoverUncollapse"
         >
           <div className="jun-edgeContent bg-sidebar">
             <button
@@ -20,7 +20,7 @@ export default function EdgeSidebarHoverExpandDemo() {
               onClick={(event) =>
                 triggerEdgeCollapse({
                   event,
-                  sidebarId: "edgeSidebar-hoverExpand-demo",
+                  sidebarId: "edgeSidebar-hoverUncollapse-demo",
                 })
               }
             >
