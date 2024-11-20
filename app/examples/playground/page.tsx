@@ -6,9 +6,19 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   triggerEdgeCollapse,
   triggerEdgeDrawer,
-} from "@/packages/tailwindcss-jun-layout/dist";
+} from "@/packages/tailwindcss-jun-layout";
 import {
   Menu,
   Home,
@@ -24,7 +34,30 @@ import {
   Building2,
   LucideIcon,
   MoreHorizontal,
+  AudioWaveform,
+  BadgeCheck,
+  Bell,
+  BookOpen,
+  Bot,
+  ChevronRight,
+  ChevronsUpDown,
+  Command,
+  CreditCard,
+  Folder,
+  Forward,
+  Frame,
+  GalleryVerticalEnd,
+  LogOut,
+  Map,
+  PieChart,
+  Plus,
+  Settings2,
+  Sparkles,
+  SquareTerminal,
+  Trash2,
 } from "lucide-react";
+import React from "react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface MenuGroup {
   label: string;
@@ -33,6 +66,31 @@ interface MenuGroup {
     label: string;
   }[];
 }
+
+const data = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
+  teams: [
+    {
+      name: "Acme Inc",
+      logo: GalleryVerticalEnd,
+      plan: "Enterprise",
+    },
+    {
+      name: "Acme Corp.",
+      logo: AudioWaveform,
+      plan: "Startup",
+    },
+    {
+      name: "Evil Corp.",
+      logo: Command,
+      plan: "Free",
+    },
+  ],
+};
 
 const menuGroups: MenuGroup[] = [
   {
@@ -55,6 +113,7 @@ const menuGroups: MenuGroup[] = [
 ];
 
 export default function PlaygroundPage() {
+  const [activeTeam, setActiveTeam] = React.useState(data.teams[0]);
   return (
     <div className="jun-layout">
       {/* Header */}
@@ -72,22 +131,64 @@ export default function PlaygroundPage() {
 
       {/* Sidebar */}
       <TooltipProvider delayDuration={0}>
-        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[72px] md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg md:jun-edgeSidebar-permanent-hoverUncollapse">
+        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg">
           <div className="jun-edgeContent">
-            <div className="flex flex-col gap-4 p-4 transition-all @container">
+            <div className="flex flex-col p-2">
               {/* App Switcher */}
-              <div className="jun-sidebarMenuButton gap-4 rounded-lg border p-3">
-                <Building2 className="" />
-                <div className="jun-sidebarGroupText">
-                  <div>
-                    <div className="jun-sidebarText font-medium">Acme Corp</div>
-                    <div className="jun-sidebarText text-sm text-muted-foreground">
-                      Switch workspace
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="jun-sidebarMenuButton jun-sidebarMenuButton-spacing-2 jun-sidebarMenuButton-shrink-spacing-0">
+                    <div className="jun-sidebarIcon flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                      <activeTeam.logo className="size-4" />
                     </div>
-                  </div>
-                </div>
-              </div>
-
+                    <div className="jun-sidebarText text-left text-sm leading-tight flex items-center">
+                      <div className="flex-1">
+                        <div className="truncate font-semibold">
+                          {activeTeam.name}
+                        </div>
+                        <div className="truncate text-xs">
+                          {activeTeam.plan}
+                        </div>
+                      </div>
+                      <ChevronsUpDown className="ml-auto size-4 " />
+                    </div>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                  align="start"
+                  side="bottom"
+                  sideOffset={4}
+                >
+                  <DropdownMenuLabel className="text-xs text-muted-foreground">
+                    Teams
+                  </DropdownMenuLabel>
+                  {data.teams.map((team, index) => (
+                    <DropdownMenuItem
+                      key={team.name}
+                      onClick={() => setActiveTeam(team)}
+                      className="gap-2 p-2"
+                    >
+                      <div className="flex size-6 items-center justify-center rounded-sm border">
+                        <team.logo className="size-4 shrink-0" />
+                      </div>
+                      {team.name}
+                      <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="gap-2 p-2">
+                    <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                      <Plus className="size-4" />
+                    </div>
+                    <div className="font-medium text-muted-foreground">
+                      Add team
+                    </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div className="flex-1 min-h-0 overflow-auto">
               {/* Collapse Button */}
               <button
                 className="jun-edgeCollapseTrigger items-center justify-between rounded-lg border p-3 text-muted-foreground hover:text-foreground"
@@ -98,50 +199,137 @@ export default function PlaygroundPage() {
               </button>
 
               {/* Menu Groups */}
-              <div className="flex-1 space-y-6">
-                {menuGroups.map((group, index) => (
-                  <div key={index}>
-                    <div className="jun-sidebarText text-xs text-muted-foreground ml-2 mb-2 uppercase tracking-widest">
-                      {group.label}
-                    </div>
-                    <div className="jun-sidebarMenu">
-                      {group.items.map((item, itemIndex) => {
-                        const Icon = item.icon;
-                        return (
-                          <div key={itemIndex} className="jun-sidebarMenuItem">
-                            <button className="jun-sidebarMenuButton jun-sidebarMenuButton-collapsed-h-[2.5rem]">
-                              <Icon className="jun-sidebarIcon jun-sidebarIcon-collapsed-size-5" />
-                              <span className="jun-sidebarText">
-                                {item.label}
-                              </span>
-                            </button>
-                            <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
-                              <MoreHorizontal />
-                            </button>
-                          </div>
-                        );
-                      })}
-                    </div>
+              {menuGroups.map((group, index) => (
+                <div key={index} className="jun-sidebarGroup p-2">
+                  <div className="jun-sidebarGroupLabel text-muted-foreground tracking-wide">
+                    {group.label}
                   </div>
-                ))}
-              </div>
+                  <div className="jun-sidebarMenu">
+                    {group.items.map((item, itemIndex) => {
+                      const Icon = item.icon;
+                      return (
+                        <div key={itemIndex} className="jun-sidebarMenuItem">
+                          <button className="jun-sidebarMenuButton">
+                            <Icon className="jun-sidebarIcon" />
+                            <span className="jun-sidebarText">
+                              {item.label}
+                            </span>
+                          </button>
+                          <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
+                            <MoreHorizontal />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
 
-              {/* Settings */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button className="jun-sidebarMenuButton">
-                    <Settings className="jun-sidebarIcon" />
-                    <span className="jun-sidebarText">Settings</span>
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent
-                  side="right"
-                  align="center"
-                  className="jun-sidebarTooltip"
-                >
-                  <p>Add to library</p>
-                </TooltipContent>
-              </Tooltip>
+              <div className="sidebarMenu">
+                {/* Settings */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button className="jun-sidebarMenuButton">
+                      <Settings className="jun-sidebarIcon" />
+                      <span className="jun-sidebarText">Settings</span>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent
+                    side="right"
+                    align="center"
+                    className="jun-sidebarTooltip"
+                  >
+                    <p>Add to library</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </div>
+            <div className="p-2">
+              <ul className="jun-sidebarMenu">
+                <li className="jun-sidebarMenuItem">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="jun-sidebarMenuButton jun-sidebarMenuButton-spacing-2 jun-sidebarMenuButton-shrink-spacing-0">
+                        <Avatar className="jun-sidebarIcon h-8 w-8 rounded-lg">
+                          <AvatarImage
+                            src={data.user.avatar}
+                            alt={data.user.name}
+                          />
+                          <AvatarFallback className="rounded-lg">
+                            CN
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="jun-sidebarText flex items-center flex-1 text-left text-sm leading-tight">
+                          <div className="flex-1">
+                            <div className="truncate font-semibold">
+                              {data.user.name}
+                            </div>
+                            <div className="truncate text-xs">
+                              {data.user.email}
+                            </div>
+                          </div>
+                          <ChevronsUpDown className="ml-auto size-4" />
+                        </div>
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                      side="bottom"
+                      align="end"
+                      sideOffset={4}
+                    >
+                      <DropdownMenuLabel className="p-0 font-normal">
+                        <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                          <Avatar className="h-8 w-8 rounded-lg">
+                            <AvatarImage
+                              src={data.user.avatar}
+                              alt={data.user.name}
+                            />
+                            <AvatarFallback className="rounded-lg">
+                              CN
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="grid flex-1 text-left text-sm leading-tight">
+                            <span className="truncate font-semibold">
+                              {data.user.name}
+                            </span>
+                            <span className="truncate text-xs">
+                              {data.user.email}
+                            </span>
+                          </div>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                          <Sparkles />
+                          Upgrade to Pro
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                          <BadgeCheck />
+                          Account
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <CreditCard />
+                          Billing
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Bell />
+                          Notifications
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>
+                        <LogOut />
+                        Log out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </li>
+              </ul>
             </div>
           </div>
         </aside>
