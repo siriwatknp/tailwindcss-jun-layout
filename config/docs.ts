@@ -64,6 +64,10 @@ export const docsConfig: DocsConfig = {
           title: "Inset Sidebar",
           href: "/docs/inset-sidebar",
         },
+        {
+          title: "Sidebar elements",
+          href: "/docs/sidebar-elements",
+        },
       ],
     },
     {

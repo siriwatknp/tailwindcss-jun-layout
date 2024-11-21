@@ -29,7 +29,8 @@ const layoutClasses = {
   DrawerEdgeSidebarRightTrigger: "jun-edgeDrawerTriggerR",
   InsetSidebar: "jun-insetSidebar",
   InsetAvoidingView: "jun-insetAvoidingView",
-  InsetSidebarContent: "jun-insetContent",
+  InsetContent: "jun-insetContent",
+  SidebarContainer: "jun-sidebarContainer",
   SidebarGroup: "jun-sidebarGroup",
   SidebarGroupLabel: "jun-sidebarGroupLabel",
   SidebarMenuItem: "jun-sidebarMenuItem",
@@ -40,6 +41,7 @@ const layoutClasses = {
   SidebarGroupText: "jun-sidebarGroupText",
   SidebarIcon: "jun-sidebarIcon",
   SidebarTooltip: "jun-sidebarTooltip",
+  SidebarRail: "jun-sidebarRail",
 };
 
 function internalCollapseSidebar(options: {
@@ -57,22 +59,18 @@ function internalCollapseSidebar(options: {
         .getComputedStyle(event.target as Element)
         .getPropertyValue("--_sidebarCollapsed") === "1";
     const nextCollapsed = state === undefined ? !currentCollapsed : state;
-    console.log("currentCollapsed", currentCollapsed);
-    console.log("nextCollapsed", nextCollapsed);
 
     /* If true, the Sidebar has `autoCollapse` feature. */
     const autoCollapse =
       window
         .getComputedStyle(event.target as Element)
         .getPropertyValue("--_autoCollapse") === "1";
-    console.log("autoCollapse", autoCollapse);
 
     /* If true, the Sidebar is in >= `autoCollapse` breakpoint. */
     const inAutoCollapse =
       window
         .getComputedStyle(event.target as Element)
         .getPropertyValue("--_in-autoCollapse") === "1";
-    console.log("inAutoCollapse", inAutoCollapse);
 
     if (nextCollapsed) {
       sidebar.removeAttribute(layoutAttrs.isEdgeSidebarUncollapsed);
@@ -583,7 +581,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       },
     }
   );
-  const SHRINK_WIDTH = "120px";
+  const SHRINK_WIDTH = "100px";
   matchComponents(
     {
       [layoutClasses.EdgeSidebarContent]: () => ({
@@ -593,17 +591,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         flexDirection: "column",
         flex: "1",
         overflowX: "auto", // prevent horizontal content overflow
-        containerType: "inline-size",
-        [`&:not([class*=${layoutClasses.EdgeSidebarContent}-shrink])`]: {
-          "--_collapsed": "var(--_)",
-          "--_uncollapsed": "",
-          "& > *": {
-            [`@container (min-width: ${SHRINK_WIDTH})`]: {
-              "--_collapsed": "",
-              "--_uncollapsed": "var(--_)",
-            },
-          },
-        },
       }),
     },
     {
@@ -614,28 +601,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   );
   matchUtilities(
     {
-      [`${layoutClasses.EdgeSidebarContent}-shrink`]: (shrink) => ({
-        "--_collapsed": "var(--_)",
-        "--_uncollapsed": "",
-        "& > *": {
-          [`@container (min-width: ${shrink})`]: {
-            "--_collapsed": "",
-            "--_uncollapsed": "var(--_)",
-          },
-        },
-      }),
-    },
-    {
-      values: {
-        DEFAULT: SHRINK_WIDTH,
-      },
-    }
-  );
-  matchUtilities(
-    {
       [layoutClasses.EdgeSidebarContent]: () =>
         ({
-          "--jun-EC-transitionDelay": "0s",
+          "--jun-EC-delay": "0s",
           opacity: `var(--_drawer, var(--jun-ES-drawerOpen))
         var(--_permanent, 1)`,
           visibility: `var(--_drawer, hidden)
@@ -651,7 +619,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           top: "var(--_drawer, calc(var(--jun-h) - var(--drawer-h)))",
           overflowY: "var(--_drawer, auto)",
           transition: `var(--_drawer, opacity 0.3s, transform 0.3s)
-           var(--_permanent, opacity 0.4s, width 0.3s var(--jun-EC-transitionDelay, 0s), transform 0.3s var(--jun-EC-transitionDelay, 0s), box-shadow 0.3s var(--jun-EC-transitionDelay, 0s))`,
+           var(--_permanent, opacity 0.4s, width 0.3s var(--jun-EC-delay, 0s), transform 0.3s var(--jun-EC-delay, 0s), box-shadow 0.3s var(--jun-EC-delay, 0s))`,
           transform: `var(--_drawer, var(--anchorLeft, translateX(calc((1 - var(--jun-ES-drawerOpen)) * -100%))) var(--anchorRight, translateX(calc(var(--jun-ES-drawerOpen) * -100%))))
            var(--_permanent, translateX(var(--jun-ES-permanentSlide, 0)))`,
           [`[${layoutAttrs.isEdgeSidebarContentHidden}] &`]: {
@@ -817,7 +785,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
               "--jun-EC-width": "var(--jun-ES-permanentWidth)",
               // TODO: make the `shadow` configurable from theme
-              "--jun-EC-transitionDelay": "0s",
+              "--jun-EC-delay": "0s",
               "--jun-EC-shadow": `var(--collapsed, 0 0 10px rgba(0,0,0,0.1), var(--jun-ES-line-w) 0 var(--jun-ES-line-color))`,
             },
           },
@@ -838,7 +806,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         delay
       ) => ({
         [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
-          "--jun-EC-transitionDelay": delay,
+          "--jun-EC-delay": delay,
         },
       }),
     },
@@ -953,335 +921,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       }),
       [layoutClasses.DrawerEdgeSidebarRightTrigger]: () => ({
         "--drawer-triggerR": "1",
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-
-  // SidebarGroup
-  matchComponents(
-    {
-      [layoutClasses.SidebarGroup]: () => ({
-        display: "flex",
-        flexDirection: "column",
-        padding: theme("spacing.2"),
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  // SidebarGroupLabel
-  matchComponents(
-    {
-      [layoutClasses.SidebarGroupLabel]: () => ({
-        textOverflow: "ellipsis",
-        transition:
-          "var(--_uncollapsed, opacity calc(0.6s + var(--_damp, 0s)))",
-        opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        fontSize: "var(--item-fs, 0.75rem)",
-        lineHeight: "var(--item-lh, 1.25rem)",
-        minHeight: "var(--item-h, 2rem)",
-        display: "flex",
-        alignItems: "center",
-        color: theme("colors.sidebar.foreground"),
-        paddingInline: "var(--item-px, 0.5rem)",
-        paddingBlock: "var(--item-py, 0.25rem)",
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  // SidebarMenu
-  matchComponents(
-    {
-      [layoutClasses.SidebarMenu]: () => ({
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.25rem",
-      }),
-      [`${layoutClasses.SidebarMenu}-relaxed`]: () => ({
-        gap: "0.5rem",
-        "--item-gap": "0.75rem",
-        "--item-h": "2.5rem",
-        "--item-fs": "1rem",
-        "--item-lh": "1.5rem",
-        "--item-px": "0.75rem",
-        "--item-py": "0.5rem",
-        "--action-size": "2rem",
-        "--icon-size": "1.25rem",
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  // SidebarMenuItem
-  matchUtilities(
-    {
-      [layoutClasses.SidebarMenuItem]: () => ({
-        display: "flex",
-        position: "relative",
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  // SidebarMenuButton
-  matchComponents(
-    {
-      [layoutClasses.SidebarMenuButton]: () => ({
-        textAlign: "left",
-        alignItems: "center",
-        flex: "1",
-        fontSize: "var(--item-fs, 0.875rem)",
-        lineHeight: "var(--item-lh, 1.25rem)",
-        minHeight: "var(--item-h, 1.75rem)",
-        borderRadius: theme("borderRadius.sm"),
-        color: theme("colors.sidebar.foreground"),
-        cursor: "pointer",
-        transitionProperty: "min-height, padding",
-        transitionDuration: "var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s)",
-        "&:hover": {
-          color: theme("colors.sidebar.accent-foreground"),
-          background: theme("colors.sidebar.accent"), // TODO: use theme token
-        },
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  matchUtilities(
-    {
-      [layoutClasses.SidebarMenuButton]: () => ({
-        display: "grid",
-        gridTemplateColumns:
-          "var(--_collapsed, auto 0px) var(--_uncollapsed, auto 1fr)",
-        gap: "var(--_collapsed, 0px) var(--_uncollapsed, var(--item-gap, 0.5rem))",
-        paddingInline:
-          "var(--_collapsed, var(--shrink-px, var(--item-px, 0.5rem))) var(--_uncollapsed, var(--item-px, 0.5rem))",
-        paddingBlock: `var(--_collapsed, var(--shrink-py, var(--item-py, 0.375rem))) var(--_uncollapsed, var(--item-py, 0.375rem))`,
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  matchUtilities(
-    {
-      [`${layoutClasses.SidebarMenuButton}-spacing`]: (spacing) => ({
-        gap: `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
-        "--item-px": spacing,
-        "--item-py": spacing,
-      }),
-    },
-    {
-      values: theme("spacing"),
-    }
-  );
-  matchUtilities(
-    {
-      [`${layoutClasses.SidebarMenuButton}-shrink-spacing`]: (spacing) => ({
-        "--shrink-px": spacing,
-        "--shrink-py": spacing,
-      }),
-    },
-    {
-      values: theme("spacing"),
-    }
-  );
-  matchUtilities(
-    {
-      [`${layoutClasses.SidebarMenuButton}-h`]: (size) => ({
-        "--item-h": size,
-      }),
-    },
-    {
-      values: theme("spacing"),
-    }
-  );
-  matchUtilities(
-    {
-      [`${layoutClasses.SidebarMenuButton}-gap`]: (size) => ({
-        "--item-gap": size,
-      }),
-    },
-    {
-      values: theme("spacing"),
-    }
-  );
-  matchUtilities(
-    {
-      [`${layoutClasses.SidebarMenuButton}-shrink-h`]: (size) => ({
-        minHeight: `var(--_collapsed, ${size}) var(--_uncollapsed, var(--item-h, 1.75rem))`,
-      }),
-    },
-    {
-      values: theme("spacing"),
-    }
-  );
-  // SidebarText
-  matchComponents(
-    {
-      [layoutClasses.SidebarText]: () => ({
-        textOverflow: "ellipsis",
-        transition:
-          "var(--_uncollapsed, opacity calc(0.6s + var(--_damp, 0s)))",
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  matchUtilities(
-    {
-      [layoutClasses.SidebarText]: () => ({
-        opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  // SidebarGroupText
-  matchComponents(
-    {
-      [layoutClasses.SidebarGroupText]: () => ({
-        "--_damp": "0.2s", // make the text opacity transition longer for smooth transition
-        transition: "grid-template-rows 0.4s",
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  matchUtilities(
-    {
-      [layoutClasses.SidebarGroupText]: () => ({
-        display: "grid",
-        whiteSpace: "nowrap",
-        gridTemplateRows: "var(--_collapsed, 0fr) var(--_uncollapsed, 1fr)",
-        "& > *": {
-          overflow: "hidden",
-        },
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  // SidebarMenuAction
-  matchComponents(
-    {
-      [layoutClasses.SidebarMenuAction]: () => ({
-        position: "absolute",
-        right: "var(--_collapsed, -100%) var(--_uncollapsed, 0.25rem)", // equal to the SidebarMenuButton padding
-        width: "var(--action-size, 1.5rem)",
-        height: "var(--action-size, 1.5rem)",
-        display: "inline-flex",
-        visibility: "var(--_collapsed, hidden) var(--_uncollapsed, visible)",
-        justifyContent: "center",
-        alignItems: "center",
-        top: "50%",
-        transform: "translateY(-50%)",
-        color: theme("colors.sidebar.foreground"),
-        transition: "right 0.4s",
-        borderRadius: theme("borderRadius.sm"),
-        "&:hover": {
-          background: theme("colors.sidebar.accent"),
-        },
-        "& svg": {
-          width: "var(--icon-size, 1rem)",
-          height: "var(--icon-size, 1rem)",
-        },
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  matchComponents(
-    {
-      [`${layoutClasses.SidebarMenuAction}-hoverAppear`]: () => ({
-        opacity: "0",
-        "&:focus-visible": {
-          opacity: "1",
-        },
-        [`.${layoutClasses.SidebarMenuItem}:hover &`]: {
-          opacity: "1",
-        },
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  // SidebarIcon
-  matchComponents(
-    {
-      [layoutClasses.SidebarIcon]: () => ({
-        height: "1em",
-        width: "1em",
-        fontSize: "var(--icon-size, 1rem)",
-        transition: "font-size 0.3s",
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  matchUtilities(
-    {
-      [`${layoutClasses.SidebarIcon}-shrink-size`]: (size) => ({
-        fontSize: `var(--_collapsed, ${size}) var(--_uncollapsed, var(--icon-size, 1rem))`,
-      }),
-    },
-    {
-      values: theme("spacing"),
-    }
-  );
-  // SidebarTooltip
-  matchUtilities(
-    {
-      [layoutClasses.SidebarTooltip]: () => ({
-        display: "var(--_collapsed, block) var(--_uncollapsed, none)",
       }),
     },
     {
@@ -1514,7 +1153,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
               "--jun-EC-width": "var(--jun-ESR-permanentWidth)",
               // TODO: make the `shadow` configurable from theme
-              "--jun-EC-transitionDelay": "0s",
+              "--jun-EC-delay": "0s",
               "--jun-EC-shadow": `var(--collapsed-R, 0 0 10px rgba(0,0,0,0.1), var(--jun-ES-line-w) 0 var(--jun-ESR-sidelineColor))`,
             },
           },
@@ -1535,7 +1174,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         delay
       ) => ({
         [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
-          "--jun-EC-transitionDelay": delay,
+          "--jun-EC-delay": delay,
         },
       }),
     },
@@ -1587,7 +1226,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // InsetSidebar
   matchUtilities(
     {
-      [layoutClasses.InsetSidebarContent]: () => ({
+      [layoutClasses.InsetContent]: () => ({
         boxSizing: "var(--fixed, content-box) var(--absolute, border-box)",
         position: "var(--fixed, fixed) var(--absolute, absolute)",
         height:
@@ -1613,7 +1252,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   );
   matchComponents(
     {
-      [layoutClasses.InsetSidebarContent]: () => ({
+      [layoutClasses.InsetContent]: () => ({
         display: "flex",
         flexDirection: "column",
         backgroundColor: "inherit",
@@ -1725,6 +1364,420 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       values: {
         DEFAULT: "220px",
+      },
+    }
+  );
+
+  // SidebarContainer
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarContainer}`]: () => ({
+        containerType: "inline-size",
+        display: "flex",
+        flexDirection: "column",
+        [`&:not([class*=${layoutClasses.SidebarContainer}-shrink])`]: {
+          "--_collapsed": "var(--_)",
+          "--_uncollapsed": "",
+          "& > *": {
+            [`@container (min-width: ${SHRINK_WIDTH})`]: {
+              "--_collapsed": "",
+              "--_uncollapsed": "var(--_)",
+            },
+          },
+        },
+      }),
+      [`${layoutClasses.SidebarContainer}-shrink`]: (shrink) => ({
+        "--_collapsed": "var(--_)",
+        "--_uncollapsed": "",
+        "& > *": {
+          [`@container (min-width: ${shrink})`]: {
+            "--_collapsed": "",
+            "--_uncollapsed": "var(--_)",
+          },
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: SHRINK_WIDTH,
+      },
+    }
+  );
+  // SidebarRail
+  matchComponents(
+    {
+      [layoutClasses.SidebarRail]: () => ({
+        "--indicator-w": "2px",
+        "--touch-size": "20px",
+        "--offset": "calc(-1 * (var(--indicator-w)/2 + var(--touch-size)/2))",
+        position: "absolute",
+        top: "0",
+        bottom: "0",
+        right: "var(--anchorLeft, var(--offset)) var(--anchorRight, unset)",
+        left: "var(--anchorLeft, unset) var(--anchorRight, var(--offset))",
+        zIndex: "20",
+        width: "var(--touch-size)",
+        textAlign: "center",
+        cursor: "var(--_collapsed, e-resize) var(--_uncollapsed, w-resize)",
+        display: "inline-flex",
+        justifyContent: "center",
+        "&::after": {
+          content: '""',
+          width: "var(--indicator-w)",
+          height: "100%",
+          display: "block",
+        },
+        "&:hover": {
+          "&::after": {
+            background: theme("colors.sidebar.border"), // TODO: use theme token
+          },
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // SidebarGroup
+  matchComponents(
+    {
+      [layoutClasses.SidebarGroup]: () => ({
+        display: "flex",
+        flexDirection: "column",
+        padding: theme("spacing.2"),
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // SidebarGroupLabel
+  matchComponents(
+    {
+      [layoutClasses.SidebarGroupLabel]: () => ({
+        textOverflow: "ellipsis",
+        transition:
+          "var(--_uncollapsed, opacity calc(0.6s + var(--_damp, 0s)))",
+        opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        fontSize: "var(--item-fs, 0.75rem)",
+        lineHeight: "var(--item-lh, 1.25rem)",
+        minHeight: "var(--item-h, 2rem)",
+        display: "flex",
+        alignItems: "center",
+        color: theme("colors.sidebar.foreground"),
+        paddingInline: "var(--item-px, 0.5rem)",
+        paddingBlock: "var(--item-py, 0.25rem)",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // SidebarMenu
+  matchComponents(
+    {
+      [layoutClasses.SidebarMenu]: () => ({
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.25rem",
+      }),
+      [`${layoutClasses.SidebarMenu}-relaxed`]: () => ({
+        gap: "0.5rem",
+        "--item-gap": "0.75rem",
+        "--item-h": "2.5rem",
+        "--item-fs": "1rem",
+        "--item-lh": "1.5rem",
+        "--item-px": "0.75rem",
+        "--item-py": "0.5rem",
+        "--action-size": "2rem",
+        "--icon-size": "1.25rem",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // SidebarMenuItem
+  matchComponents(
+    {
+      [layoutClasses.SidebarMenuItem]: () => ({
+        display: "flex",
+        position: "relative",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // SidebarMenuButton
+  matchComponents(
+    {
+      [layoutClasses.SidebarMenuButton]: () => ({
+        textAlign: "left",
+        alignItems: "center",
+        flex: "1",
+        fontSize: "var(--item-fs, 0.875rem)",
+        lineHeight: "var(--item-lh, 1.25rem)",
+        minHeight: "var(--item-h, 1.75rem)",
+        borderRadius: theme("borderRadius.sm"),
+        color: theme("colors.sidebar.foreground"),
+        cursor: "pointer",
+        transitionProperty: "min-height, padding",
+        transitionDuration: "var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s)",
+        "&:hover": {
+          color: theme("colors.sidebar.accent-foreground"),
+          background: theme("colors.sidebar.accent"), // TODO: use theme token
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [layoutClasses.SidebarMenuButton]: () => ({
+        display: "grid",
+        gap: "var(--_collapsed, 0px) var(--_uncollapsed, var(--item-gap, 0.5rem))",
+        paddingInline:
+          "var(--_collapsed, var(--shrink-px, var(--item-px, 0.5rem))) var(--_uncollapsed, var(--item-px, 0.5rem))",
+        paddingBlock: `var(--_collapsed, var(--shrink-py, var(--item-py, 0.375rem))) var(--_uncollapsed, var(--item-py, 0.375rem))`,
+        [`&:has(> .${layoutClasses.SidebarIcon})`]: {
+          gridTemplateColumns:
+            "var(--_collapsed, auto 0px) var(--_uncollapsed, auto 1fr)",
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-spacing`]: (spacing) => ({
+        gap: `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
+        "--item-px": spacing,
+        "--item-py": spacing,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-shrink-spacing`]: (spacing) => ({
+        "--shrink-px": spacing,
+        "--shrink-py": spacing,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-h`]: (size) => ({
+        "--item-h": size,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-gap`]: (size) => ({
+        "--item-gap": size,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-shrink-h`]: (size) => ({
+        minHeight: `var(--_collapsed, ${size}) var(--_uncollapsed, var(--item-h, 1.75rem))`,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  // SidebarText
+  matchComponents(
+    {
+      [layoutClasses.SidebarText]: () => ({
+        textOverflow: "ellipsis",
+        transition:
+          "var(--_uncollapsed, opacity calc(0.6s + var(--_damp, 0s)))",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [layoutClasses.SidebarText]: () => ({
+        opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // SidebarGroupText
+  matchComponents(
+    {
+      [layoutClasses.SidebarGroupText]: () => ({
+        "--_damp": "0.2s", // make the text opacity transition longer for smooth transition
+        transition: "grid-template-rows 0.4s",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [layoutClasses.SidebarGroupText]: () => ({
+        display: "grid",
+        whiteSpace: "nowrap",
+        gridTemplateRows: "var(--_collapsed, 0fr) var(--_uncollapsed, 1fr)",
+        "& > *": {
+          overflow: "hidden",
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // SidebarMenuAction
+  matchComponents(
+    {
+      [layoutClasses.SidebarMenuAction]: () => ({
+        position: "absolute",
+        right: "var(--_collapsed, -100%) var(--_uncollapsed, 0.25rem)", // equal to the SidebarMenuButton padding
+        width: "var(--action-size, 1.5rem)",
+        height: "var(--action-size, 1.5rem)",
+        display: "inline-flex",
+        visibility: "var(--_collapsed, hidden) var(--_uncollapsed, visible)",
+        justifyContent: "center",
+        alignItems: "center",
+        top: "50%",
+        transform: "translateY(-50%)",
+        color: theme("colors.sidebar.foreground"),
+        transition: "right 0.4s",
+        borderRadius: theme("borderRadius.sm"),
+        "&:hover": {
+          background: theme("colors.sidebar.accent"),
+        },
+        "& svg": {
+          width: "var(--icon-size, 1rem)",
+          height: "var(--icon-size, 1rem)",
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchComponents(
+    {
+      [`${layoutClasses.SidebarMenuAction}-hoverAppear`]: () => ({
+        opacity: "0",
+        "&:focus-visible": {
+          opacity: "1",
+        },
+        [`.${layoutClasses.SidebarMenuItem}:hover &`]: {
+          opacity: "1",
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // SidebarIcon
+  matchComponents(
+    {
+      [layoutClasses.SidebarIcon]: () => ({
+        height: "1rem",
+        width: "1rem",
+        transition: "0.3s",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarIcon}-size`]: (size) => ({
+        height: size,
+        width: size,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarIcon}-shrink-size`]: (size) => ({
+        width: `var(--_collapsed, ${size}) var(--_uncollapsed, var(--icon-size, 1rem))`,
+        height: `var(--_collapsed, ${size}) var(--_uncollapsed, var(--icon-size, 1rem))`,
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  // SidebarTooltip
+  matchUtilities(
+    {
+      [layoutClasses.SidebarTooltip]: () => ({
+        display: "var(--_collapsed, block) var(--_uncollapsed, none)",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
       },
     }
   );

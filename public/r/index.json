@@ -185,5 +185,16 @@
         "type": "registry:ui"
       }
     ]
+  },
+  {
+    "name": "sidebar-elements",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/sidebar-elements.tsx",
+        "type": "registry:ui"
+      }
+    ]
   }
 ]

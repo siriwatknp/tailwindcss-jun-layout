@@ -1,0 +1,97 @@
+---
+title: Sidebar elements
+description: Utilities for building the sidebar such as menus and links
+---
+
+## Structure
+
+A sidebar is composed of the following structure:
+
+- `SidebarContainer` - Controls the view of the sidebar based on its width.
+  - `SidebarGroup` (optional) - For building group of menus
+    - `SidebarGroupLabel` (optional) - The label of the group
+    - `SidebarMenu` - A list of menus
+      - `SidebarMenuItem` - A list item of a menu
+        - `SidebarMenuButton` - A menu button or a menu link
+          - `SidebarIcon` - An icon of the menu
+          - `SidebarText` - A text of the menu (hidden when `SidebarContainer` is small)
+  - `SidebarRail` - An element to collapse the edge sidebar
+
+<ComponentPreview preview name="sidebar-elements" />
+
+## Building a sidebar
+
+A sidebar requires `.jun-sidebarContainer` to function properly:
+
+```jsx
+<div className="jun-sidebarContainer">...sidebar elements</div>
+```
+
+### Menu button
+
+For a single menu, use `button` or `a` with a class `.jun-sidebarMenuButton`:
+
+```jsx
+<button className="jun-sidebarMenuButton">
+  <Icon className="jun-sidebarIcon" />
+  <span className="jun-sidebarText">A menu text</span>
+</button>
+```
+
+<Callout title="💡 Good to know">
+  `.jun-sidebarText` will disappear when the sidebar container's width is small.
+</Callout>
+
+### List of menus
+
+Use `.jun-sidebarMenu` to create a list of menus, each menu button should be wrapped with `.jun-sidebarMenuItem`:
+
+```jsx
+<ul className="jun-sidebarMenu">
+  <li className="jun-sidebarMenuItem">
+    <button className="jun-sidebarMenuButton">
+      <Icon className="jun-sidebarIcon" />
+      <span className="jun-sidebarText">A menu text</span>
+    </button>
+  </li>
+  ...
+  <li className="jun-sidebarMenuItem">...</li>
+</ul>
+```
+
+### Menu Groups
+
+Use `.jun-sidebarGroup` for a group of menu, each group can have a label using `.jun-sidebarGroupLabel`:
+
+```jsx
+<div className="jun-sidebarGroup">
+  <div className="jun-sidebarGroupLabel">Group 1</div>
+  <ul className="jun-sidebarMenu">...list of menus</ul>
+</div>
+
+<div className="jun-sidebarGroup">
+  <div className="jun-sidebarGroupLabel">Group 2</div>
+  <ul className="jun-sidebarMenu">...list of menus</ul>
+</div>
+```
+
+<Callout title="💡 Good to know">
+  `.jun-sidebarGroupLabel` will disappear when the sidebar container's width is
+  small.
+</Callout>
+
+## Usage with Edge/Inset sidebar
+
+For [EdgeSidebar](/docs/edge-sidebar), add `.jun-sidebarContainer` next to `.jun-edgeContent`:
+
+```jsx
+<div className="jun-edgeContent jun-sidebarContainer">...sidebar elements</div>
+```
+
+For [InsetSidebar](/docs/inset-sidebar), add `.jun-sidebarContainer` next to `.jun-insetContent`:
+
+```jsx
+<div className="jun-insetContent jun-sidebarContainer">...sidebar elements</div>
+```
+
+Other sidebar elements [remains the same](#building-a-sidebar).

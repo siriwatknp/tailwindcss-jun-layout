@@ -103,4 +103,10 @@ export const demos: Registry = [
     dependencies: [],
     files: ["demo/sidebar-menu-groupText.tsx"],
   },
+  {
+    name: "sidebar-elements",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/sidebar-elements.tsx"],
+  },
 ];
