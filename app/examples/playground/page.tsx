@@ -112,6 +112,21 @@ const menuGroups: MenuGroup[] = [
   },
 ];
 
+const subMenus = [
+  {
+    title: "History",
+    url: "#",
+  },
+  {
+    title: "Starred",
+    url: "#",
+  },
+  {
+    title: "Settings",
+    url: "#",
+  },
+];
+
 export default function PlaygroundPage() {
   const [activeTeam, setActiveTeam] = React.useState(data.teams[0]);
   return (
@@ -191,15 +206,21 @@ export default function PlaygroundPage() {
             <div className="flex-1 min-h-0 overflow-auto">
               {/* Menu Groups */}
               {menuGroups.map((group, index) => (
-                <div key={index} className="jun-sidebarGroup p-2">
+                <div key={index} className="jun-sidebarGroup relative p-2">
                   <div className="jun-sidebarGroupLabel text-muted-foreground tracking-wide">
                     {group.label}
+                    <button
+                      className="jun-sidebarMenuAction"
+                      title="Add Project"
+                    >
+                      <Plus /> <span className="sr-only">Add Project</span>
+                    </button>
                   </div>
-                  <div className="jun-sidebarMenu">
+                  <ul className="jun-sidebarMenu">
                     {group.items.map((item, itemIndex) => {
                       const Icon = item.icon;
                       return (
-                        <div key={itemIndex} className="jun-sidebarMenuItem">
+                        <li key={itemIndex} className="jun-sidebarMenuItem">
                           <button className="jun-sidebarMenuButton">
                             <Icon className="jun-sidebarIcon" />
                             <span className="jun-sidebarText">
@@ -209,10 +230,28 @@ export default function PlaygroundPage() {
                           <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
                             <MoreHorizontal />
                           </button>
-                        </div>
+                          <div className="jun-sidebarGroupText">
+                            <div>
+                              <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
+                                {subMenus.map((item, subIndex) => (
+                                  <li
+                                    key={subIndex}
+                                    className="jun-sidebarMenuItem"
+                                  >
+                                    <button className="jun-sidebarMenuButton">
+                                      <span className="jun-sidebarText">
+                                        {item.title}
+                                      </span>
+                                    </button>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </li>
                       );
                     })}
-                  </div>
+                  </ul>
                 </div>
               ))}
 

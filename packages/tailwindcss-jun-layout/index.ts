@@ -1459,6 +1459,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchComponents(
     {
       [layoutClasses.SidebarGroupLabel]: () => ({
+        position: "relative",
         textOverflow: "ellipsis",
         transition:
           "var(--_uncollapsed, opacity calc(0.6s + var(--_damp, 0s)))",
@@ -1507,12 +1508,40 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       },
     }
   );
+  matchComponents(
+    {
+      [`${layoutClasses.SidebarMenu}-nested`]: () => ({
+        "--item-py": "0px",
+        "--item-h": "calc(var(--item-lh, 1.25rem) + 0.5rem)",
+        paddingBlock: "0.25rem",
+        position: "relative",
+        marginLeft: "calc(var(--icon-size, 1rem) + var(--item-gap, 0.5rem))",
+        "&::before": {
+          content: '""',
+          display: "block",
+          position: "absolute",
+          width: "1px",
+          top: "0",
+          height: "100%",
+          left: "calc(1px + var(--icon-size, 1rem)/-2)",
+          background: theme("colors.sidebar.border"),
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
   // SidebarMenuItem
   matchComponents(
     {
       [layoutClasses.SidebarMenuItem]: () => ({
         display: "flex",
+        flexDirection: "column",
         position: "relative",
+        overflow: "var(--_collapsed, hidden) var(--_uncollapsed, unset)",
       }),
     },
     {
@@ -1525,12 +1554,13 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchComponents(
     {
       [layoutClasses.SidebarMenuButton]: () => ({
+        minWidth: "0",
         textAlign: "left",
         alignItems: "center",
         flex: "1",
         fontSize: "var(--item-fs, 0.875rem)",
         lineHeight: "var(--item-lh, 1.25rem)",
-        minHeight: "var(--item-h, 1.75rem)",
+        minHeight: "var(--item-h, 2rem)",
         borderRadius: theme("borderRadius.sm"),
         color: theme("colors.sidebar.foreground"),
         cursor: "pointer",
@@ -1548,10 +1578,23 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       },
     }
   );
+  matchComponents(
+    {
+      [`${layoutClasses.SidebarMenuButton}-active`]: () => ({
+        color: theme("colors.sidebar.accent-foreground"),
+        background: theme("colors.sidebar.accent"), // TODO: use theme token
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
   matchUtilities(
     {
       [layoutClasses.SidebarMenuButton]: () => ({
-        display: "grid",
+        display: "flex",
         gap: "var(--_collapsed, 0px) var(--_uncollapsed, var(--item-gap, 0.5rem))",
         paddingInline:
           "var(--_collapsed, var(--shrink-px, var(--item-px, 0.5rem))) var(--_uncollapsed, var(--item-px, 0.5rem))",
@@ -1614,7 +1657,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchUtilities(
     {
       [`${layoutClasses.SidebarMenuButton}-shrink-h`]: (size) => ({
-        minHeight: `var(--_collapsed, ${size}) var(--_uncollapsed, var(--item-h, 1.75rem))`,
+        minHeight: `var(--_collapsed, ${size}) var(--_uncollapsed, var(--item-h, 2rem))`,
       }),
     },
     {
@@ -1639,6 +1682,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchUtilities(
     {
       [layoutClasses.SidebarText]: () => ({
+        flex: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
         opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
         whiteSpace: "nowrap",
         overflow: "hidden",
@@ -1693,8 +1737,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         visibility: "var(--_collapsed, hidden) var(--_uncollapsed, visible)",
         justifyContent: "center",
         alignItems: "center",
-        top: "50%",
-        transform: "translateY(-50%)",
+        top: "calc(var(--item-h, 2rem)/2 - var(--action-size, 1.5rem)/2)",
         color: theme("colors.sidebar.foreground"),
         transition: "right 0.4s",
         borderRadius: theme("borderRadius.sm"),
@@ -1735,8 +1778,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchComponents(
     {
       [layoutClasses.SidebarIcon]: () => ({
-        height: "1rem",
-        width: "1rem",
+        height: "var(--icon-size, 1rem)",
+        width: "var(--icon-size, 1rem)",
         transition: "0.3s",
       }),
     },
