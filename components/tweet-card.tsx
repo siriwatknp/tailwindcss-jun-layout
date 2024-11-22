@@ -69,7 +69,7 @@ export const TweetSkeleton = ({
   <div
     className={cn(
       "flex size-full max-h-max min-w-72 flex-col gap-2 rounded-lg border p-4",
-      className,
+      className
     )}
     {...props}
   >
@@ -91,7 +91,7 @@ export const TweetNotFound = ({
   <div
     className={cn(
       "flex size-full flex-col items-center justify-center gap-2 rounded-lg border p-4",
-      className,
+      className
     )}
     {...props}
   >
@@ -103,6 +103,7 @@ export const TweetHeader = ({ tweet }: { tweet: EnrichedTweet }) => (
   <div className="flex flex-row justify-between tracking-tight">
     <div className="flex items-center space-x-2">
       <a href={tweet.user.url} target="_blank" rel="noreferrer">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           title={`Profile picture of ${tweet.user.name}`}
           alt={tweet.user.screen_name}
@@ -195,6 +196,7 @@ export const TweetMedia = ({ tweet }: { tweet: EnrichedTweet }) => (
       <div className="relative flex transform-gpu snap-x snap-mandatory gap-4 overflow-x-auto">
         <div className="shrink-0 snap-center sm:w-2" />
         {tweet.photos.map((photo) => (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             key={photo.url}
             src={photo.url}
@@ -210,10 +212,12 @@ export const TweetMedia = ({ tweet }: { tweet: EnrichedTweet }) => (
       !tweet.photos &&
       // @ts-ignore
       tweet?.card?.binding_values?.thumbnail_image_large?.image_value.url && (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           // @ts-ignore
           src={tweet.card.binding_values.thumbnail_image_large.image_value.url}
           className="h-64 rounded-xl border object-cover shadow-sm"
+          alt=""
         />
       )}
   </div>
@@ -234,7 +238,7 @@ export const MagicTweet = ({
     <div
       className={cn(
         "relative flex size-full max-w-lg flex-col gap-2 overflow-hidden rounded-lg border p-4 backdrop-blur-md",
-        className,
+        className
       )}
       {...props}
     >

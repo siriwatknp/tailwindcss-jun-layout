@@ -28,6 +28,7 @@ export type IconProps = React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
   logo: ({ className, ...props }: { className: string }) => (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src="/icon.png"
       alt="Tailwind Jun Layout"
