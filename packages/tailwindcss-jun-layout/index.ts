@@ -1850,6 +1850,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.CollapsibleContent]: () => ({
         display: "grid",
+        "& > *": {
+          overflow: "hidden",
+        },
         ":has(:checked) ~ &": {
           // open
           transition:

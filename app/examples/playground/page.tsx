@@ -240,9 +240,7 @@ export default function PlaygroundPage() {
                               defaultChecked
                             />
                           </label>
-                          <div
-                            className={`jun-collapsibleContent jun-sidebarGroupText ${itemIndex !== 0 ? "jun-sidebarGroupText-hidden" : ""}`}
-                          >
+                          <div className="jun-collapsibleContent">
                             <div>
                               <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
                                 {subMenus.map((item, subIndex) => (
