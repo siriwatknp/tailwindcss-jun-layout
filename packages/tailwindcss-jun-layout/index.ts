@@ -1834,6 +1834,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchComponents(
     {
       [layoutClasses.CollapsibleTrigger]: () => ({
+        userSelect: "none", // prevent text highlight
         "&:has(input:focus-visible)": {
           outline: `2px solid ${theme("colors.sidebar.ring")}`,
         },
