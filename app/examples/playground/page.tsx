@@ -55,6 +55,8 @@ import {
   Sparkles,
   SquareTerminal,
   Trash2,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 import React from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -221,17 +223,25 @@ export default function PlaygroundPage() {
                       const Icon = item.icon;
                       return (
                         <li key={itemIndex} className="jun-sidebarMenuItem">
-                          <button className="jun-sidebarMenuButton">
+                          <label
+                            className="jun-collapsibleTrigger jun-sidebarMenuButton"
+                            htmlFor={`menu-${item.label}`}
+                          >
                             <Icon className="jun-sidebarIcon" />
                             <span className="jun-sidebarText">
                               {item.label}
                             </span>
-                          </button>
-                          <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
-                            <MoreHorizontal />
-                          </button>
+                            <ChevronDown className="size-4 jun-collapsibleIcon jun-collapsibleIcon-rotate-180" />
+                            {/* <Plus className="size-4 jun-collapsibleIcon jun-collapsibleIcon-rotate-45" /> */}
+                            <input
+                              type="checkbox"
+                              className="sr-only"
+                              id={`menu-${item.label}`}
+                              defaultChecked
+                            />
+                          </label>
                           <div
-                            className={`jun-sidebarGroupText ${itemIndex !== 0 ? "jun-sidebarGroupText-hidden" : ""}`}
+                            className={`jun-collapsibleContent jun-sidebarGroupText ${itemIndex !== 0 ? "jun-sidebarGroupText-hidden" : ""}`}
                           >
                             <div>
                               <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
@@ -244,6 +254,9 @@ export default function PlaygroundPage() {
                                       <span className="jun-sidebarText">
                                         {item.title}
                                       </span>
+                                    </button>
+                                    <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
+                                      <MoreHorizontal />
                                     </button>
                                   </li>
                                 ))}

@@ -42,6 +42,9 @@ const layoutClasses = {
   SidebarIcon: "jun-sidebarIcon",
   SidebarTooltip: "jun-sidebarTooltip",
   SidebarRail: "jun-sidebarRail",
+  CollapsibleTrigger: "jun-collapsibleTrigger",
+  CollapsibleContent: "jun-collapsibleContent",
+  CollapsibleIcon: "jun-collapsibleIcon",
 };
 
 function internalCollapseSidebar(options: {
@@ -1461,8 +1464,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [layoutClasses.SidebarGroupLabel]: () => ({
         position: "relative",
         textOverflow: "ellipsis",
-        transition:
-          "var(--_uncollapsed, opacity calc(0.6s + var(--_damp, 0s)))",
+        transition: "var(--_uncollapsed, opacity 0.4s)",
         opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
         whiteSpace: "nowrap",
         overflow: "hidden",
@@ -1521,8 +1523,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           display: "block",
           position: "absolute",
           width: "1px",
-          top: "0",
-          height: "100%",
+          top: "2px",
+          bottom: "2px",
           left: "calc(1px + var(--icon-size, 1rem)/-2)",
           background: theme("colors.sidebar.border"),
         },
@@ -1541,7 +1543,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         display: "flex",
         flexDirection: "column",
         position: "relative",
-        overflow: "var(--_collapsed, hidden) var(--_uncollapsed, unset)",
       }),
     },
     {
@@ -1669,8 +1670,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.SidebarText]: () => ({
         textOverflow: "ellipsis",
-        transition:
-          "var(--_uncollapsed, opacity calc(0.6s + var(--_damp, 0s)))",
+        transition: "var(--_uncollapsed, opacity 0.3s)",
       }),
     },
     {
@@ -1698,8 +1698,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchComponents(
     {
       [layoutClasses.SidebarGroupText]: () => ({
-        "--_damp": "0.2s", // make the text opacity transition longer for smooth transition
-        transition: "grid-template-rows 0.4s",
+        transition:
+          "grid-template-rows 0.4s, visibility 0.4s, opacity 0.4s var(--_uncollapsed, 0.2s)",
+        opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
       }),
     },
     {
@@ -1766,9 +1767,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         "&:focus-visible": {
           opacity: "1",
         },
-        [`.${layoutClasses.SidebarMenuItem}:hover &`]: {
-          opacity: "1",
-        },
+        [`.${layoutClasses.SidebarMenuButton}:hover ~ &, .${layoutClasses.SidebarGroupLabel} > &`]:
+          {
+            opacity: "1",
+          },
       }),
     },
     {
@@ -1824,6 +1826,86 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       values: {
         DEFAULT: true,
+      },
+    }
+  );
+
+  // CollapsibleTrigger
+  matchComponents(
+    {
+      [layoutClasses.CollapsibleTrigger]: () => ({
+        "&:has(input:focus-visible)": {
+          outline: `2px solid ${theme("colors.sidebar.ring")}`,
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // CollapsibleContent
+  matchComponents(
+    {
+      [layoutClasses.CollapsibleContent]: () => ({
+        display: "grid",
+        ":has(:checked) ~ &": {
+          // open
+          transition:
+            "grid-template-rows 0.4s, visibility 0.4s, opacity 0.4s 0.2s",
+          gridTemplateRows: "var(--_collapsed, 0fr) var(--_uncollapsed, 1fr)",
+          [`& .${layoutClasses.SidebarMenuButton}`]: {
+            visibility: "var(--_collapsed, hidden)",
+          },
+        },
+        "label:not(:has(:checked)) ~ &": {
+          // closed
+          gridTemplateRows: "0fr",
+          visibility: "hidden",
+          opacity: "0",
+          transition: "grid-template-rows 0.4s, visibility 0.4s, opacity 0.2s",
+          [`& .${layoutClasses.SidebarMenuAction}`]: {
+            visibility: "hidden",
+          },
+        },
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  // CollapsibleIcon
+  matchComponents(
+    {
+      [layoutClasses.CollapsibleIcon]: () => ({
+        flex: "none",
+        position: "absolute",
+        right: "var(--item-px, 0.5rem)",
+        transition: "transform cubic-bezier(0.4, 0, 0.2, 1) 0.15s",
+        visibility: "var(--_collapsed, hidden)",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchComponents(
+    {
+      [`${layoutClasses.CollapsibleIcon}-rotate`]: (rotate) => ({
+        "label:has(:checked) &": {
+          transform: `rotate(-${rotate})`,
+        },
+      }),
+    },
+    {
+      values: {
+        "45": "45deg",
+        "180": "180deg",
       },
     }
   );
