@@ -230,7 +230,9 @@ export default function PlaygroundPage() {
                           <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
                             <MoreHorizontal />
                           </button>
-                          <div className="jun-sidebarGroupText">
+                          <div
+                            className={`jun-sidebarGroupText ${itemIndex !== 0 ? "jun-sidebarGroupText-hidden" : ""}`}
+                          >
                             <div>
                               <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
                                 {subMenus.map((item, subIndex) => (
@@ -457,19 +459,11 @@ export default function PlaygroundPage() {
                     </div>
                     <div className="jun-sidebarMenu">
                       {group.items.map((item, itemIndex) => {
-                        const Icon = item.icon;
                         return (
                           <div key={itemIndex} className="jun-sidebarMenuItem">
                             <button className="jun-sidebarMenuButton">
                               {item.label}
-                              {/* <Icon className="jun-sidebarIcon" /> */}
-                              {/* <span className="jun-sidebarText">
-                                {item.label}
-                              </span> */}
                             </button>
-                            {/* <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
-                              <MoreHorizontal />
-                            </button> */}
                           </div>
                         );
                       })}

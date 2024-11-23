@@ -1718,6 +1718,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           overflow: "hidden",
         },
       }),
+      [`${layoutClasses.SidebarGroupText}-hidden`]: () => ({
+        gridTemplateRows: "0fr",
+      }),
     },
     {
       values: {
