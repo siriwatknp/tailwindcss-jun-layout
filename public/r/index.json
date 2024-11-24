@@ -154,6 +154,17 @@
     ]
   },
   {
+    "name": "sidebar-menu-groups",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/sidebar-menu-groups.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
     "name": "sidebar-menu-action",
     "type": "registry:ui",
     "dependencies": [],
@@ -193,6 +204,28 @@
     "files": [
       {
         "path": "demo/sidebar-elements.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "sidebar-menu-nested",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/sidebar-menu-nested.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "sidebar-menu-collapsible",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/sidebar-menu-collapsible.tsx",
         "type": "registry:ui"
       }
     ]

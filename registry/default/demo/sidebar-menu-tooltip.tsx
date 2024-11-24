@@ -60,7 +60,7 @@ export default function SidebarMenuTooltipDemo() {
         <Tooltip.Provider delayDuration={0}>
           <aside
             id="sidebar-menu-tooltip-demo"
-            className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[53px] jun-edgeSidebar-permanent-autoCollapse-2xl"
+            className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[52px] jun-edgeSidebar-permanent-autoCollapse-2xl"
           >
             <div className="jun-edgeContent bg-sidebar">
               <button
@@ -78,7 +78,7 @@ export default function SidebarMenuTooltipDemo() {
 
               <div className="p-2 flex flex-col gap-4 min-h-0 overflow-auto">
                 {menuGroups.map((group, index) => (
-                  <ul className="jun-sidebarMenu">
+                  <ul key={group.label} className="jun-sidebarMenu">
                     {group.items.map((item, itemIndex) => {
                       const Icon = item.icon;
                       return (
@@ -86,7 +86,7 @@ export default function SidebarMenuTooltipDemo() {
                           <Tooltip.Tooltip>
                             <Tooltip.Trigger asChild>
                               <button className="jun-sidebarMenuButton">
-                                <Icon className="jun-sidebarIcon" />
+                                <Icon className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
                                 <span className="jun-sidebarText">
                                   {item.label}
                                 </span>

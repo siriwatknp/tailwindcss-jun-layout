@@ -159,6 +159,17 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
+    "sidebar-menu-groups": {
+      name: "sidebar-menu-groups",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/sidebar-menu-groups.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/sidebar-menu-groups.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
     "sidebar-menu-action": {
       name: "sidebar-menu-action",
       type: "registry:ui",
@@ -198,6 +209,28 @@ export const Index: Record<string, any> = {
       registryDependencies: undefined,
       files: ["registry/default/demo/sidebar-elements.tsx"],
       component: React.lazy(() => import("@/registry/default/demo/sidebar-elements.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "sidebar-menu-nested": {
+      name: "sidebar-menu-nested",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/sidebar-menu-nested.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/sidebar-menu-nested.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "sidebar-menu-collapsible": {
+      name: "sidebar-menu-collapsible",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/sidebar-menu-collapsible.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/sidebar-menu-collapsible.tsx")),
       source: "",
       category: "undefined",
       subcategory: "undefined",

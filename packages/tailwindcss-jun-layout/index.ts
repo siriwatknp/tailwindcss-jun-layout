@@ -208,7 +208,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   /** Match Shadcn Sidebar */
   const SIDEBAR_WIDTH = "var(--sidebar-width, 16rem)";
   const SIDEBAR_WIDTH_MOBILE = "18rem";
-  const SIDEBAR_WIDTH_ICON = "var(--sidebar-width-icon, 3rem)";
 
   // Root
   matchUtilities(
@@ -498,7 +497,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
               "--jun-ES-variant": "var(--permanent)",
               "--jun-ES-permanentWidth": SIDEBAR_WIDTH,
               "--jun-ES-collapsible": "var(--uncollapsed)",
-              "--jun-ES-collapsedWidth": SIDEBAR_WIDTH_ICON,
+              "--jun-ES-collapsedWidth": "0px",
 
               /** DO NOT OVERRIDE, internal variables */
               "--drawer": "var(--jun-ES-variant,)",
@@ -528,6 +527,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarCollapsed}])`]:
               {
                 "--jun-ES-collapsible": "var(--collapsed)",
+              },
+            [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarUncollapsed}])`]:
+              {
+                "--jun-ES-collapsible": "var(--uncollapsed)",
               },
             /** Collapsible feature integration with Shadcn sidebar */
             [`.${layoutClasses.Root}:has(>& [data-state="collapsed"])`]: {
@@ -764,10 +767,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
                   display: "none",
                 },
             },
-            [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarUncollapsed}])`]:
-              {
-                "--jun-ES-collapsible": "var(--uncollapsed)",
-              },
           },
           "permanent-hidden": {
             [`.${layoutClasses.Root}:has(>&)`]: {
@@ -943,7 +942,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             "--jun-ESR-variant": "var(--permanent-R)",
             "--jun-ESR-permanentWidth": SIDEBAR_WIDTH,
             "--jun-ESR-collapsible": "var(--uncollapsed-R)",
-            "--jun-ESR-collapsedWidth": SIDEBAR_WIDTH_ICON,
+            "--jun-ESR-collapsedWidth": "0px",
 
             /** DO NOT OVERRIDE, internal variables */
             "--drawer-R": "var(--jun-ESR-variant,)",
@@ -973,6 +972,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarCollapsed}])`]:
             {
               "--jun-ESR-collapsible": "var(--collapsed-R)",
+            },
+          [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarUncollapsed}])`]:
+            {
+              "--jun-ESR-collapsible": "var(--uncollapsed-R)",
             },
           /** Collapsible feature integration with Shadcn sidebar */
           [`.${layoutClasses.Root}:has(>& [data-state="collapsed"])`]: {
@@ -1132,10 +1135,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
                   display: "none",
                 },
             },
-            [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarUncollapsed}])`]:
-              {
-                "--jun-ESR-collapsible": "var(--uncollapsed-R)",
-              },
           },
           "permanent-hidden": {
             [`.${layoutClasses.Root}:has(>&)`]: {
@@ -1565,8 +1564,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         borderRadius: theme("borderRadius.sm"),
         color: theme("colors.sidebar.foreground"),
         cursor: "pointer",
-        transitionProperty: "min-height, padding",
-        transitionDuration: "var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s)",
+        transition:
+          "min-height var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), padding var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), gap var(--_collapsed, 0s 0.4s) var(--_uncollapsed, 0s)",
         "&:hover": {
           color: theme("colors.sidebar.accent-foreground"),
           background: theme("colors.sidebar.accent"), // TODO: use theme token
@@ -1699,7 +1698,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.SidebarGroupText]: () => ({
         transition:
-          "grid-template-rows 0.4s, visibility 0.4s, opacity 0.4s var(--_uncollapsed, 0.2s)",
+          "grid-template-rows 0.4s, opacity 0.4s var(--_uncollapsed, 0.2s)",
         opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
       }),
     },
@@ -1785,7 +1784,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       [layoutClasses.SidebarIcon]: () => ({
         height: "var(--icon-size, 1rem)",
         width: "var(--icon-size, 1rem)",
-        transition: "0.3s",
+        transition: "cubic-bezier(0.4, 0, 0.2, 1) 0.15s",
+        flex: "none",
       }),
     },
     {
@@ -1888,7 +1888,8 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         flex: "none",
         position: "absolute",
         right: "var(--item-px, 0.5rem)",
-        transition: "transform cubic-bezier(0.4, 0, 0.2, 1) 0.15s",
+        transition:
+          "transform cubic-bezier(0.4, 0, 0.2, 1) 0.15s, visibility 0s var(--_uncollapsed, 0.1s)",
         visibility: "var(--_collapsed, hidden)",
       }),
     },

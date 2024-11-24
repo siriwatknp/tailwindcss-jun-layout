@@ -60,7 +60,7 @@ export default function SidebarMenusDemo() {
         </header>
         <aside
           id="sidebar-menus-demo"
-          className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[53px]"
+          className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[52px]"
         >
           <div className="jun-edgeContent bg-sidebar">
             <button
@@ -78,13 +78,13 @@ export default function SidebarMenusDemo() {
 
             <div className="p-2 flex flex-col gap-4 min-h-0 overflow-auto">
               {menuGroups.map((group, index) => (
-                <ul className="jun-sidebarMenu">
+                <ul key={group.label} className="jun-sidebarMenu">
                   {group.items.map((item, itemIndex) => {
                     const Icon = item.icon;
                     return (
                       <li key={itemIndex} className="jun-sidebarMenuItem">
                         <button className="jun-sidebarMenuButton">
-                          <Icon className="jun-sidebarIcon" />
+                          <Icon className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
                           <span className="jun-sidebarText">{item.label}</span>
                         </button>
                       </li>

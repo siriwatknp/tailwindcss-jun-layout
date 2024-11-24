@@ -4,13 +4,13 @@ import {
   Users,
   FileText,
   BarChart2,
+  Settings,
   Mail,
   Calendar,
   Database,
   PanelLeftClose,
   PanelRightClose,
   LucideIcon,
-  MoreHorizontal,
 } from "lucide-react";
 
 interface MenuGroup {
@@ -39,9 +39,17 @@ const menuGroups: MenuGroup[] = [
       { icon: Users, label: "Team" },
     ],
   },
+  {
+    label: "Settings",
+    items: [
+      { icon: Settings, label: "General" },
+      { icon: Users, label: "Members" },
+      { icon: Database, label: "Integrations" },
+    ],
+  },
 ];
 
-export default function SidebarMenuActionDemo() {
+export default function SidebarMenuGroupsDemo() {
   return (
     <div className="w-full border-4 rounded bg-background max-w-[500px]">
       <div className="jun-layout jun-layout-h-[300px] jun-layout-standalone">
@@ -51,7 +59,7 @@ export default function SidebarMenuActionDemo() {
           </div>
         </header>
         <aside
-          id="sidebar-menu-action-demo"
+          id="sidebar-menu-groups-demo"
           className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[52px]"
         >
           <div className="jun-edgeContent bg-sidebar">
@@ -60,7 +68,7 @@ export default function SidebarMenuActionDemo() {
               onClick={(event) =>
                 triggerEdgeCollapse({
                   event,
-                  sidebarId: "sidebar-menu-action-demo",
+                  sidebarId: "sidebar-menu-groups-demo",
                 })
               }
             >
@@ -68,28 +76,24 @@ export default function SidebarMenuActionDemo() {
               <PanelLeftClose className="jun-edgeUncollapsed-visible" />
             </button>
 
-            <div className="p-2 flex flex-col gap-4 min-h-0 overflow-auto">
-              {menuGroups.map((group, index) => (
+            {menuGroups.map((group, index) => (
+              <div key={group.label} className="jun-sidebarGroup">
+                <div className="jun-sidebarGroupLabel">{group.label}</div>
                 <ul className="jun-sidebarMenu">
                   {group.items.map((item, itemIndex) => {
                     const Icon = item.icon;
                     return (
                       <li key={itemIndex} className="jun-sidebarMenuItem">
                         <button className="jun-sidebarMenuButton">
-                          <Icon className="jun-sidebarIcon" />
+                          <Icon className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
                           <span className="jun-sidebarText">{item.label}</span>
-                        </button>
-                        <button
-                          className={`jun-sidebarMenuAction ${index !== 0 && "jun-sidebarMenuAction-hoverAppear"}`}
-                        >
-                          <MoreHorizontal />
                         </button>
                       </li>
                     );
                   })}
                 </ul>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </aside>
         <main className="jun-content">

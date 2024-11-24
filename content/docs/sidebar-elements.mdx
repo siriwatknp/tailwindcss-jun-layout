@@ -29,7 +29,7 @@ A sidebar requires `.jun-sidebarContainer` to function properly:
 
 ### Menu button
 
-For a single menu, use `button` or `a` with a class `.jun-sidebarMenuButton`:
+For a single menu, wrap `button` or `a` with a class `.jun-sidebarMenuButton` within `.jun-sidebarMenu`:
 
 ```jsx
 <button className="jun-sidebarMenuButton">
@@ -45,6 +45,8 @@ For a single menu, use `button` or `a` with a class `.jun-sidebarMenuButton`:
 ### List of menus
 
 Use `.jun-sidebarMenu` to create a list of menus, each menu button should be wrapped with `.jun-sidebarMenuItem`:
+
+<ComponentPreview preview name="sidebar-menus" />
 
 ```jsx
 <ul className="jun-sidebarMenu">
@@ -63,6 +65,8 @@ Use `.jun-sidebarMenu` to create a list of menus, each menu button should be wra
 
 Use `.jun-sidebarGroup` for a group of menu, each group can have a label using `.jun-sidebarGroupLabel`:
 
+<ComponentPreview preview name="sidebar-menu-groups" />
+
 ```jsx
 <div className="jun-sidebarGroup">
   <div className="jun-sidebarGroupLabel">Group 1</div>
@@ -80,13 +84,17 @@ Use `.jun-sidebarGroup` for a group of menu, each group can have a label using `
   small.
 </Callout>
 
-## Usage with Edge/Inset sidebar
+## Usage with EdgeSidebar
 
 For [EdgeSidebar](/docs/edge-sidebar), add `.jun-sidebarContainer` next to `.jun-edgeContent`:
 
 ```jsx
 <div className="jun-edgeContent jun-sidebarContainer">...sidebar elements</div>
 ```
+
+Other sidebar elements [remains the same](#building-a-sidebar).
+
+## Usage with InsetSidebar
 
 For [InsetSidebar](/docs/inset-sidebar), add `.jun-sidebarContainer` next to `.jun-insetContent`:
 
@@ -95,3 +103,182 @@ For [InsetSidebar](/docs/inset-sidebar), add `.jun-sidebarContainer` next to `.j
 ```
 
 Other sidebar elements [remains the same](#building-a-sidebar).
+
+## Group of texts
+
+If the menu has more than one text elements, wrap those texts with `.jun-sidebarGroupText`.
+The layout will collapse the texts when EdgeSidebar is in collapsed state.
+
+You can control the spacing of the menu button using a modifier `.jun-sidebarMenuButton-spacing-[*]`.
+
+```jsx
+<a className="jun-sidebarMenuButton jun-sidebarMenuButton-spacing-3.5">
+  <svg className="jun-sidebarIcon" />
+  <div className="jun-sidebarGroupText">
+    <div>
+      <span className="jun-sidebarText">Primary text</span>
+      <span className="jun-sidebarText">Secondary text</span>
+      <span className="jun-sidebarText">Tertiary text</span>
+    </div>
+  </div>
+</a>
+```
+
+<ComponentPreview preview name="sidebar-menu-groupText" />
+
+<Callout title="⚠️ Warning">
+  The extra `div` under the `.jun-sidebarGroupText` is require to make the
+  collapse working properly.
+</Callout>
+
+## Menu action
+
+To add a secondary action to a menu, create a button with `.jun-sidebarMenuAction`:
+
+```jsx
+<li className="jun-sidebarMenuItem">
+  <a className="jun-sidebarMenuButton">
+    <svg className="jun-sidebarIcon" />
+    <span className="jun-sidebarText">Dashboard</span>
+  </a>
+  <button className="jun-sidebarMenuAction">
+    <MoreHorizontal />
+  </button>
+</li>
+```
+
+<Callout title="⚠️ Warning">
+  The button **must** be a direct child of the `.jun-sidebarMenuItem`. **Do
+  not** put the action inside `.jun-sidebarMenuButton`.
+</Callout>
+
+Append `.jun-sidebarMenuAction-hoverAppear`, if you want the action to appear when users hover on the item.
+The action also appears on keyboard focus.
+
+<ComponentPreview preview name="sidebar-menu-action" />
+
+## Tooltip
+
+To show a tooltip only when the permanent EdgeSidebar is collapsed, use `.jun-sidebarTooltip` to the [TooltipContent](https://www.radix-ui.com/primitives/docs/components/tooltip#content):
+
+```jsx
+<li className="jun-sidebarMenuItem">
+  <Tooltip>
+    <TooltipTrigger>
+      <a className="jun-sidebarMenuButton">
+        <svg className="jun-sidebarIcon" />
+        <span className="jun-sidebarText">Dashboard</span>
+      </a>
+    </TooltipTrigger>
+    <TooltipContent side="right" align="center" className="jun-sidebarTooltip">
+      <p>Dashboard</p>
+    </TooltipContent>
+  </Tooltip>
+</li>
+```
+
+<ComponentPreview preview name="sidebar-menu-tooltip" />
+
+## Nested menu
+
+The nested menu should be a direct child of `.jun-sidebarMenuItem` to follow semantic structure, then append `.jun-sidebarMenu-nested` to the menu.
+The `.jun-sidebarGroupText` is used to hide the nested menu when the sidebar is collapsed.
+
+```jsx {8-18}
+<ul className="jun-sidebarMenu">
+  <li key={itemIndex} className="jun-sidebarMenuItem">
+    <button className="jun-sidebarMenuButton">
+      <Icon className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+      <span className="jun-sidebarText">{item.label}</span>
+    </button>
+
+    <div className="jun-sidebarGroupText">
+      <div>
+        <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
+          <li className="jun-sidebarMenuItem">
+            <button className="jun-sidebarMenuButton">
+              <span className="jun-sidebarText">{sub.label}</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </li>
+</ul>
+```
+
+<ComponentPreview preview name="sidebar-menu-nested" />
+
+## Collapsible menu
+
+To create a collapsible menu, first change the menu button tag to `label` and add a hidden checkbox like this (`id` and `htmlFor` are required):
+
+```diff
+- <button className="jun-sidebarMenuButton">
++ <label
++  htmlFor={`menu-${item.label}`}
++  className="jun-sidebarMenuButton jun-collapsibleTrigger"
++ >
+  <Icon className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+  <span className="jun-sidebarText">{item.label}</span>
++  <input
++    type="checkbox"
++    className="sr-only"
++    id={`menu-${item.label}`}
++  />
++ </label>
+- </button>
+```
+
+Then, create a div with `.jun-collapsibleContent` as a direct child of menu item, add another div as a child and then the nested menu:
+
+```jsx {9-10} {20-21}
+<li key={itemIndex} className="jun-sidebarMenuItem">
+  <label
+    htmlFor={`menu-${item.label}`}
+    className="jun-sidebarMenuButton jun-collapsibleTrigger"
+  >
+    ...
+  </label>
+
+  <div className="jun-collapsibleContent">
+    <div>
+      <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
+        {item.items.map((sub) => (
+          <li className="jun-sidebarMenuItem">
+            <button className="jun-sidebarMenuButton">
+              <span className="jun-sidebarText">{sub.label}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</li>
+```
+
+<Callout title="Warning">
+  The extra `div` between `.jun-collapsibleContent` and `jun-sidebarMenu-nested`
+  is required.
+</Callout>
+
+Finally, an optional `.jun-collapsibleIcon` can be used as an indicator.
+
+```jsx {7}
+<label
+  htmlFor={`menu-${item.label}`}
+  className="jun-sidebarMenuButton jun-collapsibleTrigger"
+>
+  <Icon className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+  <span className="jun-sidebarText">{item.label}</span>
+  <ChevronDown className="size-4 jun-collapsibleIcon jun-collapsibleIcon-rotate-180" />
+  <input
+    type="checkbox"
+    className="sr-only"
+    id={`menu-${item.label}`}
+    defaultChecked
+  />
+</label>
+```
+
+<ComponentPreview preview name="sidebar-menu-collapsible" />

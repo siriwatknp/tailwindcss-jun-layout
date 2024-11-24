@@ -86,6 +86,12 @@ export const demos: Registry = [
     files: ["demo/sidebar-menus.tsx"],
   },
   {
+    name: "sidebar-menu-groups",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/sidebar-menu-groups.tsx"],
+  },
+  {
     name: "sidebar-menu-action",
     type: "registry:ui",
     dependencies: [],
@@ -108,5 +114,17 @@ export const demos: Registry = [
     type: "registry:ui",
     dependencies: [],
     files: ["demo/sidebar-elements.tsx"],
+  },
+  {
+    name: "sidebar-menu-nested",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/sidebar-menu-nested.tsx"],
+  },
+  {
+    name: "sidebar-menu-collapsible",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/sidebar-menu-collapsible.tsx"],
   },
 ];

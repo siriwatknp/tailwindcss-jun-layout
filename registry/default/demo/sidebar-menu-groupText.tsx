@@ -18,7 +18,7 @@ export default function SidebarMenuGroupTextDemo() {
         </header>
         <aside
           id="sidebar-menu-groupText-demo"
-          className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[53px]"
+          className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[52px]"
         >
           <div className="jun-edgeContent bg-sidebar">
             <button
@@ -34,29 +34,31 @@ export default function SidebarMenuGroupTextDemo() {
               <PanelLeftClose className="jun-edgeUncollapsed-visible" />
             </button>
 
-            {[
-              <Database className="w-6 h-6" />,
-              <Apple className="w-6 h-6" />,
-              <Bell className="w-6 h-6" />,
-            ].map((icon, index) => (
-              <button
-                key={index}
-                className="jun-sidebarMenuButton jun-sidebarMenuButton-spacing-3.5 rounded-none items-start"
-              >
-                {icon}
-                <div className="jun-sidebarGroupText">
-                  <div className="flex flex-col">
-                    <span className="text-[1rem]">Primary text</span>
-                    <span className="text-muted-foreground jun-sidebarText">
-                      Secondary text a very long text
-                    </span>
-                    <span className="text-muted-foreground jun-sidebarText">
-                      Tertiary text
-                    </span>
+            <div className="jun-sidebarMenu">
+              {[
+                <Database key="1" className="w-6 h-6 jun-sidebarIcon" />,
+                <Apple key="2" className="w-6 h-6 jun-sidebarIcon" />,
+                <Bell key="3" className="w-6 h-6 jun-sidebarIcon" />,
+              ].map((icon, index) => (
+                <button
+                  key={index}
+                  className="jun-sidebarMenuButton jun-sidebarMenuButton-spacing-3.5 rounded-none items-start"
+                >
+                  {icon}
+                  <div className="jun-sidebarGroupText">
+                    <div className="flex flex-col">
+                      <span className="text-[1rem]">Primary text</span>
+                      <span className="text-muted-foreground jun-sidebarText">
+                        Secondary text a very long text
+                      </span>
+                      <span className="text-muted-foreground jun-sidebarText">
+                        Tertiary text
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </button>
-            ))}
+                </button>
+              ))}
+            </div>
           </div>
         </aside>
         <main className="jun-content">

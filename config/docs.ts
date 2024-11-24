@@ -57,10 +57,6 @@ export const docsConfig: DocsConfig = {
           href: "/docs/edge-sidebar",
         },
         {
-          title: "Edge Sidebar menus",
-          href: "/docs/edge-sidebar-menus",
-        },
-        {
           title: "Inset Sidebar",
           href: "/docs/inset-sidebar",
         },
