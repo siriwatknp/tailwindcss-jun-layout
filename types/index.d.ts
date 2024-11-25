@@ -9,6 +9,7 @@ export interface NavItem {
   label?: string;
   paid?: boolean;
   event?: string;
+  lucide?: string;
 }
 
 export interface NavItemWithChildren extends NavItem {

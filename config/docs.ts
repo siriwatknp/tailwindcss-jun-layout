@@ -10,11 +10,13 @@ export const docsConfig: DocsConfig = {
     {
       title: "Documentation",
       href: "/docs",
+      lucide: "book-open-text",
     },
   ],
   sidebarNav: [
     {
       title: "Getting Started",
+      lucide: "pencil-line",
       items: [
         {
           title: "Introduction",
@@ -35,6 +37,7 @@ export const docsConfig: DocsConfig = {
     },
     {
       title: "Configuration",
+      lucide: "code",
       items: [
         {
           title: "Layout",
@@ -68,6 +71,7 @@ export const docsConfig: DocsConfig = {
     },
     {
       title: "Integration",
+      lucide: "blocks",
       items: [
         {
           title: "Shadcn Sidebar",
@@ -77,6 +81,7 @@ export const docsConfig: DocsConfig = {
     },
     {
       title: "Examples",
+      lucide: "panels-top-left",
       items: [
         {
           title: "Blog",
