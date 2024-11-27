@@ -1225,7 +1225,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     { values: theme("screens") }
   );
 
-  // InsetSidebar
+  // InsetContent
   matchUtilities(
     {
       [layoutClasses.InsetContent]: () => ({
@@ -1267,6 +1267,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       },
     }
   );
+  // InsetAvoidingView
   matchUtilities(
     {
       [layoutClasses.InsetAvoidingView]: () => ({
@@ -1280,6 +1281,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       },
     }
   );
+  // InsetSidebar
   const insetSidebarSticky = {
     position: "sticky",
     height: "var(--sticky, calc(var(--jun-h) - var(--jun-H-h)))",
@@ -1763,7 +1765,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [`${layoutClasses.SidebarMenuAction}-hoverAppear`]: () => ({
         opacity: "0",
-        "&:focus-visible": {
+        "&:hover, &:focus-visible": {
           opacity: "1",
         },
         [`.${layoutClasses.SidebarMenuButton}:hover ~ &, .${layoutClasses.SidebarGroupLabel} > &`]:

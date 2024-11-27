@@ -148,7 +148,7 @@ export default function PlaygroundPage() {
         </header>
 
         {/* Sidebar */}
-        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg">
+        <aside className="jun-edgeSidebar jun-edgeSidebar-drawer md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[3rem] md:jun-edgeSidebar-w-[280px] jun-edgeSidebar-permanent-autoCollapse-lg">
           <div className="jun-edgeContent jun-sidebarContainer">
             <div className="flex flex-col p-2">
               {/* App Switcher */}
@@ -474,6 +474,9 @@ export default function PlaygroundPage() {
                           <div key={itemIndex} className="jun-sidebarMenuItem">
                             <button className="jun-sidebarMenuButton">
                               {item.label}
+                            </button>
+                            <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
+                              <MoreHorizontal />
                             </button>
                           </div>
                         );
