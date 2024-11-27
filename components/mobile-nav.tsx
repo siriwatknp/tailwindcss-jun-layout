@@ -85,7 +85,7 @@ export function MobileNav() {
             <ul className="jun-sidebarMenu">
               {item.items?.map((item, itemIndex) =>
                 !item.disabled && item.href ? (
-                  <li className="jun-sidebarMenuItem">
+                  <li key={item.title} className="jun-sidebarMenuItem">
                     <Link
                       key={item.href}
                       href={item.href}
