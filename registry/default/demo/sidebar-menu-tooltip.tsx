@@ -44,11 +44,10 @@ const menuGroups: MenuGroup[] = [
 ];
 
 export default function SidebarMenuTooltipDemo() {
-  const container = React.useRef(
-    typeof document !== "undefined"
-      ? document.querySelector("#sidebar-menu-tooltip-demo")
-      : null,
-  );
+  const [container, setContainer] = React.useState<Element | null>(null);
+  React.useEffect(() => {
+    setContainer(document.querySelector("#sidebar-menu-tooltip-demo"));
+  }, []);
   return (
     <div className="w-full border-4 rounded bg-background max-w-[500px]">
       <div className="jun-layout jun-layout-h-[300px] jun-layout-standalone">
@@ -92,7 +91,7 @@ export default function SidebarMenuTooltipDemo() {
                                 </span>
                               </button>
                             </Tooltip.Trigger>
-                            <Tooltip.Portal container={container.current}>
+                            <Tooltip.Portal container={container}>
                               <Tooltip.Content
                                 sideOffset={4}
                                 side="right"
