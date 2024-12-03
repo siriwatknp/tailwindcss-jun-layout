@@ -596,6 +596,24 @@ export default function PlaygroundPage() {
             </div>
           </div>
         </main>
+
+        <aside
+          className={`
+          jun-edgeSidebar
+          jun-edgeSidebarR 
+          jun-edgeSidebarR-drawer
+          md:jun-edgeSidebarR-permanent
+          md:jun-edgeSidebarR-collapsed-w-[80px]
+          jun-edgeSidebarR-permanent-autoCollapse-xl`}
+        >
+          <div className="jun-edgeContent">
+            <button>A</button>
+            <button>A</button>
+            <button>A</button>
+            <button>A</button>
+            <button>A</button>
+          </div>
+        </aside>
       </div>
     </TooltipProvider>
   );

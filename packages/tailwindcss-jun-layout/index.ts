@@ -192,9 +192,9 @@ export function triggerEdgeDrawerRight(options?: {
   internalToggleSidebar({ ...options, selector });
 }
 
-const LEFT_COLLAPSER = `.${layoutClasses.EdgeSidebarCollapser}:where(:not(.${layoutClasses.EdgeSidebarRightCollapser}))`;
+const LEFT_COLLAPSER = `.${layoutClasses.EdgeSidebarCollapser}`;
 const RIGHT_COLLAPSER = `.${layoutClasses.EdgeSidebarRightCollapser}`;
-const LEFT_DRAWER_TRIGGER = `.${layoutClasses.DrawerEdgeSidebarTrigger}:where(:not(.${layoutClasses.DrawerEdgeSidebarRightTrigger}))`;
+const LEFT_DRAWER_TRIGGER = `.${layoutClasses.DrawerEdgeSidebarTrigger}`;
 const RIGHT_DRAWER_TRIGGER = `.${layoutClasses.DrawerEdgeSidebarRightTrigger}`;
 const NESTED_LAYOUT = `.${layoutClasses.Root} .${layoutClasses.Root}`;
 const NESTED_COLLAPSER = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.EdgeSidebarCollapser}`;
@@ -207,6 +207,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
 
   /** Match Shadcn Sidebar */
   const SIDEBAR_WIDTH = "var(--sidebar-width, 16rem)";
+  const SIDEBAR_ICON_WIDTH = "3rem";
   const SIDEBAR_WIDTH_MOBILE = "18rem";
 
   // Root
@@ -497,7 +498,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
               "--jun-ES-variant": "var(--permanent)",
               "--jun-ES-permanentWidth": SIDEBAR_WIDTH,
               "--jun-ES-collapsible": "var(--uncollapsed)",
-              "--jun-ES-collapsedWidth": "0px",
+              "--jun-ES-collapsedWidth": SIDEBAR_ICON_WIDTH,
 
               /** DO NOT OVERRIDE, internal variables */
               "--drawer": "var(--jun-ES-variant,)",
@@ -538,6 +539,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             },
             [`.${layoutClasses.Root}:has(>& [data-collapsible="icon"])`]: {
               "--jun-ES-collapsedWidth": "var(--sidebar-width-icon)",
+            },
+            [`.${layoutClasses.Root}:has(>& [data-collapsible="offcanvas"])`]: {
+              "--jun-ES-collapsedWidth": "0px",
             },
             [`.${layoutClasses.Root}:has(>&:empty), .${layoutClasses.Root}:has(>& .${layoutClasses.EdgeSidebarContent}:empty)`]:
               {
@@ -612,8 +616,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           "--jun-EC-delay": "0s",
           opacity: `var(--_drawer, var(--jun-ES-drawerOpen))
         var(--_permanent, 1)`,
-          visibility: `var(--_drawer, hidden)
-           var(--_permanent, visible)`,
+          visibility: `var(--_drawer, hidden) var(--_permanent, visible)`,
           padding: "0px", // prevent user from customizing it
           margin: "0px", // prevent user from customizing it
           position:
@@ -770,13 +773,19 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           },
           "permanent-hidden": {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--jun-ES-collapsedWidth": "0px",
-              "--jun-ES-collapsible": "var(--collapsed)",
+              "--_permanentWidth": "0px",
+            },
+            [`& .${layoutClasses.EdgeSidebarContent}`]: {
+              visibility: "hidden",
             },
           },
           "permanent-visible": {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--jun-ES-collapsible": "var(--uncollapsed)",
+              "--_permanentWidth": `var(--uncollapsed, var(--jun-ES-permanentWidth))
+                                    var(--collapsed, var(--jun-ES-collapsedWidth, 0px))`,
+            },
+            [`& .${layoutClasses.EdgeSidebarContent}`]: {
+              visibility: `var(--_drawer, hidden) var(--_permanent, visible)`,
             },
           },
           "permanent-hoverUncollapse": {
@@ -931,7 +940,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             "--jun-ESR-variant": "var(--permanent-R)",
             "--jun-ESR-permanentWidth": SIDEBAR_WIDTH,
             "--jun-ESR-collapsible": "var(--uncollapsed-R)",
-            "--jun-ESR-collapsedWidth": "0px",
+            "--jun-ESR-collapsedWidth": SIDEBAR_ICON_WIDTH,
 
             /** DO NOT OVERRIDE, internal variables */
             "--drawer-R": "var(--jun-ESR-variant,)",
@@ -972,6 +981,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           },
           [`.${layoutClasses.Root}:has(>& [data-collapsible="icon"])`]: {
             "--jun-ESR-collapsedWidth": "var(--sidebar-width-icon)",
+          },
+          [`.${layoutClasses.Root}:has(>& [data-collapsible="offcanvas"])`]: {
+            "--jun-ESR-collapsedWidth": "0px",
           },
           [`.${layoutClasses.Root}:has(>&:empty), .${layoutClasses.Root}:has(>& .${layoutClasses.EdgeSidebarContent}:empty)`]:
             {
@@ -1127,13 +1139,19 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           },
           "permanent-hidden": {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--jun-ESR-collapsedWidth": "0px",
-              "--jun-ESR-collapsible": "var(--collapsed-R)",
+              "--_permanentWidth-R": "0px",
+            },
+            [`& .${layoutClasses.EdgeSidebarContent}`]: {
+              visibility: "hidden",
             },
           },
           "permanent-visible": {
             [`.${layoutClasses.Root}:has(>&)`]: {
-              "--jun-ESR-collapsible": "var(--uncollapsed-R)",
+              "--_permanentWidth-R": `var(--uncollapsed-R, var(--jun-ESR-permanentWidth))
+                            var(--collapsed-R, var(--jun-ESR-collapsedWidth, 0px))`,
+            },
+            [`& .${layoutClasses.EdgeSidebarContent}`]: {
+              visibility: `var(--_drawer, hidden) var(--_permanent, visible)`,
             },
           },
           "permanent-hoverUncollapse": {
