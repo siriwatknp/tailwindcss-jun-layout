@@ -12,7 +12,7 @@ export default function HeaderClipDemo() {
             <div className="h-4 w-1/2 rounded bg-muted" />
           </div>
         </aside>
-        <aside className="jun-edgeSidebar jun-edgeSidebarR">
+        <aside className="jun-edgeSidebarR">
           <div className="jun-edgeContent bg-sidebar flex flex-col gap-2 p-4">
             <div className="h-4 w-full rounded bg-muted" />
             <div className="h-4 w-2/3 rounded bg-muted" />

@@ -25,7 +25,7 @@ export default function EcommerceExample() {
           </div>
         </aside>
       </main>
-      <div className="jun-edgeSidebar jun-edgeSidebarR jun-edgeSidebarR-drawer jun-edgeSidebarR-w-[370px] lg:jun-edgeSidebarR-permanent lg:jun-edgeSidebarR-permanent-hidden">
+      <div className="jun-edgeSidebarR jun-edgeSidebarR-drawer jun-edgeSidebarR-w-[370px] lg:jun-edgeSidebarR-permanent lg:jun-edgeSidebarR-permanent-hidden">
         <div className="jun-edgeContent bg-white dark:bg-gray-900">
           <div className="p-4">
             <CartList />

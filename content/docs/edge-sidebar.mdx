@@ -239,11 +239,10 @@ Use Tailwind CSS responsive variants to create a drawer sidebar on mobile and sw
 
 ## Right sidebar
 
-To create a right edge sidebar, use `jun-edgeSidebarR-&lsqb;*&rsqb;` with all the modifiers above to build a drawer and a permanent sidebar.
-The `jun-edgeSidebar` is still required to function properly.
+To create a right edge sidebar, use `jun-edgeSidebarR-*` with all the modifiers above to build a drawer and a permanent sidebar.
 
 ```js
-<div className="jun-edgeSidebar jun-edgeSidebarR">
+<div className="jun-edgeSidebarR">
   <div className="jun-edgeContent">
     <div className="flex flex-col gap-2 p-2">navigation...</div>
   </div>
@@ -258,7 +257,7 @@ The `jun-edgeSidebar` is still required to function properly.
 
 | Class                                                  | Description                                                                           |
 | ------------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| `jun-edgeSidebar`                                      | The root container for the edge sidebar (Required)                                    |
+| `jun-edgeSidebar`                                      | Creates a left-aligned sidebar (Required)                                             |
 | `jun-edgeContent`                                      | The content container of the sidebar (Required) (works within left & right sidebars)  |
 | `jun-edgeSidebar-w-[*]`                                | Sets the width of the sidebar                                                         |
 | `jun-edgeSidebar-collapsed-w-[*]`                      | Sets the width of the sidebar when **collapsed**                                      |
@@ -268,7 +267,7 @@ The `jun-edgeSidebar` is still required to function properly.
 | `jun-edgeSidebar-permanent-autoCollapse-[breakpoint]`  | Auto collapses the sidebar below specified breakpoint                                 |
 | `jun-edgeSidebar-drawer`                               | Enables drawer mode for the sidebar                                                   |
 | `jun-edgeSidebar-drawer-withoutOverlay`                | Removes the overlay in drawer mode                                                    |
-| `jun-edgeSidebarR`                                     | Creates a right-aligned sidebar                                                       |
+| `jun-edgeSidebarR`                                     | Creates a right-aligned sidebar (Required)                                            |
 | `jun-edgeSidebarR-w-[*]`                               | Sets the width of the right sidebar                                                   |
 | `jun-edgeSidebarR-collapsed-w-[*]`                     | Sets the width of the right sidebar when **collapsed**                                |
 | `jun-edgeSidebarR-drawer`                              | Enables drawer mode for the right sidebar                                             |

@@ -48,7 +48,7 @@ export default function MetaBusinessExample() {
 
           <div
             id="chat-setting"
-            className="jun-edgeSidebar jun-edgeSidebarR jun-edgeSidebarR-drawer lg:jun-edgeSidebarR-permanent shadow-none"
+            className="jun-edgeSidebarR jun-edgeSidebarR-drawer lg:jun-edgeSidebarR-permanent shadow-none"
           >
             <div className="jun-edgeContent bg-transparent">
               <div className="p-4 pb-0 h-full">

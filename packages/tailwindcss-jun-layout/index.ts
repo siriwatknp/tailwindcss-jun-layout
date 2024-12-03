@@ -145,7 +145,7 @@ export function triggerEdgeCollapse(options: {
   document?: Document | null;
 }) {
   const { sidebarId } = options || {};
-  let selector = `.${layoutClasses.EdgeSidebar}:not(.${layoutClasses.EdgeSidebarRight})`;
+  let selector = `.${layoutClasses.EdgeSidebar}`;
   if (sidebarId) {
     selector = `#${sidebarId}`;
   }
@@ -158,7 +158,7 @@ export function triggerEdgeDrawer(options?: {
   document?: Document | null;
 }) {
   const { sidebarId } = options || {};
-  let selector = `.${layoutClasses.EdgeSidebar}:not(.${layoutClasses.EdgeSidebarRight})`;
+  let selector = `.${layoutClasses.EdgeSidebar}`;
   if (sidebarId) {
     selector = `#${sidebarId}`;
   }
@@ -343,10 +343,9 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
                 "${layoutClasses.EdgeSidebar} ${layoutClasses.Content} ${layoutClasses.EdgeSidebarRight}"
                 "${layoutClasses.EdgeSidebar} ${layoutClasses.Footer} ${layoutClasses.EdgeSidebarRight}"
               `,
-              [`& .${layoutClasses.EdgeSidebar}:not(.${layoutClasses.EdgeSidebarRight})`]:
-                {
-                  "--jun-H-clip-h": "var(--jun-H-h)",
-                },
+              [`& .${layoutClasses.EdgeSidebar}`]: {
+                "--jun-H-clip-h": "var(--jun-H-h)",
+              },
             }),
             ...(value === "right" && {
               gridTemplateAreas: `
@@ -444,133 +443,131 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     }
   );
 
-  // Shared EdgeSidebar
+  const sharedSidebarStyles = {
+    "--anchorLeft": "var(--jun-ES-anchor,)",
+    "--anchorRight": "var(--jun-ES-anchor,)",
+    "--drawer-h": "var(--jun-h)",
+    transition: "width 0.3s",
+    display: "flex",
+    flexDirection: "column",
+    padding: "0px", // prevent user from customizing it
+    margin: "0px", // prevent user from customizing it
+    // ==============================
+    // To keep the EdgeSidebar fixed when the Content is scrollable
+    position: "var(--_permanent, sticky)",
+    top: "var(--_permanent, var(--jun-H-clip-h))",
+    zIndex: "var(--_drawer, 2) var(--_permanent, 1)",
+    height: "var(--_permanent, calc(var(--jun-h) - var(--jun-H-clip-h)))",
+    // ==============================
+    "&::before": {
+      display: `var(--_drawer, block)
+                var(--_permanent, none)`,
+      position: "absolute",
+      content: '""',
+      inset: "0",
+      backgroundColor: "rgba(0, 0, 0, 0.48)",
+      backdropFilter: "blur(4px)",
+      zIndex: "1",
+      transition: "opacity 0.4s, visibility 0.4s",
+      visibility: "hidden",
+      opacity: "var(--jun-ES-drawerOpen, 0)",
+    },
+    [`&[${layoutAttrs.isDrawerOpen}]`]: {
+      "&::before": {
+        visibility: "visible",
+      },
+    },
+    [`html:has([${layoutAttrs.isDrawerOpen}]:not(.${layoutClasses.DrawerWithoutOverlay}):not(.${layoutClasses.Content} &))`]:
+      {
+        overflow: "hidden",
+      },
+    "&::after": {
+      position: "absolute",
+      content: '""',
+      display: "block",
+      width: "var(--_permanent, var(--jun-EC-width))",
+      height: "var(--jun-H-clip-h)",
+      top: "calc(-1 * var(--jun-H-clip-h))",
+      left: "var(--anchorLeft, 0px) var(--anchorRight, unset)",
+      right: "var(--anchorLeft, unset) var(--anchorRight, 0px)",
+      border: "inherit",
+    },
+  };
+  // Left EdgeSidebar
   matchUtilities(
     {
       [layoutClasses.EdgeSidebar]: () =>
         ({
-          "--anchorLeft": "var(--jun-ES-anchor,)",
-          "--anchorRight": "var(--jun-ES-anchor,)",
-          "--drawer-h": "var(--jun-h)",
-          transition: "width 0.3s",
-          display: "flex",
-          flexDirection: "column",
-          padding: "0px", // prevent user from customizing it
-          margin: "0px", // prevent user from customizing it
-          // ==============================
-          // To keep the EdgeSidebar fixed when the Content is scrollable
-          position: "var(--_permanent, sticky)",
-          top: "var(--_permanent, var(--jun-H-clip-h))",
-          zIndex: "var(--_drawer, 2) var(--_permanent, 1)",
-          height: "var(--_permanent, calc(var(--jun-h) - var(--jun-H-clip-h)))",
-          // ==============================
-          "&::before": {
-            position: "absolute",
-            content: '""',
-            inset: "0",
-            backgroundColor: "rgba(0, 0, 0, 0.48)",
-            backdropFilter: "blur(4px)",
-            zIndex: "1",
-            transition: "opacity 0.4s, visibility 0.4s",
-            visibility: "hidden",
-            opacity: "var(--jun-ES-drawerOpen, 0)",
-          },
-          [`&[${layoutAttrs.isDrawerOpen}]`]: {
-            "&::before": {
-              visibility: "visible",
-            },
-          },
-          [`html:has([${layoutAttrs.isDrawerOpen}]:not(.${layoutClasses.DrawerWithoutOverlay}):not(.${layoutClasses.Content} &))`]:
-            {
-              overflow: "hidden",
-            },
-          "&::after": {
-            position: "absolute",
-            content: '""',
-            display: "block",
-            width: "var(--_permanent, var(--jun-EC-width))",
-            height: "var(--jun-H-clip-h)",
-            top: "calc(-1 * var(--jun-H-clip-h))",
-          },
-          [`&:where(:not(.${layoutClasses.EdgeSidebarRight}))`]: {
-            [`.${layoutClasses.Root}:has(>&)`]: {
-              /** Root default settings */
-              "--jun-ES-variant": "var(--permanent)",
-              "--jun-ES-permanentWidth": SIDEBAR_WIDTH,
-              "--jun-ES-collapsible": "var(--uncollapsed)",
-              "--jun-ES-collapsedWidth": SIDEBAR_ICON_WIDTH,
+          ...sharedSidebarStyles,
+          [`.${layoutClasses.Root}:has(>&)`]: {
+            /** Root default settings */
+            "--jun-ES-variant": "var(--permanent)",
+            "--jun-ES-permanentWidth": SIDEBAR_WIDTH,
+            "--jun-ES-collapsible": "var(--uncollapsed)",
+            "--jun-ES-collapsedWidth": SIDEBAR_ICON_WIDTH,
 
-              /** DO NOT OVERRIDE, internal variables */
-              "--drawer": "var(--jun-ES-variant,)",
-              "--permanent": "var(--jun-ES-variant,)",
-              "--_permanentWidth": `var(--uncollapsed, var(--jun-ES-permanentWidth))
-                              var(--collapsed, var(--jun-ES-collapsedWidth, 0px))`,
-              "--collapsed": "var(--jun-ES-collapsible,)",
-              "--uncollapsed": "var(--jun-ES-collapsible,)",
-
-              /** Collapsible feature */
-              [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
-                {
-                  display: "var(--display, inline-flex)",
-                  "--_sidebarCollapsed": "var(--collapsed, 1)",
-                  [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
-                    display:
-                      "var(--collapsed, none) var(--uncollapsed, inline-block)",
-                  },
-                  [`.${layoutClasses.EdgeSidebarCollapsedVisible}`]: {
-                    display:
-                      "var(--collapsed, inline-block) var(--uncollapsed, none)",
-                  },
-                },
-            },
+            /** DO NOT OVERRIDE, internal variables */
+            "--drawer": "var(--jun-ES-variant,)",
+            "--permanent": "var(--jun-ES-variant,)",
+            "--_permanentWidth": `var(--uncollapsed, var(--jun-ES-permanentWidth))
+                            var(--collapsed, var(--jun-ES-collapsedWidth, 0px))`,
+            "--collapsed": "var(--jun-ES-collapsible,)",
+            "--uncollapsed": "var(--jun-ES-collapsible,)",
 
             /** Collapsible feature */
-            [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarCollapsed}])`]:
+            [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
               {
-                "--jun-ES-collapsible": "var(--collapsed)",
-              },
-            [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarUncollapsed}])`]:
-              {
-                "--jun-ES-collapsible": "var(--uncollapsed)",
-              },
-            /** Collapsible feature integration with Shadcn sidebar */
-            [`.${layoutClasses.Root}:has(>& [data-state="collapsed"])`]: {
-              "--jun-ES-collapsible": "var(--collapsed)",
-            },
-            [`.${layoutClasses.Root}:has(>& [data-collapsible="icon"])`]: {
-              "--jun-ES-collapsedWidth": "var(--sidebar-width-icon)",
-            },
-            [`.${layoutClasses.Root}:has(>& [data-collapsible="offcanvas"])`]: {
-              "--jun-ES-collapsedWidth": "0px",
-            },
-            [`.${layoutClasses.Root}:has(>&:empty), .${layoutClasses.Root}:has(>& .${layoutClasses.EdgeSidebarContent}:empty)`]:
-              {
-                "--jun-ES-permanentWidth": "0px",
-              },
-
-            /** EdgeSidebar default settings */
-            "--jun-ES-anchor": "var(--anchorLeft)",
-            "--jun-EC-width": "var(--_permanentWidth, 0px)",
-            "--_drawer": "var(--drawer)",
-            "--_permanent": "var(--permanent)",
-            "--_collapsed": "var(--collapsed)",
-            "--_uncollapsed": "var(--uncollapsed)",
-            gridArea: layoutClasses.EdgeSidebar,
-            width: `var(--drawer, 0)
-                var(--permanent, var(--_permanentWidth))`,
-            "&::after": {
-              border: "inherit",
-              left: "0",
-            },
-            "&::before": {
-              display: `var(--drawer, block)
-                    var(--permanent, none)`,
-            },
-            [`&:not([${layoutAttrs.isDrawerOpen}], [${layoutAttrs.isDrawerClosing}])`]:
-              {
-                overflow: "var(--drawer, hidden)",
+                display: "var(--display, inline-flex)",
+                "--_sidebarCollapsed": "var(--collapsed, 1)",
+                [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
+                  display:
+                    "var(--collapsed, none) var(--uncollapsed, inline-block)",
+                },
+                [`.${layoutClasses.EdgeSidebarCollapsedVisible}`]: {
+                  display:
+                    "var(--collapsed, inline-block) var(--uncollapsed, none)",
+                },
               },
           },
+
+          /** Collapsible feature */
+          [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarCollapsed}])`]:
+            {
+              "--jun-ES-collapsible": "var(--collapsed)",
+            },
+          [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isEdgeSidebarUncollapsed}])`]:
+            {
+              "--jun-ES-collapsible": "var(--uncollapsed)",
+            },
+          /** Collapsible feature integration with Shadcn sidebar */
+          [`.${layoutClasses.Root}:has(>& [data-state="collapsed"])`]: {
+            "--jun-ES-collapsible": "var(--collapsed)",
+          },
+          [`.${layoutClasses.Root}:has(>& [data-collapsible="icon"])`]: {
+            "--jun-ES-collapsedWidth": "var(--sidebar-width-icon)",
+          },
+          [`.${layoutClasses.Root}:has(>& [data-collapsible="offcanvas"])`]: {
+            "--jun-ES-collapsedWidth": "0px",
+          },
+          [`.${layoutClasses.Root}:has(>&:empty), .${layoutClasses.Root}:has(>& .${layoutClasses.EdgeSidebarContent}:empty)`]:
+            {
+              "--jun-ES-permanentWidth": "0px",
+            },
+
+          /** EdgeSidebar default settings */
+          "--jun-ES-anchor": "var(--anchorLeft)",
+          "--jun-EC-width": "var(--_permanentWidth, 0px)",
+          "--_drawer": "var(--drawer)",
+          "--_permanent": "var(--permanent)",
+          "--_collapsed": "var(--collapsed)",
+          "--_uncollapsed": "var(--uncollapsed)",
+          gridArea: layoutClasses.EdgeSidebar,
+          width: `var(--drawer, 0)
+              var(--permanent, var(--_permanentWidth))`,
+          [`&:not([${layoutAttrs.isDrawerOpen}], [${layoutAttrs.isDrawerClosing}])`]:
+            {
+              overflow: "var(--drawer, hidden)",
+            },
         }) as CSSRuleObject,
     },
     {
@@ -935,6 +932,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [layoutClasses.EdgeSidebarRight]: () =>
         ({
+          ...sharedSidebarStyles,
           [`.${layoutClasses.Root}:has(>&)`]: {
             /** Root default settings */
             "--jun-ESR-variant": "var(--permanent-R)",
@@ -1000,14 +998,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           gridArea: layoutClasses.EdgeSidebarRight,
           width: `var(--drawer-R, 0)
               var(--permanent-R, var(--_permanentWidth-R))`,
-          "&::after": {
-            border: "inherit",
-            right: "0", // prevent Root overflow
-          },
-          "&::before": {
-            display: `var(--drawer-R, block)
-                  var(--permanent-R, none)`,
-          },
           [`&:not([${layoutAttrs.isDrawerOpen}], [${layoutAttrs.isDrawerClosing}])`]:
             {
               overflow: "var(--drawer-R, hidden)",

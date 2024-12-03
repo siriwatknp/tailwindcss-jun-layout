@@ -599,7 +599,6 @@ export default function PlaygroundPage() {
 
         <aside
           className={`
-          jun-edgeSidebar
           jun-edgeSidebarR 
           jun-edgeSidebarR-drawer
           md:jun-edgeSidebarR-permanent

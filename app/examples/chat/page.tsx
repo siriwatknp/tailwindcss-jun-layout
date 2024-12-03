@@ -12,7 +12,7 @@ export default function ChatExample() {
 
   return (
     <div className="jun-layout jun-layout-standalone">
-      <header className="jun-header">
+      <header className="jun-header jun-header-clip">
         <Header
           mobileNavTrigger={
             <button
@@ -29,13 +29,13 @@ export default function ChatExample() {
           moreButton={
             <>
               <button
-                className="jun-edgeDrawerTrigger jun-edgeDrawerTriggerR rounded-full p-2"
+                className="jun-edgeDrawerTriggerR rounded-full p-2"
                 onClick={() => triggerEdgeDrawerRight()}
               >
                 <MoreVertical />
               </button>
               <button
-                className="jun-edgeCollapseTrigger jun-edgeCollapseTriggerR rounded-full p-2"
+                className="jun-edgeCollapseTriggerR rounded-full p-2"
                 onClick={(event) => triggerEdgeCollapseRight({ event })}
               >
                 <MoreVertical className="jun-edgeCollapsed-visible" />
@@ -47,13 +47,22 @@ export default function ChatExample() {
       </main>
       <div
         id="right-sidebar"
-        className="jun-edgeSidebar jun-edgeSidebarR jun-edgeSidebarR-drawer jun-edgeSidebarR-w-[100%] md:jun-edgeSidebarR-permanent md:jun-edgeSidebarR-permanent-hidden md:jun-edgeSidebarR-w-[300px] xl:jun-edgeSidebarR-w-[400px] xl:jun-edgeSidebarR-permanent-visible jun-edgeSidebarR-permanent-autoCollapse-xl"
+        className={`
+          jun-edgeSidebarR
+          jun-edgeSidebarR-drawer
+          jun-edgeSidebarR-w-[100%]
+          md:jun-edgeSidebarR-permanent
+          md:jun-edgeSidebarR-collapsed-w-[0px]
+          md:jun-edgeSidebarR-w-[300px]
+          xl:jun-edgeSidebarR-w-[400px]
+          jun-edgeSidebarR-permanent-autoCollapse-xl
+        `}
       >
         <div className="jun-edgeContent">
           <ChatSettings
             mobileClose={
               <button
-                className="jun-edgeDrawerTrigger md:hidden"
+                className="jun-edgeDrawerTriggerR md:hidden"
                 onClick={() => triggerEdgeDrawerRight()}
               >
                 <X />
@@ -64,7 +73,16 @@ export default function ChatExample() {
       </div>
       <div
         id="left-sidebar"
-        className="jun-edgeSidebar jun-edgeSidebar-drawer jun-edgeSidebar-w-[370px] md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[88px] jun-edgeSidebar-permanent-autoCollapse-lg lg:jun-edgeSidebar-w-[288px] xl:jun-edgeSidebar-w-[360px]"
+        className={`
+          jun-edgeSidebar
+          jun-edgeSidebar-drawer
+          jun-edgeSidebar-w-[370px]
+          md:jun-edgeSidebar-permanent
+          md:jun-edgeSidebar-collapsed-w-[88px]
+          jun-edgeSidebar-permanent-autoCollapse-lg
+          lg:jun-edgeSidebar-w-[288px]
+          xl:jun-edgeSidebar-w-[360px]
+        `}
       >
         <div className="jun-edgeContent bg-white dark:bg-gray-900">
           <ConversationsList

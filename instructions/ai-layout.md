@@ -469,7 +469,7 @@ To create a right edge sidebar, use `jun-edgeSidebarR-&lsqb;*&rsqb;` with all th
 The `jun-edgeSidebar` is still required to function properly.
 
 ```js
-<div className="jun-edgeSidebar jun-edgeSidebarR">
+<div className="jun-edgeSidebarR">
   <div className="jun-edgeContent">
     <div className="flex flex-col gap-2 p-2">navigation...</div>
   </div>

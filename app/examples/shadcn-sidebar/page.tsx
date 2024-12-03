@@ -254,7 +254,7 @@ export default function ShadcnSidebarExample() {
             </Sidebar>
           </div>
         </div>
-        <div className="jun-edgeSidebar jun-edgeSidebarR jun-edgeSidebarR-drawer lg:jun-edgeSidebarR-permanent lg:jun-edgeSidebarR-w-[3rem]">
+        <div className="jun-edgeSidebarR jun-edgeSidebarR-drawer lg:jun-edgeSidebarR-permanent lg:jun-edgeSidebarR-w-[3rem]">
           <div className="jun-edgeContent">
             <div className="flex flex-col items-center gap-4 py-4">
               <Button variant="ghost" size="icon" className="h-8 w-8">

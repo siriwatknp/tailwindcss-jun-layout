@@ -33,7 +33,7 @@ export default function EdgeSidebarRightDemo() {
         </header>
         <aside
           id="edgeSidebar-right-demo"
-          className="jun-edgeSidebar jun-edgeSidebarR jun-edgeSidebarR-drawer md:jun-edgeSidebarR-permanent"
+          className="jun-edgeSidebarR jun-edgeSidebarR-drawer md:jun-edgeSidebarR-permanent"
         >
           <div className="jun-edgeContent bg-sidebar">
             <div className="p-4 space-y-2">
