@@ -266,6 +266,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         "--drawer-pos": "absolute", // make edge sidebar (drawer) stay within the layout
         "--drawer-z": "5",
         "--content-overflow": "auto",
+        "--jun-IC-absolute-h": "calc(var(--jun-h) - var(--jun-H-h))",
         maxHeight: "var(--jun-h)",
       }),
     },
@@ -279,7 +280,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
     {
       [`${layoutClasses.Root}-h`]: (height) => ({
         "--jun-h": height,
-        "--jun-IC-absolute-h": "calc(var(--jun-h) - var(--jun-H-h))",
       }),
     },
     {
@@ -860,31 +860,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   // DrawerClose
   matchComponents(
     {
-      [layoutClasses.DrawerEdgeSidebarClose]: () => ({
-        position: "fixed",
-        width: "40px",
-        height: "40px",
-        color: "white",
-        cursor: "pointer",
-        backgroundColor: "#999",
-        borderRadius: "40px",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "none",
-        "& svg": {
-          width: "1.5em",
-          height: "1.5em",
-        },
-      }),
-    },
-    {
-      values: {
-        DEFAULT: true,
-      },
-    }
-  );
-  matchUtilities(
-    {
       [layoutClasses.DrawerEdgeSidebarClose]: () =>
         ({
           display: "var(--_drawer, flex) var(--_permanent, none)",
@@ -895,6 +870,20 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           right: "var(--anchorLeft, 0.875rem)",
           left: "var(--anchorRight, 0.875rem)",
           zIndex: "2",
+          position: "fixed",
+          width: "40px",
+          height: "40px",
+          color: "white",
+          cursor: "pointer",
+          backgroundColor: "#999",
+          borderRadius: "40px",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "none",
+          "& svg": {
+            width: "1.5em",
+            height: "1.5em",
+          },
           [`[${layoutAttrs.isDrawerOpen}] &`]: {
             visibility: "visible",
             opacity: "1",
