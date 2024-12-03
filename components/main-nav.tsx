@@ -21,7 +21,7 @@ export function MainNav() {
         </span>
         <Badge variant="secondary">Beta</Badge>
       </Link>
-      <nav className="hidden items-center space-x-6 text-sm font-medium xl:flex">
+      <nav className="hidden items-center space-x-6 text-sm font-medium sm:flex">
         {docsConfig.mainNav.map((item) => (
           <Link
             key={item.href}
