@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-jun-layout",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A powerful Tailwind CSS plugin for building dynamic layouts with ease",
   "publishConfig": {
     "access": "public"

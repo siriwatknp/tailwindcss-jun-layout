@@ -207,7 +207,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
 
   /** Match Shadcn Sidebar */
   const SIDEBAR_WIDTH = "var(--sidebar-width, 16rem)";
-  const SIDEBAR_ICON_WIDTH = "3rem";
   const SIDEBAR_WIDTH_MOBILE = "18rem";
 
   // Root
@@ -504,7 +503,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             "--jun-ES-variant": "var(--permanent)",
             "--jun-ES-permanentWidth": SIDEBAR_WIDTH,
             "--jun-ES-collapsible": "var(--uncollapsed)",
-            "--jun-ES-collapsedWidth": SIDEBAR_ICON_WIDTH,
+            "--jun-ES-collapsedWidth": "0px",
 
             /** DO NOT OVERRIDE, internal variables */
             "--drawer": "var(--jun-ES-variant,)",
@@ -938,7 +937,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
             "--jun-ESR-variant": "var(--permanent-R)",
             "--jun-ESR-permanentWidth": SIDEBAR_WIDTH,
             "--jun-ESR-collapsible": "var(--uncollapsed-R)",
-            "--jun-ESR-collapsedWidth": SIDEBAR_ICON_WIDTH,
+            "--jun-ESR-collapsedWidth": "0px",
 
             /** DO NOT OVERRIDE, internal variables */
             "--drawer-R": "var(--jun-ESR-variant,)",
