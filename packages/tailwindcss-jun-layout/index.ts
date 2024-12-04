@@ -596,6 +596,7 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         display: "flex",
         flexDirection: "column",
         flex: "1",
+        padding: "0px",
         overflowX: "auto", // prevent horizontal content overflow
       }),
     },
@@ -613,7 +614,6 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           opacity: `var(--_drawer, var(--jun-ES-drawerOpen))
         var(--_permanent, 1)`,
           visibility: `var(--_drawer, hidden) var(--_permanent, visible)`,
-          padding: "0px", // prevent user from customizing it
           margin: "0px", // prevent user from customizing it
           position:
             "var(--_drawer, var(--drawer-pos)) var(--_permanent, relative)",
@@ -1749,6 +1749,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
           width: "var(--icon-size, 1rem)",
           height: "var(--icon-size, 1rem)",
         },
+        "&:has(+ &)": {
+          right:
+            "var(--_collapsed, -100%) var(--_uncollapsed, calc(var(--action-size, 1.5rem) + 0.25rem))",
+        },
       }),
     },
     {
@@ -1889,6 +1893,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
         transition:
           "transform cubic-bezier(0.4, 0, 0.2, 1) 0.15s, visibility 0s var(--_uncollapsed, 0.1s)",
         visibility: "var(--_collapsed, hidden)",
+        [`:where(.${layoutClasses.SidebarMenuAction}) &`]: {
+          position: "unset",
+          right: "unset",
+        },
       }),
     },
     {

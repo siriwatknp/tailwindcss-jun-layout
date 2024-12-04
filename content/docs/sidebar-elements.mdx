@@ -84,26 +84,6 @@ Use `.jun-sidebarGroup` for a group of menu, each group can have a label using `
   small.
 </Callout>
 
-## Usage with EdgeSidebar
-
-For [EdgeSidebar](/docs/edge-sidebar), add `.jun-sidebarContainer` next to `.jun-edgeContent`:
-
-```jsx
-<div className="jun-edgeContent jun-sidebarContainer">...sidebar elements</div>
-```
-
-Other sidebar elements [remains the same](#building-a-sidebar).
-
-## Usage with InsetSidebar
-
-For [InsetSidebar](/docs/inset-sidebar), add `.jun-sidebarContainer` next to `.jun-insetContent`:
-
-```jsx
-<div className="jun-insetContent jun-sidebarContainer">...sidebar elements</div>
-```
-
-Other sidebar elements [remains the same](#building-a-sidebar).
-
 ## Group of texts
 
 If the menu has more than one text elements, wrap those texts with `.jun-sidebarGroupText`.
@@ -159,7 +139,43 @@ The action also appears on keyboard focus.
 
 ## Tooltip
 
-To show a tooltip only when the permanent EdgeSidebar is collapsed, use `.jun-sidebarTooltip` to the [TooltipContent](https://www.radix-ui.com/primitives/docs/components/tooltip#content):
+To show a tooltip (using radix or shadcn) only when the permanent EdgeSidebar is collapsed, first wraps the layout with the `TooltipProvider`:
+
+```jsx
+<TooltipProvider delayDuration={0}>
+  <div className="jun-layout">...</div>
+</TooltipProvider>
+```
+
+Then, create a `TooltipSidebar` that wraps `TooltipPrimitive.Portal` and `TooltipPrimitive.Content` to custom the `container` prop to be the EdgeSidebar element:
+
+```jsx
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+
+function TooltipSidebar({ children }) {
+  const [container, setContainer] = React.useState(null);
+  React.useEffect(() => {
+    setContainer(document.querySelector(".jun-edgeSidebar"));
+  }, []);
+  return (
+    <TooltipPrimitive.Portal container={container}>
+      <TooltipPrimitive.Content
+        ref={ref}
+        sideOffset={4}
+        side="right"
+        className={cn(
+          "z-50 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95",
+          className
+        )}
+      >
+        {children}
+      </TooltipPrimitive.Content>
+    </TooltipPrimitive.Portal>
+  );
+}
+```
+
+Finally, create a tooltip for each menu and apply `.jun-sidebarTooltip` to the [TooltipContent](https://www.radix-ui.com/primitives/docs/components/tooltip#content):
 
 ```jsx
 <li className="jun-sidebarMenuItem">
@@ -282,3 +298,32 @@ Finally, an optional `.jun-collapsibleIcon` can be used as an indicator.
 ```
 
 <ComponentPreview preview name="sidebar-menu-collapsible" />
+
+### Collapsible menu action
+
+If the menu is an anchor, moved the collapsible trigger to the menu action instead.
+
+The order must strictly follow:
+
+```jsx
+<li className="jun-sidebarMenuItem">
+  <button className="jun-sidebarMenuButton">...</button>
+
+  {/* Collapsible trigger as secondary action */}
+  <label
+    htmlFor="menu-orders"
+    className="jun-sidebarMenuAction jun-collapsibleTrigger"
+  >
+    <ChevronDown className="size-4 jun-collapsibleIcon jun-collapsibleIcon-rotate-180" />
+    <input
+      type="checkbox"
+      className="sr-only"
+      id="menu-orders"
+      defaultChecked
+    />
+  </label>
+
+  {/* Nested menu wrapped in collapsible content */}
+  <div className="jun-collapsibleContent">...</div>
+</li>
+```
