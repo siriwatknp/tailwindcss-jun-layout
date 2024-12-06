@@ -213,7 +213,10 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   matchUtilities(
     {
       [layoutClasses.Root]: () => ({
-        "--jun-h": "100lvh",
+        "--jun-h": "calc(100svh - env(safe-area-inset-bottom))",
+        [`:where(.${layoutClasses.Root}) &`]: {
+          "--jun-h": "100%",
+        },
         "--jun-H-h": "0px",
         "--jun-H-clip-h": "0px",
         "--jun-ES-line-w": "1px",
@@ -262,17 +265,26 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
   );
   matchUtilities(
     {
-      [layoutClasses.Root]: () => ({
+      [`${layoutClasses.Root}-standalone`]: () => ({
         "--drawer-pos": "absolute", // make edge sidebar (drawer) stay within the layout
         "--drawer-z": "5",
         "--content-overflow": "auto",
         "--jun-IC-absolute-h": "calc(var(--jun-h) - var(--jun-H-h))",
         maxHeight: "var(--jun-h)",
       }),
+      [`${layoutClasses.Root}-safeArea`]: () =>
+        ({
+          paddingInline: "env(safe-area-inset-left) env(safe-area-inset-right)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+          [`:where(.${layoutClasses.Root}) &`]: {
+            paddingInline: "initial",
+            paddingBottom: "initial",
+          },
+        }) as CSSRuleObject,
     },
     {
       values: {
-        standalone: true,
+        DEFAULT: true,
       },
     }
   );

@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 export default function MetaBusinessExample() {
   return (
     // layout.tsx
-    <div className="jun-layout bg-neutral-100">
+    <div className="jun-layout jun-layout-standalone bg-neutral-100">
       <aside className="jun-edgeSidebar jun-edgeSidebar-collapsed-w-[80px] jun-edgeSidebar-permanent-autoCollapse-xl">
         <div className="jun-edgeContent bg-white">Edge content</div>
       </aside>
@@ -12,7 +12,7 @@ export default function MetaBusinessExample() {
       {/* /latest/inbox */}
       <main className="jun-content bg-transparent">
         {/* Mini app */}
-        <div className="jun-layout jun-layout-standalone jun-layout-h-[100vh] bg-transparent">
+        <div className="jun-layout jun-layout-standalone bg-transparent">
           <div className="jun-header jun-header-h-[4rem] jun-header-clip-left bg-transparent border-none">
             <div className="p-2">
               <h2>Inbox</h2>
