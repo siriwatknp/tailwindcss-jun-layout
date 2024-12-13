@@ -45,6 +45,14 @@ const layoutClasses = {
   CollapsibleTrigger: "jun-collapsibleTrigger",
   CollapsibleContent: "jun-collapsibleContent",
   CollapsibleIcon: "jun-collapsibleIcon",
+  Dock: "jun-dock",
+  DockMenu: "jun-dockMenu",
+  DockMenuItem: "jun-dockMenuItem",
+  DockMenuButton: "jun-dockMenuButton",
+  DockIndicator: "jun-dockIndicator",
+  DockTooltip: "jun-dockTooltip",
+  DockTooltipNoIndicator: "jun-dockTooltipNoIndicator",
+  DockTooltipWithIndicator: "jun-dockTooltipWithIndicator",
 };
 
 function internalCollapseSidebar(options: {
@@ -202,12 +210,23 @@ const NESTED_RIGHT_COLLAPSER = `.${layoutClasses.Root} .${layoutClasses.Root} .$
 const NESTED_DRAWER_TRIGGER = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.DrawerEdgeSidebarTrigger}`;
 const NESTED_RIGHT_DRAWER_TRIGGER = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.DrawerEdgeSidebarRightTrigger}`;
 
-export default plugin(function ({ matchComponents, matchUtilities, theme }) {
+export default plugin(function ({
+  addComponents,
+  matchComponents,
+  matchUtilities,
+  theme,
+}) {
   const HEADER_HEIGHT = "3rem";
 
   /** Match Shadcn Sidebar */
   const SIDEBAR_WIDTH = "var(--sidebar-width, 16rem)";
   const SIDEBAR_WIDTH_MOBILE = "18rem";
+
+  addComponents({
+    ".custom-component-hey": {
+      color: "red",
+    },
+  });
 
   // Root
   matchUtilities(
@@ -1929,6 +1948,150 @@ export default plugin(function ({ matchComponents, matchUtilities, theme }) {
       values: {
         "45": "45deg",
         "180": "180deg",
+      },
+    }
+  );
+
+  // Dock
+  matchComponents(
+    {
+      [layoutClasses.Dock]: () => ({
+        position: "fixed",
+        bottom: "0",
+        width: "100%",
+        zIndex: "999",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: theme("colors.background"),
+        borderTop: "1px solid",
+        borderColor: theme("colors.border"),
+        boxShadow: theme("boxShadow.md"),
+      }),
+      [`${layoutClasses.Dock}-float`]: () => ({
+        width: "fit-content",
+        maxWidth: `calc(100vw - ${theme("spacing.2")})`,
+        left: "50%",
+        transform: `translate(-50%, calc(-1 * max(env(safe-area-inset-bottom), ${theme("spacing.3")})))`,
+        borderRadius: theme("borderRadius.xl"),
+        borderWidth: "1px",
+        borderStyle: "solid",
+      }),
+      [layoutClasses.DockMenu]: () => ({
+        display: "flex",
+        flex: "1",
+        paddingInline: theme("spacing.2"),
+      }),
+      [layoutClasses.DockMenuItem]: () => ({
+        flex: "1",
+        display: "flex",
+      }),
+      [layoutClasses.DockMenuButton]: () => ({
+        flex: "1",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        color: theme("colors.sidebar.foreground"),
+        padding: theme("spacing.2"),
+        rowGap: "2px",
+        fontSize: theme("fontSize.xs"),
+        lineHeight: theme("lineHeight.xs"),
+        transition: "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+        "&:where(:hover)": {
+          color: theme("colors.sidebar.accent-foreground"),
+        },
+        [`&:where(.${layoutClasses.DockMenuButton}-row)`]: {
+          fontSize: theme("fontSize.sm"),
+          lineHeight: theme("lineHeight.sm"),
+        },
+        [`&:where(:has(.${layoutClasses.DockIndicator}))`]: {
+          paddingBlock: "6px 10px",
+        },
+      }),
+      [`${layoutClasses.DockMenuButton}-row`]: () => ({
+        flexDirection: "row",
+        columnGap: theme("spacing.1"),
+      }),
+      [`${layoutClasses.DockMenuButton}-smooth`]: () => ({
+        display: "grid",
+        gridTemplateRows: "auto 1fr",
+        transition: "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+        [`&.${layoutClasses.DockMenuButton}-row`]: {
+          gridTemplateColumns: "auto auto",
+          justifyItems: "center",
+        },
+      }),
+      [layoutClasses.DockIndicator]: () => ({
+        "--size": "4px",
+        width: "var(--size)",
+        height: "var(--size)",
+        borderRadius: "var(--size)",
+        position: "absolute",
+        bottom: "2px",
+        left: "calc(50% - var(--size)/2)",
+        background: theme("colors.muted.foreground"),
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+
+  // DockTooltip
+  const tooltipStyles = {
+    pointerEvents: "none",
+    position: "absolute",
+    zIndex: "50",
+    overflow: "hidden",
+    borderRadius: theme("borderRadius.md"),
+    background: theme("colors.primary.DEFAULT"),
+    paddingInline: theme("spacing.2"),
+    paddingBlock: theme("spacing.1"),
+    fontSize: theme("fontSize.xs"),
+    lineHeight: theme("lineHeight.xs"),
+    color: theme("colors.primary.foreground"),
+    transform: "translateY(-100%)",
+    top: `calc(-1 * ${theme("spacing.1")})`,
+    opacity: "var(--active, 0)",
+  };
+  matchComponents(
+    {
+      [layoutClasses.DockTooltip]: () =>
+        ({
+          ...tooltipStyles,
+          [`:where(.${layoutClasses.DockMenuButton}:is(:hover,:focus-visible)) &`]:
+            {
+              "--active": "1",
+            },
+        }) as CSSRuleObject,
+      [layoutClasses.DockTooltipNoIndicator]: () =>
+        ({
+          [`&:not(:has(~.${layoutClasses.DockIndicator}))`]: {
+            ...tooltipStyles,
+          },
+          [`:where(.${layoutClasses.DockMenuButton}:is(:hover,:focus-visible)) &`]:
+            {
+              "--active": "1",
+            },
+        }) as CSSRuleObject,
+      [layoutClasses.DockTooltipWithIndicator]: () =>
+        ({
+          [`&:has(~.${layoutClasses.DockIndicator})`]: {
+            ...tooltipStyles,
+          },
+          [`:where(.${layoutClasses.DockMenuButton}:is(:hover,:focus-visible)) &`]:
+            {
+              "--active": "1",
+            },
+        }) as CSSRuleObject,
+    },
+    {
+      values: {
+        DEFAULT: true,
       },
     }
   );
