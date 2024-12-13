@@ -5,7 +5,7 @@ import React from "react";
 function ActiveMenus4() {
   const [active, setActive] = React.useState(0);
   return (
-    <nav className="jun-dock sm:jun-dock-float bottom-[540px]">
+    <nav className="jun-dock sm:jun-dock-float bottom-[600px]">
       <ul className="jun-dockMenu gap-x-2">
         <li className="jun-dockMenuItem">
           <button
@@ -13,7 +13,9 @@ function ActiveMenus4() {
             onClick={() => setActive(0)}
           >
             <Home className="size-5" />
-            <span className="jun-dockTooltipNoIndicator">Home</span>
+            <span className="jun-dockTooltip jun-dockTooltip-noIndicator">
+              Home
+            </span>
             {active === 0 && <span className="jun-dockIndicator" />}
           </button>
         </li>
@@ -23,7 +25,9 @@ function ActiveMenus4() {
             onClick={() => setActive(1)}
           >
             <Search className="size-5" />
-            <span className="jun-dockTooltipNoIndicator">Search</span>
+            <span className="jun-dockTooltip jun-dockTooltip-noIndicator">
+              Search
+            </span>
             {active === 1 && <span className="jun-dockIndicator" />}
           </button>
         </li>
@@ -33,7 +37,9 @@ function ActiveMenus4() {
             onClick={() => setActive(2)}
           >
             <Bell className="size-5" />
-            <span className="jun-dockTooltipNoIndicator">Alerts</span>
+            <span className="jun-dockTooltip jun-dockTooltip-noIndicator">
+              Alerts
+            </span>
             {active === 2 && <span className="jun-dockIndicator" />}
           </button>
         </li>
@@ -45,7 +51,7 @@ function ActiveMenus4() {
 function ActiveMenus3() {
   const [active, setActive] = React.useState(0);
   return (
-    <nav className="jun-dock sm:jun-dock-float bottom-[480px]">
+    <nav className="jun-dock sm:jun-dock-float bottom-[500px]">
       <ul className="jun-dockMenu gap-x-2">
         <li className="jun-dockMenuItem">
           <button
@@ -53,7 +59,9 @@ function ActiveMenus3() {
             onClick={() => setActive(0)}
           >
             <Home className="size-5" />
-            <span className="jun-dockTooltipWithIndicator">Home</span>
+            <span className="jun-dockTooltip jun-dockTooltip-hasIndicator">
+              Home
+            </span>
             {active === 0 && <span className="jun-dockIndicator" />}
           </button>
         </li>
@@ -63,7 +71,9 @@ function ActiveMenus3() {
             onClick={() => setActive(1)}
           >
             <Search className="size-5" />
-            <span className="jun-dockTooltipWithIndicator">Search</span>
+            <span className="jun-dockTooltip jun-dockTooltip-hasIndicator">
+              Search
+            </span>
             {active === 1 && <span className="jun-dockIndicator" />}
           </button>
         </li>
@@ -73,7 +83,9 @@ function ActiveMenus3() {
             onClick={() => setActive(2)}
           >
             <Bell className="size-5" />
-            <span className="jun-dockTooltipWithIndicator">Alerts</span>
+            <span className="jun-dockTooltip jun-dockTooltip-hasIndicator">
+              Alerts
+            </span>
             {active === 2 && <span className="jun-dockIndicator" />}
           </button>
         </li>
@@ -90,21 +102,27 @@ function ActiveMenus2() {
         <li className="jun-dockMenuItem">
           <button className="jun-dockMenuButton" onClick={() => setActive(0)}>
             <Home className="size-5" />
-            <span className="jun-dockTooltipNoIndicator">Home</span>
+            <span className="jun-dockTooltip jun-dockTooltip-noIndicator">
+              Home
+            </span>
             {active === 0 && <span className="jun-dockIndicator" />}
           </button>
         </li>
         <li className="jun-dockMenuItem">
           <button className="jun-dockMenuButton " onClick={() => setActive(1)}>
             <Search className="size-5" />
-            <span className="jun-dockTooltipNoIndicator">Search</span>
+            <span className="jun-dockTooltip jun-dockTooltip-noIndicator">
+              Search
+            </span>
             {active === 1 && <span className="jun-dockIndicator" />}
           </button>
         </li>
         <li className="jun-dockMenuItem">
           <button className="jun-dockMenuButton " onClick={() => setActive(2)}>
             <Bell className="size-5" />
-            <span className="jun-dockTooltipNoIndicator">Alerts</span>
+            <span className="jun-dockTooltip jun-dockTooltip-noIndicator">
+              Alerts
+            </span>
             {active === 2 && <span className="jun-dockIndicator" />}
           </button>
         </li>

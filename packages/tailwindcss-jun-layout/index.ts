@@ -51,8 +51,6 @@ const layoutClasses = {
   DockMenuButton: "jun-dockMenuButton",
   DockIndicator: "jun-dockIndicator",
   DockTooltip: "jun-dockTooltip",
-  DockTooltipNoIndicator: "jun-dockTooltipNoIndicator",
-  DockTooltipWithIndicator: "jun-dockTooltipWithIndicator",
 };
 
 function internalCollapseSidebar(options: {
@@ -1999,6 +1997,7 @@ export default plugin(function ({
         fontSize: theme("fontSize.xs"),
         lineHeight: theme("lineHeight.xs"),
         transition: "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+        userSelect: "none",
         "&:where(:hover)": {
           color: theme("colors.sidebar.accent-foreground"),
         },
@@ -2063,29 +2062,33 @@ export default plugin(function ({
       [layoutClasses.DockTooltip]: () =>
         ({
           ...tooltipStyles,
-          [`:where(.${layoutClasses.DockMenuButton}:is(:hover,:focus-visible)) &`]:
-            {
+          "@media (hover: hover)": {
+            [`:where(.${layoutClasses.DockMenuButton}:hover) &`]: {
               "--active": "1",
             },
-        }) as CSSRuleObject,
-      [layoutClasses.DockTooltipNoIndicator]: () =>
-        ({
-          [`&:not(:has(~.${layoutClasses.DockIndicator}))`]: {
-            ...tooltipStyles,
           },
-          [`:where(.${layoutClasses.DockMenuButton}:is(:hover,:focus-visible)) &`]:
+          [`:where(.${layoutClasses.DockMenuButton}:focus-visible) &`]: {
+            "--active": "1",
+          },
+        }) as CSSRuleObject,
+      [`${layoutClasses.DockTooltip}-noIndicator`]: () =>
+        ({
+          [`.${layoutClasses.DockMenuButton}:has(.${layoutClasses.DockIndicator}) &`]:
             {
-              "--active": "1",
+              display: "contents",
+              color: "inherit",
+              fontSize: "inherit",
+              lineHeight: "inherit",
             },
         }) as CSSRuleObject,
-      [layoutClasses.DockTooltipWithIndicator]: () =>
+      [`${layoutClasses.DockTooltip}-hasIndicator`]: () =>
         ({
-          [`&:has(~.${layoutClasses.DockIndicator})`]: {
-            ...tooltipStyles,
-          },
-          [`:where(.${layoutClasses.DockMenuButton}:is(:hover,:focus-visible)) &`]:
+          [`.${layoutClasses.DockMenuButton}:not(:has(.${layoutClasses.DockIndicator})) &`]:
             {
-              "--active": "1",
+              display: "contents",
+              color: "inherit",
+              fontSize: "inherit",
+              lineHeight: "inherit",
             },
         }) as CSSRuleObject,
     },
