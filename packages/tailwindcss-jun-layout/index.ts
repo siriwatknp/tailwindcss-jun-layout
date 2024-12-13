@@ -2029,7 +2029,7 @@ export default plugin(function ({
         height: "var(--size)",
         borderRadius: "var(--size)",
         position: "absolute",
-        bottom: "2px",
+        bottom: "7%",
         left: "calc(50% - var(--size)/2)",
         background: theme("colors.muted.foreground"),
       }),
