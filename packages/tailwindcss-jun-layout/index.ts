@@ -1965,15 +1965,17 @@ export default plugin(function ({
         borderTop: "1px solid",
         borderColor: theme("colors.border"),
         boxShadow: theme("boxShadow.md"),
+        paddingBottom: "env(safe-area-inset-bottom)",
       }),
       [`${layoutClasses.Dock}-float`]: () => ({
         width: "fit-content",
         maxWidth: `calc(100vw - ${theme("spacing.2")})`,
         left: "50%",
-        transform: `translate(-50%, calc(-1 * max(env(safe-area-inset-bottom), ${theme("spacing.3")})))`,
         borderRadius: theme("borderRadius.xl"),
         borderWidth: "1px",
         borderStyle: "solid",
+        transform: `translate(-50%, calc(-1 * max(env(safe-area-inset-bottom), ${theme("spacing.3")})))`,
+        paddingBottom: "0px", // override the default safe-area-inset-bottom because `transform` already handle it
       }),
       [layoutClasses.DockMenu]: () => ({
         display: "flex",

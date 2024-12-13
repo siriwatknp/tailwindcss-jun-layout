@@ -165,7 +165,7 @@ function ActiveMenus() {
 export default function DockPlayground() {
   return (
     <div className="jun-layout">
-      <nav className="jun-dock jun-dock-float">
+      <nav className="jun-dock">
         <ul className="jun-dockMenu">
           <li className="jun-dockMenuItem">
             <button
