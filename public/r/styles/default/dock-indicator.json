@@ -1,0 +1,13 @@
+{
+  "name": "dock-indicator",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/dock-indicator.tsx",
+      "content": "import { Home, User, Settings, Bell } from \"lucide-react\";\n\nexport default function DockIndicatorDemo() {\n  return (\n    <div className=\"w-full max-w-[400px] border-4 rounded bg-background\">\n      <div className=\"jun-layout jun-layout-h-[240px] jun-layout-standalone overflow-hidden\">\n        <nav className=\"jun-dock jun-dock-float\">\n          <ul className=\"jun-dockMenu\">\n            <li className=\"jun-dockMenuItem\">\n              <button className=\"jun-dockMenuButton\">\n                <Home className=\"size-5\" />\n                <span className=\"jun-dockMenuText\">Home</span>\n              </button>\n            </li>\n            <li className=\"jun-dockMenuItem\">\n              <button className=\"jun-dockMenuButton\">\n                <Bell className=\"size-5\" />\n                <span className=\"jun-dockMenuText\">Notifications</span>\n              </button>\n            </li>\n            <li className=\"jun-dockMenuItem\">\n              <button className=\"jun-dockMenuButton\">\n                <User className=\"size-5\" />\n                <span className=\"jun-dockMenuText\">Profile</span>\n              </button>\n            </li>\n            <li className=\"jun-dockMenuItem\">\n              <button className=\"jun-dockMenuButton\">\n                <Settings className=\"size-5\" />\n                <span className=\"jun-dockMenuText\">Settings</span>\n              </button>\n            </li>\n          </ul>\n        </nav>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

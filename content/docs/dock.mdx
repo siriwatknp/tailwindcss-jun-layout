@@ -1,0 +1,129 @@
+---
+title: Dock (Bottom Navigation)
+description: Utilities for setting the dock of the layout
+---
+
+Dock is a bottom navigation for small to medium size app. It's a quick way to let end users go through the pages or doing some action because it always stick at the bottom of the screen.
+If you want to start quick for your app or need to provide mobile app experience, Dock is the goto component for the layout.
+
+## Basic usage
+
+Dock has a strict structure as demonstrated below. The dock is stick at the bottom with full width of the screen by default.
+
+```jsx
+<nav className="jun-dock">
+  <ul className="jun-dockMenu">
+    <li className="jun-dockMenuItem">
+      <a className="jun-dockMenuButton">
+        <Icon />
+        Menu
+      </a>
+    </li>
+  </ul>
+</nav>
+```
+
+<ComponentPreview name="standard-dock" preview />
+
+## Float dock
+
+A floating dock has the width fit to its children instead of screen width. The spacing around the dock is preserve to make it look like it's floating.
+This utility is useful for displaying the dock on large screen.
+
+```jsx
+<nav className="jun-dock jun-dock-float">
+```
+
+<ComponentPreview name="dock-float" preview />
+
+You can use Tailwind responsive utility to set the floating behavior starting from tablet screen.
+
+```jsx
+<nav className="jun-dock sm:jun-dock-float">
+```
+
+## Horizontal menu
+
+To render a menu horizontally, use `.jun-dockMenuButton-row` utility:
+
+```jsx
+<a className="jun-dockMenuButton jun-dockMenuButton-row">
+  <Icon />
+  Menu
+</a>
+```
+
+<ComponentPreview name="dock-horizontal-menu" preview />
+
+## Icon only
+
+To render only icons, remove the text and add an appropriate `aria-label` to the menu button:
+
+```jsx
+<a className="jun-dockMenuButton" aria-label="My profile">
+  <User />
+</a>
+```
+
+<ComponentPreview name="dock-icon-only" preview />
+
+## Indicator
+
+Render a span with `.jun-dockIndicator` utility to indicate that the menu button is active:
+
+```jsx
+<a className="jun-dockMenuButton">
+  <Icon />
+  Menu
+  {active && <span className="jun-dockIndicator" />}
+</a>
+```
+
+<ComponentPreview name="dock-indicator" preview />
+
+## Tooltip
+
+To add a tooltip to icon only menu, wrap the text with `.jun-dockTooltip`:
+
+```jsx
+<a className="jun-dockMenuButton">
+  <Icon />
+  <span className="jun-dockTooltip">Menu</span>
+</a>
+```
+
+<ComponentPreview name="dock-tooltip" preview />
+
+By default, the tooltip is shown regardless of the indicator. To change this behavior, use one of the option below:
+
+### Shown when no indicator
+
+Use `.jun-dockTooltip-noIndicator` utility to make the tooltip appear when there is **NO indicator** on the menu:
+
+```jsx
+<a className="jun-dockMenuButton">
+  <Icon />
+  <span className="jun-dockTooltip jun-dockTooltip-noIndicator">Menu</span>
+</a>
+```
+
+<ComponentPreview name="dock-tooltip-noIndicator" preview />
+
+### Shown when has indicator
+
+Use `.jun-dockTooltip-hasIndicator` utility to make the tooltip appear when there is **AN indicator** on the menu:
+
+```jsx
+<a className="jun-dockMenuButton">
+  <Icon />
+  <span className="jun-dockTooltip jun-dockTooltip-hasIndicator">Menu</span>
+</a>
+```
+
+<ComponentPreview name="dock-tooltip-hasIndicator" preview />
+
+## Styling examples
+
+### Custom indicator
+
+<ComponentPreview name="dock-example1" preview />

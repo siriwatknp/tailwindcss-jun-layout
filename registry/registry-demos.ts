@@ -127,4 +127,58 @@ export const demos: Registry = [
     dependencies: [],
     files: ["demo/sidebar-menu-collapsible.tsx"],
   },
+  {
+    name: "standard-dock",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/standard-dock.tsx"],
+  },
+  {
+    name: "dock-example1",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/dock-example1.tsx"],
+  },
+  {
+    name: "dock-float",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/dock-float.tsx"],
+  },
+  {
+    name: "dock-horizontal-menu",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/dock-horizontal-menu.tsx"],
+  },
+  {
+    name: "dock-icon-only",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/dock-icon-only.tsx"],
+  },
+  {
+    name: "dock-indicator",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/dock-indicator.tsx"],
+  },
+  {
+    name: "dock-tooltip-hasIndicator",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/dock-tooltip-hasIndicator.tsx"],
+  },
+  {
+    name: "dock-tooltip-noIndicator",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/dock-tooltip-noIndicator.tsx"],
+  },
+  {
+    name: "dock-tooltip",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/dock-tooltip.tsx"],
+  },
 ];

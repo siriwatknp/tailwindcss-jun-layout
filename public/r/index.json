@@ -229,5 +229,104 @@
         "type": "registry:ui"
       }
     ]
+  },
+  {
+    "name": "standard-dock",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/standard-dock.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "dock-example1",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/dock-example1.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "dock-float",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/dock-float.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "dock-horizontal-menu",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/dock-horizontal-menu.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "dock-icon-only",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/dock-icon-only.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "dock-indicator",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/dock-indicator.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "dock-tooltip-hasIndicator",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/dock-tooltip-hasIndicator.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "dock-tooltip-noIndicator",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/dock-tooltip-noIndicator.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "dock-tooltip",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/dock-tooltip.tsx",
+        "type": "registry:ui"
+      }
+    ]
   }
 ]

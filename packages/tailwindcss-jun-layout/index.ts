@@ -1966,6 +1966,9 @@ export default plugin(function ({
         borderColor: theme("colors.border"),
         boxShadow: theme("boxShadow.md"),
         paddingBottom: "env(safe-area-inset-bottom)",
+        [`:where(.${layoutClasses.Root}-standalone) &`]: {
+          position: "absolute",
+        },
       }),
       [`${layoutClasses.Dock}-float`]: () => ({
         width: "fit-content",
@@ -2014,15 +2017,6 @@ export default plugin(function ({
       [`${layoutClasses.DockMenuButton}-row`]: () => ({
         flexDirection: "row",
         columnGap: theme("spacing.1"),
-      }),
-      [`${layoutClasses.DockMenuButton}-smooth`]: () => ({
-        display: "grid",
-        gridTemplateRows: "auto 1fr",
-        transition: "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
-        [`&.${layoutClasses.DockMenuButton}-row`]: {
-          gridTemplateColumns: "auto auto",
-          justifyItems: "center",
-        },
       }),
       [layoutClasses.DockIndicator]: () => ({
         "--size": "4px",

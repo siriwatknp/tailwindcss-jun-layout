@@ -236,6 +236,105 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
+    "standard-dock": {
+      name: "standard-dock",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/standard-dock.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/standard-dock.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "dock-example1": {
+      name: "dock-example1",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/dock-example1.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/dock-example1.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "dock-float": {
+      name: "dock-float",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/dock-float.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/dock-float.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "dock-horizontal-menu": {
+      name: "dock-horizontal-menu",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/dock-horizontal-menu.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/dock-horizontal-menu.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "dock-icon-only": {
+      name: "dock-icon-only",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/dock-icon-only.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/dock-icon-only.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "dock-indicator": {
+      name: "dock-indicator",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/dock-indicator.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/dock-indicator.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "dock-tooltip-hasIndicator": {
+      name: "dock-tooltip-hasIndicator",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/dock-tooltip-hasIndicator.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/dock-tooltip-hasIndicator.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "dock-tooltip-noIndicator": {
+      name: "dock-tooltip-noIndicator",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/dock-tooltip-noIndicator.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/dock-tooltip-noIndicator.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "dock-tooltip": {
+      name: "dock-tooltip",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/dock-tooltip.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/dock-tooltip.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
     "utils": {
       name: "utils",
       type: "registry:lib",
