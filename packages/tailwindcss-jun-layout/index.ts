@@ -51,6 +51,13 @@ const layoutClasses = {
   DockMenuButton: "jun-dockMenuButton",
   DockIndicator: "jun-dockIndicator",
   DockTooltip: "jun-dockTooltip",
+  Card: "jun-card",
+  CardContent: "jun-cardContent",
+  CardCover: "jun-cardCover",
+  CardOverlay: "jun-cardOverlay",
+  CardMedia: "jun-cardMedia",
+  CardOverflow: "jun-cardOverflow",
+  CardActions: "jun-cardActions",
 };
 
 function internalCollapseSidebar(options: {
@@ -2091,6 +2098,329 @@ export default plugin(function ({
     {
       values: {
         DEFAULT: true,
+      },
+    }
+  );
+
+  matchComponents(
+    {
+      [layoutClasses.Card]: () => ({
+        // sizing
+        "--p": "1rem",
+        "--b-radius": "var(--radius, 0.25rem)", // --radius from shadcn
+
+        // variant
+        "--bg": "transparent",
+        "--b-width": "1px",
+        "--b-color": "hsl(var(--border, 240 5.9% 90%))", // --border from shadcn
+        "--color": "",
+        "--shadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+
+        // direction
+        "--gap": "0.75rem 1rem",
+
+        // Context variables for child components
+        "--child-radius":
+          "max((var(--b-radius) - var(--b-width, 0px)) - var(--p), min(var(--p) / 2, (var(--b-radius) - var(--b-width, 0px)) / 2))",
+        "--child-overflow": "calc(-1 * var(--p))",
+        "--in-radius": "calc(var(--b-radius) - var(--b-width))",
+        "--card-p": "var(--p)",
+
+        // cyclic toggle
+        "--dir": "var(--col)",
+        "--col": "var(--dir,)",
+        "--row": "var(--dir,)",
+
+        padding: "var(--p)",
+        borderRadius: "var(--b-radius)",
+        background: "var(--bg)",
+        border: "var(--b-width) solid",
+        borderColor: "var(--b-color)",
+        color: "var(--color)",
+        position: "relative",
+        display: "flex",
+        flexDirection: "var(--col, column) var(--row, row)",
+        gap: "var(--gap)",
+        boxShadow: "var(--shadow)",
+      }),
+      [layoutClasses.CardOverflow]: () => ({
+        "--b-radius": "var(--in-radius)",
+        "--rtl": "var(--edge)",
+        "--rtr": "var(--edge)",
+        "--rbr": "var(--edge)",
+        "--rbl": "var(--edge)",
+        "--edge": "var(--b-radius)",
+        "--m": "var(--child-overflow)",
+
+        alignSelf: "stretch",
+        borderRadius: "var(--rtl) var(--rtr) var(--rbr) var(--rbl)",
+        marginTop: "var(--mt, var(--m))",
+        marginRight: "var(--mr, var(--m))",
+        marginBottom: "var(--mb, var(--m))",
+        marginLeft: "var(--ml, var(--m))",
+        flexBasis: "content",
+
+        "&:first-child": {
+          "--mb": "var(--col, 0) var(--row, var(--m))",
+          "--mr": "var(--row, 0) var(--col, var(--m))",
+          "--rbl": "var(--col, var(--edge)) var(--row, var(--b-radius))",
+          "--rbr": "var(--col, var(--edge)) var(--row, var(--edge))",
+          "--rtr": "var(--row, var(--edge)) var(--col, var(--b-radius))",
+          "--rtl": "var(--b-radius)",
+        },
+        "&:last-child": {
+          "--mt": "var(--col, 0) var(--row, var(--m))",
+          "--ml": "var(--row, 0) var(--col, var(--m))",
+          "--rtl": "var(--col, var(--edge)) var(--row, var(--edge))",
+          "--rtr": "var(--col, var(--edge)) var(--row, var(--b-radius))",
+          "--rbl": "var(--row, var(--edge)) var(--col, var(--b-radius))",
+          "--rbr": "var(--b-radius)",
+        },
+        "&:not(:first-child):not(:last-child)": {
+          "--ml": "var(--col, var(--m)) var(--row, 0)",
+          "--mr": "var(--col, var(--m)) var(--row, 0)",
+          "--mt": "var(--col, 0) var(--row, var(--m))",
+          "--mb": "var(--col, 0) var(--row, var(--m))",
+        },
+      }),
+      [layoutClasses.CardMedia]: () =>
+        ({
+          "--min-h": "",
+          "--max-h": "",
+          "--min-w": "",
+          "--max-w": "",
+          "--max-col": "",
+
+          borderRadius:
+            "var(--rtl, var(--child-radius)) var(--rtr, var(--child-radius)) var(--rbr, var(--child-radius)) var(--rbl, var(--child-radius))",
+          overflow: "hidden",
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          flex: "var(--row, 0.33)",
+          minHeight: "var(--min-h)",
+          maxHeight: "var(--max-h)",
+          minWidth: "var(--min-w)",
+          maxWidth: "var(--max-w)",
+
+          "& img, & video": {
+            width: "100%",
+            height: "100%",
+            "&:not([class])": {
+              objectFit: "cover",
+            },
+          },
+
+          [`:where(.${layoutClasses.Card}) > &, :where(.${layoutClasses.Card} > .${layoutClasses.CardOverflow}) &`]:
+            {
+              "--min-h": "var(--col, var(--min-col))",
+              "--max-h": "var(--col, var(--max-col))",
+              "--min-w": "var(--row, var(--min-row))",
+              "--max-w": "var(--row, var(--max-row))",
+            },
+        }) as CSSRuleObject,
+      [layoutClasses.CardContent]: () =>
+        ({
+          flex: "1",
+          display: "flex",
+          flexDirection: "column",
+          zIndex: "1",
+        }) as CSSRuleObject,
+      [layoutClasses.CardCover]: () =>
+        ({
+          "--b-radius": "var(--in-radius)",
+          position: "absolute",
+          zIndex: "0",
+          inset: "0",
+          borderRadius: "var(--b-radius)",
+
+          "& :first-child": {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            boxSizing: "border-box",
+            borderRadius: "var(--b-radius)",
+            margin: "0",
+            padding: "0",
+
+            "& > img": {
+              width: "100%",
+              height: "100%",
+              "&:not([class])": {
+                objectFit: "cover",
+              },
+            },
+          },
+          [`:where(.${layoutClasses.CardMedia}) > &`]: {
+            borderRadius: "var(--child-radius)",
+          },
+        }) as CSSRuleObject,
+      [layoutClasses.CardOverlay]: () =>
+        ({
+          "--bg": "",
+          "--bg-hover": "",
+          "--bg-focus": "",
+          display: "block",
+          position: "absolute",
+          inset: "0",
+          borderRadius: "var(--in-radius)",
+          outline: "var(--outline)",
+          outlineOffset: "var(--o-offset)",
+          background: "var(--bg-state, var(--bg))",
+          transition: "background 0.2s",
+
+          "@media (hover: hover)": {
+            "&:hover": {
+              "--bg-state": "var(--bg-hover)",
+            },
+          },
+          ":focus-visible > &": {
+            outline: "2px solid currentColor",
+            outlineOffset: "2px",
+            "--bg-state": "var(--bg-focus)",
+          },
+          ":has(> &):focus-visible": {
+            // the parent should not have outline because the overlay already has
+            outline: "none",
+          },
+        }) as CSSRuleObject,
+      [layoutClasses.CardActions]: () =>
+        ({
+          "--pt": "calc(var(--card-p) / 2)",
+          "--pl": "0",
+          "--mt": "",
+          "--child-flex": "",
+
+          "--actions-dir": "var(--actions-row)",
+          "--actions-col": "var(--actions-dir,)",
+          "--actions-row": "var(--actions-dir,)",
+
+          display: "flex",
+          flexDirection: "var(--actions-col, column)",
+          alignItems: "var(--actions-row, center)",
+          gap: "calc(var(--card-p) / 2)",
+          paddingTop: "var(--pt)",
+          paddingLeft: "var(--pl)",
+          flexWrap: "wrap",
+          marginTop: "var(--mt)",
+
+          "& > *": {
+            flex: "var(--child-flex)",
+          },
+          [`:where(.${layoutClasses.Card}) > &:last-child`]: {
+            "--pl": "var(--col, 0) var(--row, calc(var(--card-p) / 2))",
+            "--pt": "var(--row, 0) var(--col, calc(var(--card-p) / 2))",
+          },
+          [`:where(.${layoutClasses.CardContent}) > &:last-child`]: {
+            "--mt": "auto",
+          },
+        }) as CSSRuleObject,
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+
+  matchUtilities(
+    {
+      [`${layoutClasses.Card}-row`]: () => ({
+        "--dir": "var(--row,)",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.Card}-rounded`]: (radius) => ({
+        "--b-radius": radius,
+      }),
+    },
+    {
+      values: theme("borderRadius"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.CardActions}-col`]: () => ({
+        "--actions-dir": "var(--actions-col,)",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.CardActions}-equalSize`]: () => ({
+        "--child-flex": "1 1 max-content",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.CardOverflow}-rounded`]: (value) => ({
+        "--edge": value,
+      }),
+    },
+    {
+      values: theme("borderRadius"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.CardMedia}-minSize`]: (size) => ({
+        "--min-col": size,
+        "--min-row": size,
+      }),
+      [`${layoutClasses.CardMedia}-minColSize`]: (size) => ({
+        "--min-col": size,
+      }),
+      [`${layoutClasses.CardMedia}-minRowSize`]: (size) => ({
+        "--min-row": size,
+      }),
+      [`${layoutClasses.CardMedia}-maxSize`]: (size) => ({
+        "--max-col": size,
+        "--max-row": size,
+      }),
+      [`${layoutClasses.CardMedia}-maxColSize`]: (size) => ({
+        "--max-col": size,
+      }),
+      [`${layoutClasses.CardMedia}-maxRowSize`]: (size) => ({
+        "--max-row": size,
+      }),
+    },
+    {
+      values: {
+        DEFAULT: "240px",
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.CardOverlay}-interactive`]: (color) => ({
+        "--bg-hover": color,
+        "--bg-focus": "var(--bg-hover)",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: "color-mix(in srgb, hsl(var(--border)) 12%, transparent)",
       },
     }
   );
