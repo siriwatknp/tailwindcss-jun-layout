@@ -96,6 +96,10 @@ export const docsConfig: DocsConfig = {
           href: "/examples/chat",
         },
         {
+          title: "Dashboard",
+          href: "/examples/dashboard",
+        },
+        {
           title: "Ecommerce",
           href: "/examples/ecommerce",
         },
@@ -118,12 +122,6 @@ export const docsConfig: DocsConfig = {
         {
           title: "Chat application",
           href: "/examples/chat-application",
-          label: "Soon",
-          disabled: true,
-        },
-        {
-          title: "Dashboard",
-          href: "/examples/dashboard",
           label: "Soon",
           disabled: true,
         },
