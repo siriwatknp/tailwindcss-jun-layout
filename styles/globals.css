@@ -1,6 +1,10 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @config '../tailwind.config.cjs';
+@plugin 'tailwindcss-animate';
+@plugin '../packages/tailwindcss-jun-layout';
+
+@source './mdx.css';
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,

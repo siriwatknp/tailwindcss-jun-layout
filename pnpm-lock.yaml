@@ -65,9 +65,6 @@ importers:
       '@t3-oss/env-nextjs':
         specifier: ^0.7.1
         version: 0.7.3(typescript@5.3.3)(zod@3.23.8)
-      '@tailwindcss/container-queries':
-        specifier: 0.1.1
-        version: 0.1.1(tailwindcss@4.0.0)
       '@types/lodash.template':
         specifier: ^4.5.3
         version: 4.5.3
@@ -1921,11 +1918,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  '@tailwindcss/container-queries@0.1.1':
-    resolution: {integrity: sha512-p18dswChx6WnTSaJCSGx6lTmrGzNNvm2FtXmiO6AuA1V4U5REyoqwmT6kgAsIMdjo07QdAfYXHJ4hnMtfHzWgA==}
-    peerDependencies:
-      tailwindcss: '>=3.2.0'
 
   '@tailwindcss/node@4.0.1':
     resolution: {integrity: sha512-lc+ly6PKHqgCVl7eO8D2JlV96Lks5bmL6pdtM6UasyUHLU2zmrOqU6jfgln120IVnCh3VC8GG/ca24xVTtSokw==}
@@ -6858,10 +6850,6 @@ snapshots:
       zod: 3.23.8
     optionalDependencies:
       typescript: 5.3.3
-
-  '@tailwindcss/container-queries@0.1.1(tailwindcss@4.0.0)':
-    dependencies:
-      tailwindcss: 4.0.0
 
   '@tailwindcss/node@4.0.1':
     dependencies:
