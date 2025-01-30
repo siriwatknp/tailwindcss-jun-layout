@@ -157,7 +157,7 @@ export default function PlaygroundPage() {
         `}
         >
           <div className="jun-edgeContent">
-            {/* <div className="jun-sidebarContainer flex-1 min-h-0 shadow border rounded bg-sidebar"> */}
+            {/* <div className="jun-sidebarContainer flex-1 min-h-0 shadow-sm border rounded bg-sidebar"> */}
             <div className="jun-sidebarContainer">
               <div className="flex flex-col p-2">
                 {/* App Switcher */}
@@ -181,7 +181,7 @@ export default function PlaygroundPage() {
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
-                    className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                    className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                     align="start"
                     side="bottom"
                     sideOffset={4}
@@ -328,7 +328,7 @@ export default function PlaygroundPage() {
                         </button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
-                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                        className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                         side="bottom"
                         align="end"
                         sideOffset={4}
@@ -438,7 +438,7 @@ export default function PlaygroundPage() {
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                      className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                      className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                       align="start"
                       side="bottom"
                       sideOffset={4}
@@ -550,7 +550,7 @@ export default function PlaygroundPage() {
                           </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
-                          className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                          className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                           side="bottom"
                           align="end"
                           sideOffset={4}

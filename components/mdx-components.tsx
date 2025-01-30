@@ -112,7 +112,7 @@ const components = {
   ),
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
-      className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}
+      className={cn("leading-7 not-first:mt-6", className)}
       {...props}
     />
   ),
@@ -273,7 +273,7 @@ const components = {
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        "relative rounded [&:not(:has(span))]:bg-sky-50 [&:not(:has(span))]:text-sky-600 [&:not(:has(span))]:dark:bg-sky-950 [&:not(:has(span))]:dark:text-sky-200 px-[0.3rem] py-[0.2rem] font-mono text-sm font-medium",
+        "relative rounded [&:not(:has(span))]:bg-sky-50 [&:not(:has(span))]:text-sky-600 dark:[&:not(:has(span))]:bg-sky-950 dark:[&:not(:has(span))]:text-sky-200 px-[0.3rem] py-[0.2rem] font-mono text-sm font-medium",
         className
       )}
       {...props}
@@ -282,7 +282,7 @@ const components = {
   LinkedCard: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
     <Link
       className={cn(
-        "flex w-full flex-col items-center rounded-xl border bg-card p-6 text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-10",
+        "flex w-full flex-col items-center rounded-xl border bg-card p-6 text-card-foreground shadow-sm transition-colors hover:bg-muted/50 sm:p-10",
         className
       )}
       {...props}

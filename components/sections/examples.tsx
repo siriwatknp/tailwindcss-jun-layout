@@ -41,13 +41,13 @@ export default function Examples() {
       ) ?? [];
 
   return (
-    <section className="container max-w-screen-xl px-4 py-16">
+    <section className="container max-w-(--breakpoint-xl) px-4 py-16">
       <div className="mb-16 text-center">
         <div className="flex justify-center">
           <AnchorHeading id="examples">
             <h2
               id="examples"
-              className="scroll-m-20 text-balance bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl"
+              className="scroll-m-20 text-balance bg-linear-to-br from-foreground to-foreground/70 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl"
             >
               Layout Examples
             </h2>

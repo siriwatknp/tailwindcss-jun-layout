@@ -54,7 +54,7 @@ export default function Hero() {
                         variant: "default",
                         size: "lg",
                       }),
-                      "w-full gap-2 bg-gradient-to-r from-violet-600 to-indigo-600"
+                      "w-full gap-2 bg-linear-to-r from-violet-600 to-indigo-600"
                     )}
                   >
                     Get Started

@@ -105,7 +105,7 @@ export default function ChatExample() {
           <input
             type="text"
             placeholder="Type a message..."
-            className="flex-1 rounded-lg border dark:border-gray-700 px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100"
+            className="flex-1 rounded-lg border dark:border-gray-700 px-4 py-2 outline-hidden focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100"
           />
           <button className="inline-flex items-center rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
             <span className="inline-block h-4 w-10 rounded bg-white/20 dark:bg-white/30" />

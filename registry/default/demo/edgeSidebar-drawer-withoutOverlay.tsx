@@ -22,7 +22,7 @@ export default function EdgeSidebarDrawerDemo() {
           id="edgeSidebar-drawer-withoutOverlay-demo"
           className="jun-edgeSidebar jun-edgeSidebar-drawer jun-edgeSidebar-drawer-withoutOverlay"
         >
-          <div className="jun-edgeContent bg-sidebar border-r shadow">
+          <div className="jun-edgeContent bg-sidebar border-r shadow-sm">
             <div className="p-4 space-y-2">
               <div className="h-4 w-32 rounded bg-muted" />
               <div className="h-4 w-24 rounded bg-muted" />
