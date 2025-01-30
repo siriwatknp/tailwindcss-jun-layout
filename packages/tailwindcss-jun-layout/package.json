@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/siriwatknp/jun-ui",
+    "url": "https://github.com/siriwatknp/tailwindcss-jun-layout",
     "directory": "packages/tailwindcss-jun-layout"
   },
   "files": [
