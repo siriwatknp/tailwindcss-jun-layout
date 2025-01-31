@@ -191,7 +191,7 @@ importers:
         version: 4.0.0
       '@tailwindcss/typography':
         specifier: ^0.5.9
-        version: 0.5.10(tailwindcss@4.0.0)
+        version: 0.5.10(tailwindcss@0.0.0-insiders.88c8906)
       '@types/canvas-confetti':
         specifier: ^1.6.4
         version: 1.6.4
@@ -224,7 +224,7 @@ importers:
         version: 7.33.2(eslint@8.57.1)
       eslint-plugin-tailwindcss:
         specifier: 3.13.1
-        version: 3.13.1(tailwindcss@4.0.0)
+        version: 3.13.1(tailwindcss@0.0.0-insiders.88c8906)
       husky:
         specifier: ^9.0.11
         version: 9.0.11
@@ -268,11 +268,11 @@ importers:
         specifier: ^1.20.0
         version: 1.20.0
       tailwindcss:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 0.0.0-insiders.88c8906
+        version: 0.0.0-insiders.88c8906
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@4.0.0)
+        version: 1.0.7(tailwindcss@0.0.0-insiders.88c8906)
       tsx:
         specifier: ^4.11.0
         version: 4.11.0
@@ -4878,6 +4878,9 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
+  tailwindcss@0.0.0-insiders.88c8906:
+    resolution: {integrity: sha512-lhCZkxyzzFqIy6EBLzms8Df4HvihbgZCvTdC2S9VcpGXt5X/sa1cw6KNFb82bmPthdOo0B7EcisERhM8+LtBOA==}
+
   tailwindcss@4.0.0:
     resolution: {integrity: sha512-ULRPI3A+e39T7pSaf1xoi58AqqJxVCLg8F/uM5A3FadUbnyDTgltVnXJvdkTjwCOGA6NazqHVcwPJC5h2vRYVQ==}
 
@@ -6913,13 +6916,13 @@ snapshots:
       postcss: 8.5.1
       tailwindcss: 4.0.0
 
-  '@tailwindcss/typography@0.5.10(tailwindcss@4.0.0)':
+  '@tailwindcss/typography@0.5.10(tailwindcss@0.0.0-insiders.88c8906)':
     dependencies:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 4.0.0
+      tailwindcss: 0.0.0-insiders.88c8906
 
   '@trysound/sax@0.2.0': {}
 
@@ -7893,11 +7896,11 @@ snapshots:
       semver: 6.3.1
       string.prototype.matchall: 4.0.10
 
-  eslint-plugin-tailwindcss@3.13.1(tailwindcss@4.0.0):
+  eslint-plugin-tailwindcss@3.13.1(tailwindcss@0.0.0-insiders.88c8906):
     dependencies:
       fast-glob: 3.3.2
       postcss: 8.4.39
-      tailwindcss: 4.0.0
+      tailwindcss: 0.0.0-insiders.88c8906
 
   eslint-scope@7.2.2:
     dependencies:
@@ -10518,9 +10521,11 @@ snapshots:
 
   tailwind-merge@2.4.0: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@4.0.0):
+  tailwindcss-animate@1.0.7(tailwindcss@0.0.0-insiders.88c8906):
     dependencies:
-      tailwindcss: 4.0.0
+      tailwindcss: 0.0.0-insiders.88c8906
+
+  tailwindcss@0.0.0-insiders.88c8906: {}
 
   tailwindcss@4.0.0: {}
 

@@ -220,12 +220,6 @@ export default plugin(function ({
   const SIDEBAR_WIDTH = "var(--sidebar-width, 16rem)";
   const SIDEBAR_WIDTH_MOBILE = "18rem";
 
-  addComponents({
-    ".custom-component-hey": {
-      color: "red",
-    },
-  });
-
   // Root
   matchUtilities(
     {
