@@ -7,13 +7,13 @@ description: Learn how to install and set up Jun Layout, a Tailwind CSS plugin f
 
 Ensure you have the following installed:
 
-- [Tailwind CSS v3](https://tailwindcss.com/) or [v4-beta](https://tailwindcss.com/docs/v4-beta)
+- [Tailwind CSS v3](https://tailwindcss.com/) or [>=v4.0.3](https://tailwindcss.com/docs/installation/)
 - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
 
 ## Installation
 
 ```bash
-npm install -D tailwindcss-jun-layout
+npm install tailwindcss-jun-layout
 ```
 
 ### Tailwind CSS v3
@@ -34,6 +34,12 @@ module.exports = {
 ```
 
 ### Tailwind CSS v4
+
+<Callout title="⚠️ Important">
+  Required at least v4.0.3 because the version lower has [a
+  bug](https://github.com/tailwindlabs/tailwindcss/issues/16100) related to CSS
+  variables.
+</Callout>
 
 Use the new [`@plugin` directive](https://tailwindcss.com/docs/v4-beta#using-plugins) in your main CSS file:
 

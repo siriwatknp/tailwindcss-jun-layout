@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/siriwatknp/jun-ui",
+    "url": "https://github.com/siriwatknp/tailwindcss-jun-layout",
     "directory": "packages/tailwindcss-jun-layout"
   },
   "files": [
@@ -36,11 +36,11 @@
     "test": "vitest run"
   },
   "peerDependencies": {
-    "tailwindcss": "^3"
+    "tailwindcss": ">=3.0.0 <4.0.0 || >=4.0.3"
   },
   "devDependencies": {
     "tsup": "^6.6.3",
     "typescript": "^4.9.3",
-    "tailwindcss": "^3"
+    "tailwindcss": ">=3.0.0 <4.0.0 || >=4.0.3"
   }
 }
