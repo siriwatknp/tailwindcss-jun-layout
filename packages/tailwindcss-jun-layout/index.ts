@@ -683,6 +683,12 @@ export default plugin(function ({
       [layoutClasses.EdgeSidebarUncollapsedVisible]: () => ({
         boxSizing: "border-box",
       }),
+      [layoutClasses.DrawerOpenVisible]: () => ({
+        boxSizing: "border-box",
+      }),
+      [layoutClasses.DrawerClosedVisible]: () => ({
+        boxSizing: "border-box",
+      }),
     },
     {
       values: {
@@ -729,6 +735,12 @@ export default plugin(function ({
               "--jun-ES-drawerWidth": SIDEBAR_WIDTH_MOBILE,
             },
         }) as CSSRuleObject,
+      [`${layoutClasses.EdgeSidebar}-drawer-showHeader`]: () => ({
+        "--drawer-h": "calc(var(--jun-h) - var(--jun-H-h))",
+        "&::before": {
+          top: "var(--jun-H-h)",
+        },
+      }),
     },
     {
       values: {
@@ -1088,6 +1100,12 @@ export default plugin(function ({
               "--jun-ES-drawerWidth": SIDEBAR_WIDTH_MOBILE,
             },
         }) as CSSRuleObject,
+      [`${layoutClasses.EdgeSidebarRight}-drawer-showHeader`]: () => ({
+        "--drawer-h": "calc(var(--jun-h) - var(--jun-H-h))",
+        "&::before": {
+          top: "var(--jun-H-h)",
+        },
+      }),
     },
     {
       values: {
