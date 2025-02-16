@@ -415,11 +415,11 @@ export default function Dashboard() {
         className="jun-edgeSidebar jun-edgeSidebar-w-[260px] jun-edgeSidebar-drawer jun-edgeSidebar-drawer-showHeader md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[55px] jun-edgeSidebar-permanent-hoverUncollapse"
       >
         <div className="jun-edgeContent">
-          <div className="min-h-[60px] border-b border-sidebar-border flex items-center justify-center @container">
-            <h1 className="text-md font-medium hidden @[60px]:block">
+          <div className="min-h-[60px] border-b border-sidebar-border flex items-center justify-center">
+            <h1 className="text-md font-medium jun-edgeUncollapsed-visible">
               someone@gmail.com
             </h1>
-            <div className="w-8 h-8 rounded-full bg-blue-600 flex @[60px]:hidden items-center justify-center text-white font-medium">
+            <div className="jun-edgeCollapsed-visible w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
               SK
             </div>
           </div>

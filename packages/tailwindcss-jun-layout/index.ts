@@ -208,6 +208,11 @@ const NESTED_RIGHT_COLLAPSER = `.${layoutClasses.Root} .${layoutClasses.Root} .$
 const NESTED_DRAWER_TRIGGER = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.DrawerEdgeSidebarTrigger}`;
 const NESTED_RIGHT_DRAWER_TRIGGER = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.DrawerEdgeSidebarRightTrigger}`;
 
+const COLLAPSE_VISIBLE = `.${layoutClasses.EdgeSidebarCollapsedVisible}`;
+const NESTED_COLLAPSE_VISIBLE = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.EdgeSidebarCollapsedVisible}`;
+const UNCOLLAPSE_VISIBLE = `.${layoutClasses.EdgeSidebarUncollapsedVisible}`;
+const NESTED_UNCOLLAPSE_VISIBLE = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.EdgeSidebarUncollapsedVisible}`;
+
 export default plugin(function ({
   addComponents,
   matchComponents,
@@ -560,14 +565,16 @@ export default plugin(function ({
               {
                 display: "var(--display, inline-flex)",
                 "--_sidebarCollapsed": "var(--collapsed, 1)",
-                [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
-                  display:
-                    "var(--collapsed, none) var(--uncollapsed, inline-block)",
-                },
-                [`.${layoutClasses.EdgeSidebarCollapsedVisible}`]: {
-                  display:
-                    "var(--collapsed, inline-block) var(--uncollapsed, none)",
-                },
+              },
+            [`&:is(${NESTED_LAYOUT}) ${COLLAPSE_VISIBLE}, ${COLLAPSE_VISIBLE}:not(${NESTED_COLLAPSE_VISIBLE})`]:
+              {
+                display:
+                  "var(--collapsed, inline-flex) var(--uncollapsed, none)",
+              },
+            [`&:is(${NESTED_LAYOUT}) ${UNCOLLAPSE_VISIBLE}, ${UNCOLLAPSE_VISIBLE}:not(${NESTED_UNCOLLAPSE_VISIBLE})`]:
+              {
+                display:
+                  "var(--collapsed, none) var(--uncollapsed, inline-flex)",
               },
           },
 
@@ -1007,14 +1014,16 @@ export default plugin(function ({
               {
                 display: "var(--display, inline-flex)",
                 "--_sidebarCollapsed": "var(--collapsed-R, 1)",
-                [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
-                  display:
-                    "var(--collapsed-R, none) var(--uncollapsed-R, inline-block)",
-                },
-                [`.${layoutClasses.EdgeSidebarCollapsedVisible}`]: {
-                  display:
-                    "var(--collapsed-R, inline-block) var(--uncollapsed-R, none)",
-                },
+              },
+            [`&:is(${NESTED_LAYOUT}) ${COLLAPSE_VISIBLE}, ${COLLAPSE_VISIBLE}:not(${NESTED_COLLAPSE_VISIBLE})`]:
+              {
+                display:
+                  "var(--collapsed-R, inline-flex) var(--uncollapsed-R, none)",
+              },
+            [`&:is(${NESTED_LAYOUT}) ${UNCOLLAPSE_VISIBLE}, ${UNCOLLAPSE_VISIBLE}:not(${NESTED_UNCOLLAPSE_VISIBLE})`]:
+              {
+                display:
+                  "var(--collapsed-R, none) var(--uncollapsed-R, inline-flex)",
               },
           },
 
