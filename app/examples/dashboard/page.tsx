@@ -415,11 +415,11 @@ export default function Dashboard() {
         className="jun-edgeSidebar jun-edgeSidebar-w-[260px] jun-edgeSidebar-drawer jun-edgeSidebar-drawer-showHeader md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[55px] jun-edgeSidebar-permanent-hoverUncollapse"
       >
         <div className="jun-edgeContent">
-          <div className="min-h-[60px] border-b border-sidebar-border flex items-center justify-center">
-            <h1 className="text-md font-medium jun-edgeUncollapsed-visible">
+          <div className="min-h-[60px] border-b border-sidebar-border flex items-center justify-center @container">
+            <h1 className="text-md font-medium hidden @[100px]:block">
               someone@gmail.com
             </h1>
-            <div className="jun-edgeCollapsed-visible w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
+            <div className="w-8 h-8 rounded-full bg-blue-600 flex @[100px]:hidden items-center justify-center text-white font-medium">
               SK
             </div>
           </div>
@@ -500,6 +500,45 @@ export default function Dashboard() {
           </h2>
         </div>
       </main>
+
+      <footer className="jun-footer min-h-[60px]">
+        <div className="container h-full py-4 flex flex-wrap items-center justify-center gap-y-4 text-sm">
+          <a href="#" className="hover:underline text-sidebar-foreground px-4">
+            Support
+          </a>
+          <a
+            href="#"
+            className="hover:underline text-sidebar-foreground px-4 border-l border-sidebar-border"
+          >
+            System Status
+          </a>
+          <a
+            href="#"
+            className="hover:underline text-sidebar-foreground px-4 border-l border-sidebar-border"
+          >
+            Careers
+          </a>
+          <a
+            href="#"
+            className="hover:underline text-sidebar-foreground px-4 border-l border-sidebar-border"
+          >
+            Terms of Use
+          </a>
+          <a
+            href="#"
+            className="hover:underline text-sidebar-foreground px-4 border-l border-sidebar-border"
+          >
+            Report Security Issues
+          </a>
+          <a
+            href="#"
+            className="hover:underline text-sidebar-foreground px-4 border-l border-sidebar-border"
+          >
+            Privacy Policy
+          </a>
+          <div>© 2025 3Portals, Inc.</div>
+        </div>
+      </footer>
     </div>
   );
 }
