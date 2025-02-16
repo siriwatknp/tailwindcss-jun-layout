@@ -66,7 +66,7 @@ Use `.jun-sidebarMenu` to create a list of menus, each menu button should be wra
 </ul>
 ```
 
-### Menu Groups
+### Group of menus
 
 <img
   src="https://github.com/user-attachments/assets/3215423a-1cb6-4eea-b4b5-f67234ad4bc6"
@@ -336,4 +336,167 @@ The order must strictly follow:
   {/* Nested menu wrapped in collapsible content */}
   <div className="jun-collapsibleContent">...</div>
 </li>
+```
+
+## Examples
+
+### Flat menus
+
+<ComponentPreview preview name="examples-flat-menus" />
+
+```tsx
+<div className="jun-edgeContent bg-sidebar">
+  <div className="jun-sidebarContainer">
+    <ul className="jun-sidebarMenu">
+      <li className="jun-sidebarMenuItem">
+        <button className="jun-sidebarMenuButton">
+          <Home className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+          <span className="jun-sidebarText">Home</span>
+        </button>
+      </li>
+      ...items
+    </ul>
+  </div>
+</div>
+```
+
+### Group menus
+
+<ComponentPreview preview name="examples-group-menus" />
+
+```tsx
+<div className="jun-sidebarContainer">
+  <div className="jun-sidebarGroup">
+    <div className="jun-sidebarGroupLabel">Main</div>
+    <ul className="jun-sidebarMenu">
+      <li className="jun-sidebarMenuItem">
+        <button className="jun-sidebarMenuButton">
+          <Home className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+          <span className="jun-sidebarText">Home</span>
+        </button>
+      </li>
+      <li className="jun-sidebarMenuItem">
+        <button className="jun-sidebarMenuButton">
+          <Users className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+          <span className="jun-sidebarText">Users</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+  ...groups
+</div>
+```
+
+### Collapsible menus
+
+<ComponentPreview preview name="examples-collapsible-menus" />
+
+```tsx
+<div className="jun-sidebarContainer">
+  <ul className="jun-sidebarMenu">
+    <li className="jun-sidebarMenuItem">
+      <label
+        htmlFor="menu-home"
+        className="jun-sidebarMenuButton jun-collapsibleTrigger"
+      >
+        <Home className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+        <span className="jun-sidebarText">Home</span>
+        <ChevronDown className="size-4 jun-collapsibleIcon jun-collapsibleIcon-rotate-180" />
+        <input
+          type="checkbox"
+          className="sr-only"
+          id="menu-home"
+          defaultChecked
+        />
+      </label>
+
+      <div className="jun-collapsibleContent">
+        <div>
+          <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
+            <li className="jun-sidebarMenuItem">
+              <button className="jun-sidebarMenuButton">
+                <Users className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+                <span className="jun-sidebarText">Users</span>
+              </button>
+            </li>
+            <li className="jun-sidebarMenuItem">
+              <button className="jun-sidebarMenuButton">
+                <FileText className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+                <span className="jun-sidebarText">Documents</span>
+              </button>
+            </li>
+            <li className="jun-sidebarMenuItem">
+              <button className="jun-sidebarMenuButton">
+                <Settings className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+                <span className="jun-sidebarText">Settings</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    ...collapsible items
+  </ul>
+</div>
+```
+
+### Collapsible menus (secondary action)
+
+<ComponentPreview preview name="examples-collapsible-menus-secondary-action" />
+
+```tsx
+<div className="jun-sidebarContainer">
+  <ul className="jun-sidebarMenu">
+    <li className="jun-sidebarMenuItem">
+      <button className="jun-sidebarMenuButton">
+        <Home className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+        <span className="jun-sidebarText">Home</span>
+      </button>
+
+      <label className="jun-sidebarMenuAction jun-collapsibleTrigger">
+        <ChevronDown className="size-4 jun-collapsibleIcon jun-collapsibleIcon-rotate-180" />
+        <input
+          type="checkbox"
+          className="sr-only"
+          id="menu-home"
+          defaultChecked
+        />
+      </label>
+
+      <div className="jun-collapsibleContent">
+        <div>
+          <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
+            <li className="jun-sidebarMenuItem">
+              <button className="jun-sidebarMenuButton">
+                <Users className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+                <span className="jun-sidebarText">Users</span>
+              </button>
+              <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
+                <MoreVertical />
+              </button>
+            </li>
+            <li className="jun-sidebarMenuItem">
+              <button className="jun-sidebarMenuButton">
+                <FileText className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+                <span className="jun-sidebarText">Documents</span>
+              </button>
+              <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
+                <MoreVertical />
+              </button>
+            </li>
+            <li className="jun-sidebarMenuItem">
+              <button className="jun-sidebarMenuButton">
+                <Settings className="jun-sidebarIcon jun-sidebarIcon-shrink-size-5" />
+                <span className="jun-sidebarText">Settings</span>
+              </button>
+              <button className="jun-sidebarMenuAction jun-sidebarMenuAction-hoverAppear">
+                <MoreVertical />
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 ```

@@ -328,5 +328,49 @@
         "type": "registry:ui"
       }
     ]
+  },
+  {
+    "name": "examples-flat-menus",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/examples-flat-menus.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "examples-group-menus",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/examples-group-menus.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "examples-collapsible-menus",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/examples-collapsible-menus.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "examples-collapsible-menus-secondary-action",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/examples-collapsible-menus-secondary-action.tsx",
+        "type": "registry:ui"
+      }
+    ]
   }
 ]

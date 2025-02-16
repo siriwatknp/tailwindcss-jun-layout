@@ -335,6 +335,50 @@ export const Index: Record<string, any> = {
       subcategory: "undefined",
       chunks: []
     },
+    "examples-flat-menus": {
+      name: "examples-flat-menus",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/examples-flat-menus.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/examples-flat-menus.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "examples-group-menus": {
+      name: "examples-group-menus",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/examples-group-menus.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/examples-group-menus.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "examples-collapsible-menus": {
+      name: "examples-collapsible-menus",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/examples-collapsible-menus.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/examples-collapsible-menus.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
+    "examples-collapsible-menus-secondary-action": {
+      name: "examples-collapsible-menus-secondary-action",
+      type: "registry:ui",
+      registryDependencies: undefined,
+      files: ["registry/default/demo/examples-collapsible-menus-secondary-action.tsx"],
+      component: React.lazy(() => import("@/registry/default/demo/examples-collapsible-menus-secondary-action.tsx")),
+      source: "",
+      category: "undefined",
+      subcategory: "undefined",
+      chunks: []
+    },
     "utils": {
       name: "utils",
       type: "registry:lib",

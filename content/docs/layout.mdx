@@ -15,15 +15,15 @@ A required class to set up a layout system.
 
 ### Controlling height
 
-Use `jun-layout-h-[*]` to change the height of the layout (default as `100lvh`).
+Use `jun-layout-h-[*]` to change the height of the layout (default as `100svh - env(safe-area-inset-bottom)`).
 
 ```js
 <div className="jun-layout jun-layout-h-[500px] lg:jun-layout-h-[800px]">
 ```
 
 <Callout title="⚠️ Warning">
-  Don't use `h-[*]` directly because the layout uses CSS variables to control
-  other parts of the layout.
+  Don't use `h-[*]` from Tailwind directly because the layout uses CSS variables
+  to control other parts of the layout.
 </Callout>
 
 ### Standalone app
@@ -34,10 +34,19 @@ Use `jun-layout-standalone` to create apps like POS (Point of Sale) or chat appl
 <div className="jun-layout jun-layout-standalone">
 ```
 
+### Disable transition
+
+Use `jun-layout-noTransition` to remove transitions from all layout classes.
+
+```js
+<div className="jun-layout jun-layout-noTransition">
+```
+
 ## API
 
-| Class                   | Description                                                                                      |
-| ----------------------- | ------------------------------------------------------------------------------------------------ |
-| `jun-layout`            | Set as root layout `(Required)`                                                                  |
-| `jun-layout-h-[*]`      | Custom the height of the layout                                                                  |
-| `jun-layout-standalone` | Make the layout fixed to its height, useful for building standalone app like a POS or a chat app |
+| Class                     | Description                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------ |
+| `jun-layout`              | Set as root layout `(Required)`                                                                  |
+| `jun-layout-h-[*]`        | Custom the height of the layout                                                                  |
+| `jun-layout-standalone`   | Make the layout fixed to its height, useful for building standalone app like a POS or a chat app |
+| `jun-layout-noTransition` | Set the transitions of all layout classes to `none`                                              |

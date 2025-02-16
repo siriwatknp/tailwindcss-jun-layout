@@ -198,6 +198,10 @@ export function triggerEdgeDrawerRight(options?: {
   internalToggleSidebar({ ...options, selector });
 }
 
+const LEFT_EDGE_SIDEBAR = `.${layoutClasses.EdgeSidebar}`;
+const NESTED_LEFT_EDGE_SIDEBAR = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.EdgeSidebar}`;
+const RIGHT_EDGE_SIDEBAR = `.${layoutClasses.EdgeSidebarRight}`;
+const NESTED_RIGHT_EDGE_SIDEBAR = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.EdgeSidebarRight}`;
 const LEFT_COLLAPSER = `.${layoutClasses.EdgeSidebarCollapser}`;
 const RIGHT_COLLAPSER = `.${layoutClasses.EdgeSidebarRightCollapser}`;
 const LEFT_DRAWER_TRIGGER = `.${layoutClasses.DrawerEdgeSidebarTrigger}`;
@@ -246,7 +250,7 @@ export default plugin(function ({
         display: "grid",
         flex: "auto", // integrating with Shadcn sidebar
         position: "relative",
-        transition: "grid-template-columns 0.3s",
+        transition: "var(--tsn, grid-template-columns 0.3s)",
         gridTemplateRows: "auto 1fr",
         gridTemplateColumns:
           "var(--_start-col, 0px) minmax(0, 1fr) var(--_end-col, 0px)", // minmax(0, 1fr) is used over `1fr` to prevent root horizontal overflow
@@ -314,6 +318,18 @@ export default plugin(function ({
     {
       values: {
         DEFAULT: "100vh",
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.Root}-noTransition`]: () => ({
+        "--tsn": "none",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
       },
     }
   );
@@ -459,7 +475,8 @@ export default plugin(function ({
   matchComponents(
     {
       [layoutClasses.Footer]: () => ({
-        transition: "all 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, color 0s",
+        transition:
+          "var(--tsn, all 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, color 0s)",
         background: theme("colors.background"),
         borderTop: `1px solid ${theme("colors.border")}`,
       }),
@@ -475,7 +492,7 @@ export default plugin(function ({
     "--anchorLeft": "var(--jun-ES-anchor,)",
     "--anchorRight": "var(--jun-ES-anchor,)",
     "--drawer-h": "var(--jun-h)",
-    transition: "width 0.3s",
+    transition: "var(--tsn, width 0.3s)",
     display: "flex",
     flexDirection: "column",
     padding: "0px", // prevent user from customizing it
@@ -496,7 +513,7 @@ export default plugin(function ({
       backgroundColor: "rgba(0, 0, 0, 0.48)",
       backdropFilter: "blur(4px)",
       zIndex: "1",
-      transition: "opacity 0.4s, visibility 0.4s",
+      transition: "var(--tsn, opacity 0.4s, visibility 0.4s)",
       visibility: "hidden",
       opacity: "var(--jun-ES-drawerOpen, 0)",
     },
@@ -547,13 +564,17 @@ export default plugin(function ({
               {
                 display: "var(--display, inline-flex)",
                 "--_sidebarCollapsed": "var(--collapsed, 1)",
+              },
+            [`&:is(${NESTED_LAYOUT}) ${LEFT_EDGE_SIDEBAR}, ${LEFT_EDGE_SIDEBAR}:not(${NESTED_LEFT_EDGE_SIDEBAR})`]:
+              // `.jun-edgeCollapsed/edgeUncollapsed-visible can be used anywhere inside EdgeSidebar
+              {
                 [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
                   display:
-                    "var(--collapsed, none) var(--uncollapsed, inline-block)",
+                    "var(--collapsed, none) var(--uncollapsed, inline-flex)",
                 },
                 [`.${layoutClasses.EdgeSidebarCollapsedVisible}`]: {
                   display:
-                    "var(--collapsed, inline-block) var(--uncollapsed, none)",
+                    "var(--collapsed, inline-flex) var(--uncollapsed, none)",
                 },
               },
           },
@@ -652,8 +673,8 @@ export default plugin(function ({
           height: "var(--_drawer, var(--drawer-h))",
           top: "var(--_drawer, calc(var(--jun-h) - var(--drawer-h)))",
           overflowY: "var(--_drawer, auto)",
-          transition: `var(--_drawer, opacity 0.3s, transform 0.3s)
-           var(--_permanent, opacity 0.4s, width 0.3s var(--jun-EC-delay, 0s), transform 0.3s var(--jun-EC-delay, 0s), box-shadow 0.3s var(--jun-EC-delay, 0s))`,
+          transition: `var(--tsn, var(--_drawer, opacity 0.3s, transform 0.3s)
+           var(--_permanent, opacity 0.4s, width 0.3s var(--jun-EC-delay, 0s), transform 0.3s var(--jun-EC-delay, 0s), box-shadow 0.3s var(--jun-EC-delay, 0s)))`,
           transform: `var(--_drawer, var(--anchorLeft, translateX(calc((1 - var(--jun-ES-drawerOpen)) * -100%))) var(--anchorRight, translateX(calc(var(--jun-ES-drawerOpen) * -100%))))
            var(--_permanent, translateX(var(--jun-ES-permanentSlide, 0)))`,
           [`[${layoutAttrs.isEdgeSidebarContentHidden}] &`]: {
@@ -665,7 +686,8 @@ export default plugin(function ({
               visibility: "visible",
             },
           [`[${layoutAttrs.isDrawerClosing}] &`]: {
-            transition: "transform 0.3s, visibility 0.3s, opacity 0.3s",
+            transition:
+              "var(--tsn, transform 0.3s, visibility 0.3s, opacity 0.3s)",
           },
         }) as CSSRuleObject,
     },
@@ -681,6 +703,12 @@ export default plugin(function ({
         boxSizing: "border-box",
       }),
       [layoutClasses.EdgeSidebarUncollapsedVisible]: () => ({
+        boxSizing: "border-box",
+      }),
+      [layoutClasses.DrawerOpenVisible]: () => ({
+        boxSizing: "border-box",
+      }),
+      [layoutClasses.DrawerClosedVisible]: () => ({
         boxSizing: "border-box",
       }),
     },
@@ -729,6 +757,12 @@ export default plugin(function ({
               "--jun-ES-drawerWidth": SIDEBAR_WIDTH_MOBILE,
             },
         }) as CSSRuleObject,
+      [`${layoutClasses.EdgeSidebar}-drawer-showHeader`]: () => ({
+        "--drawer-h": "calc(var(--jun-h) - var(--jun-H-h))",
+        "&::before": {
+          top: "var(--jun-H-h)",
+        },
+      }),
     },
     {
       values: {
@@ -822,7 +856,7 @@ export default plugin(function ({
               "--jun-EC-width": "var(--jun-ES-permanentWidth)",
               // TODO: make the `shadow` configurable from theme
               "--jun-EC-delay": "0s",
-              "--jun-EC-shadow": `var(--collapsed, 0 0 10px rgba(0,0,0,0.1), var(--jun-ES-line-w) 0 var(--jun-ES-line-color))`,
+              "--jun-EC-shadow": `var(--_permanent, var(--collapsed, 0 0 10px rgba(0,0,0,0.1), var(--jun-ES-line-w) 0 var(--jun-ES-line-color)))`,
             },
           },
         })[value] as CSSRuleObject,
@@ -899,7 +933,7 @@ export default plugin(function ({
           display: "var(--_drawer, flex) var(--_permanent, none)",
           visibility: "hidden",
           opacity: "0",
-          transition: "0.3s",
+          transition: "var(--tsn, 0.3s)",
           top: "calc(0.875rem)",
           right: "var(--anchorLeft, 0.875rem)",
           left: "var(--anchorRight, 0.875rem)",
@@ -981,13 +1015,17 @@ export default plugin(function ({
               {
                 display: "var(--display, inline-flex)",
                 "--_sidebarCollapsed": "var(--collapsed-R, 1)",
+              },
+            [`&:is(${NESTED_LAYOUT}) ${RIGHT_EDGE_SIDEBAR}, ${RIGHT_EDGE_SIDEBAR}:not(${NESTED_RIGHT_EDGE_SIDEBAR})`]:
+              // `.jun-edgeCollapsed/edgeUncollapsed-visible can be used anywhere inside EdgeSidebar-R
+              {
                 [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
                   display:
-                    "var(--collapsed-R, none) var(--uncollapsed-R, inline-block)",
+                    "var(--collapsed-R, none) var(--uncollapsed-R, inline-flex)",
                 },
                 [`.${layoutClasses.EdgeSidebarCollapsedVisible}`]: {
                   display:
-                    "var(--collapsed-R, inline-block) var(--uncollapsed-R, none)",
+                    "var(--collapsed-R, inline-flex) var(--uncollapsed-R, none)",
                 },
               },
           },
@@ -1088,6 +1126,12 @@ export default plugin(function ({
               "--jun-ES-drawerWidth": SIDEBAR_WIDTH_MOBILE,
             },
         }) as CSSRuleObject,
+      [`${layoutClasses.EdgeSidebarRight}-drawer-showHeader`]: () => ({
+        "--drawer-h": "calc(var(--jun-h) - var(--jun-H-h))",
+        "&::before": {
+          top: "var(--jun-H-h)",
+        },
+      }),
     },
     {
       values: {
@@ -1490,7 +1534,7 @@ export default plugin(function ({
       [layoutClasses.SidebarGroupLabel]: () => ({
         position: "relative",
         textOverflow: "ellipsis",
-        transition: "var(--_uncollapsed, opacity 0.4s)",
+        transition: "var(--tsn, var(--_uncollapsed, opacity 0.4s))",
         opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
         whiteSpace: "nowrap",
         overflow: "hidden",
@@ -1543,7 +1587,8 @@ export default plugin(function ({
         "--item-h": "calc(var(--item-lh, 1.25rem) + 0.5rem)",
         paddingBlock: "0.25rem",
         position: "relative",
-        marginLeft: "calc(var(--icon-size, 1rem) + var(--item-gap, 0.5rem))",
+        marginLeft:
+          "calc(var(--icon-w, 1rem) + 2*var(--item-gap, 0.5rem) - 0.5rem)", // last 0.5rem is the child menu item default `pl`
         "&::before": {
           content: '""',
           display: "block",
@@ -1551,8 +1596,13 @@ export default plugin(function ({
           width: "1px",
           top: "2px",
           bottom: "2px",
-          left: "calc(1px + var(--icon-size, 1rem)/-2)",
+          left: "calc(var(--icon-w, 1rem)/-2 - var(--item-gap, 0.5rem) + 0.5rem)", // last 0.5rem is the child menu item default `pl`
           background: theme("colors.sidebar.border"),
+        },
+      }),
+      [`${layoutClasses.SidebarMenu}-nested-noLine`]: () => ({
+        "&::before": {
+          display: "none",
         },
       }),
     },
@@ -1592,7 +1642,7 @@ export default plugin(function ({
         color: theme("colors.sidebar.foreground"),
         cursor: "pointer",
         transition:
-          "min-height var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), padding var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), gap var(--_collapsed, 0s 0.4s) var(--_uncollapsed, 0s)",
+          "var(--tsn, min-height var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), padding var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), gap var(--_collapsed, 0s 0.4s) var(--_uncollapsed, 0s))",
         "&:hover": {
           color: theme("colors.sidebar.accent-foreground"),
           background: theme("colors.sidebar.accent"), // TODO: use theme token
@@ -1621,8 +1671,9 @@ export default plugin(function ({
   matchUtilities(
     {
       [layoutClasses.SidebarMenuButton]: () => ({
+        "--item-gap": `var(--_collapsed, 0px) var(--_uncollapsed, 0.5rem)`,
         display: "flex",
-        gap: "var(--_collapsed, 0px) var(--_uncollapsed, var(--item-gap, 0.5rem))",
+        gap: "var(--item-gap)",
         paddingInline:
           "var(--_collapsed, var(--shrink-px, var(--item-px, 0.5rem))) var(--_uncollapsed, var(--item-px, 0.5rem))",
         paddingBlock: `var(--_collapsed, var(--shrink-py, var(--item-py, 0.375rem))) var(--_uncollapsed, var(--item-py, 0.375rem))`,
@@ -1641,9 +1692,12 @@ export default plugin(function ({
   matchUtilities(
     {
       [`${layoutClasses.SidebarMenuButton}-spacing`]: (spacing) => ({
-        gap: `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
+        "--item-gap": `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
         "--item-px": spacing,
         "--item-py": spacing,
+        [`.${layoutClasses.SidebarMenuItem}:has(> &)`]: {
+          "--item-gap": `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
+        },
       }),
     },
     {
@@ -1665,6 +1719,9 @@ export default plugin(function ({
     {
       [`${layoutClasses.SidebarMenuButton}-h`]: (size) => ({
         "--item-h": size,
+        [`.${layoutClasses.SidebarMenuItem}:has(> &)`]: {
+          "--item-h": size,
+        },
       }),
     },
     {
@@ -1675,6 +1732,9 @@ export default plugin(function ({
     {
       [`${layoutClasses.SidebarMenuButton}-gap`]: (size) => ({
         "--item-gap": size,
+        [`.${layoutClasses.SidebarMenuItem}:has(> &)`]: {
+          "--item-gap": size,
+        },
       }),
     },
     {
@@ -1691,12 +1751,28 @@ export default plugin(function ({
       values: theme("spacing"),
     }
   );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-offset`]: (ratio) => ({
+        marginLeft: `calc(-${ratio} * var(--icon-w, 1rem) + var(--item-gap))`,
+        paddingLeft: `calc(${ratio} * var(--icon-w, 1rem))`,
+      }),
+    },
+    {
+      values: {
+        ".25": ".25",
+        ".5": ".5",
+        ".75": ".75",
+        "1": "1",
+      },
+    }
+  );
   // SidebarText
   matchComponents(
     {
       [layoutClasses.SidebarText]: () => ({
         textOverflow: "ellipsis",
-        transition: "var(--_uncollapsed, opacity 0.3s)",
+        transition: "var(--tsn, var(--_uncollapsed, opacity 0.3s))",
       }),
     },
     {
@@ -1725,7 +1801,7 @@ export default plugin(function ({
     {
       [layoutClasses.SidebarGroupText]: () => ({
         transition:
-          "grid-template-rows 0.4s, opacity 0.4s var(--_uncollapsed, 0.2s)",
+          "var(--tsn, grid-template-rows 0.4s, opacity 0.4s var(--_uncollapsed, 0.2s))",
         opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
       }),
     },
@@ -1769,7 +1845,7 @@ export default plugin(function ({
         alignItems: "center",
         top: "calc(var(--item-h, 2rem)/2 - var(--action-size, 1.5rem)/2)",
         color: theme("colors.sidebar.foreground"),
-        transition: "right 0.4s",
+        transition: "var(--tsn, right 0.4s)",
         borderRadius: theme("borderRadius.sm"),
         "&:hover": {
           background: theme("colors.sidebar.accent"),
@@ -1788,6 +1864,16 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
+    }
+  );
+  matchComponents(
+    {
+      [`${layoutClasses.SidebarMenuAction}-size`]: (size) => ({
+        "--action-size": size,
+      }),
+    },
+    {
+      values: theme("spacing"),
     }
   );
   matchComponents(
@@ -1815,7 +1901,7 @@ export default plugin(function ({
       [layoutClasses.SidebarIcon]: () => ({
         height: "var(--icon-size, 1rem)",
         width: "var(--icon-size, 1rem)",
-        transition: "cubic-bezier(0.4, 0, 0.2, 1) 0.15s",
+        transition: "var(--tsn, cubic-bezier(0.4, 0, 0.2, 1) 0.15s)",
         flex: "none",
       }),
     },
@@ -1828,8 +1914,26 @@ export default plugin(function ({
   matchUtilities(
     {
       [`${layoutClasses.SidebarIcon}-size`]: (size) => ({
+        "--icon-size": size,
         height: size,
         width: size,
+        [`.${layoutClasses.SidebarMenuItem}:has(&)`]: {
+          "--icon-w": size,
+        },
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    // split to another matcher to override the above
+    {
+      [`${layoutClasses.SidebarIcon}-min-w`]: (size) => ({
+        minWidth: size,
+        [`.${layoutClasses.SidebarMenuItem}:has(&)`]: {
+          "--icon-w": size,
+        },
       }),
     },
     {
@@ -1888,7 +1992,7 @@ export default plugin(function ({
         ":has(:checked) ~ &": {
           // open
           transition:
-            "grid-template-rows 0.4s, visibility 0.4s, opacity 0.4s 0.2s",
+            "var(--tsn, grid-template-rows 0.4s, visibility 0.4s, opacity 0.4s 0.2s)",
           gridTemplateRows: "var(--_collapsed, 0fr) var(--_uncollapsed, 1fr)",
           [`& .${layoutClasses.SidebarMenuButton}`]: {
             visibility: "var(--_collapsed, hidden)",
@@ -1899,7 +2003,8 @@ export default plugin(function ({
           gridTemplateRows: "0fr",
           visibility: "hidden",
           opacity: "0",
-          transition: "grid-template-rows 0.4s, visibility 0.4s, opacity 0.2s",
+          transition:
+            "var(--tsn, grid-template-rows 0.4s, visibility 0.4s, opacity 0.2s)",
           [`& .${layoutClasses.SidebarMenuAction}`]: {
             visibility: "hidden",
           },
@@ -1920,7 +2025,7 @@ export default plugin(function ({
         position: "absolute",
         right: "var(--item-px, 0.5rem)",
         transition:
-          "transform cubic-bezier(0.4, 0, 0.2, 1) 0.15s, visibility 0s var(--_uncollapsed, 0.1s)",
+          "var(--tsn, transform cubic-bezier(0.4, 0, 0.2, 1) 0.15s, visibility 0s var(--_uncollapsed, 0.1s))",
         visibility: "var(--_collapsed, hidden)",
         [`:where(.${layoutClasses.SidebarMenuAction}) &`]: {
           position: "unset",
@@ -2001,7 +2106,7 @@ export default plugin(function ({
         rowGap: "2px",
         fontSize: theme("fontSize.xs"),
         lineHeight: theme("lineHeight.xs"),
-        transition: "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+        transition: "var(--tsn, 0.15s cubic-bezier(0.4, 0, 0.2, 1))",
         userSelect: "none",
         "&:where(:hover)": {
           color: theme("colors.sidebar.accent-foreground"),
