@@ -29,6 +29,8 @@ import {
   Filter,
   ChevronLeft,
   ChevronRight,
+  ArrowDown,
+  ChevronDown,
 } from "lucide-react";
 
 const menus = [
@@ -410,35 +412,55 @@ export default function Dashboard() {
       </div>
       <div
         id="examples-dashboard-sidebar"
-        className="jun-edgeSidebar jun-edgeSidebar-w-[260px] jun-edgeSidebar-drawer jun-edgeSidebar-drawer-showHeader md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[55px]"
+        className="jun-edgeSidebar jun-edgeSidebar-w-[260px] jun-edgeSidebar-drawer jun-edgeSidebar-drawer-showHeader md:jun-edgeSidebar-permanent md:jun-edgeSidebar-collapsed-w-[55px] jun-edgeSidebar-permanent-hoverUncollapse"
       >
         <div className="jun-edgeContent">
           <div className="min-h-[60px] border-b border-sidebar-border flex items-center justify-center">
             <h1 className="text-md font-medium">someone@gmail.com</h1>
           </div>
-          <div className="jun-sidebarContainer min-h-0 overflow-auto">
+          <div className="jun-sidebarContainer flex-auto min-h-0 overflow-auto">
             <ul className="jun-sidebarMenu">
               {menus.map((item) => {
                 const Icon = item.icon;
                 return (
                   <li key={item.id} className="jun-sidebarMenuItem">
-                    <button className="jun-sidebarMenuButton jun-sidebarMenuButton-spacing-0">
-                      <Icon className="jun-sidebarIcon w-[55px]" />
+                    <button className="jun-sidebarMenuButton jun-sidebarMenuButton-spacing-0 jun-sidebarMenuButton-h-[40px]">
+                      <Icon className="jun-sidebarIcon jun-sidebarIcon-min-w-[55px] jun-sidebarIcon-shrink-size-[24px]" />
                       <span className="jun-sidebarText">{item.title}</span>
                     </button>
 
                     {item.submenu && (
-                      <ul className="jun-sidebarMenu jun-sidebarMenu-nested ml-[48px] before:left-[-21px]">
-                        {item.submenu.map((sub) => (
-                          <li key={sub.id} className="jun-sidebarMenuItem">
-                            <button className="jun-sidebarMenuButton">
-                              <span className="jun-sidebarText">
-                                {sub.title}
-                              </span>
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
+                      <>
+                        <label
+                          htmlFor={`menu-${item.id}`}
+                          className="jun-sidebarMenuAction jun-collapsibleTrigger"
+                        >
+                          <ChevronDown />
+                          <input
+                            type="checkbox"
+                            className="sr-only"
+                            id={`menu-${item.id}`}
+                          />
+                        </label>
+                        <div className="jun-collapsibleContent">
+                          <div>
+                            <ul className="jun-sidebarMenu jun-sidebarMenu-nested jun-sidebarMenu-nested-noLine">
+                              {item.submenu.map((sub) => (
+                                <li
+                                  key={sub.id}
+                                  className="jun-sidebarMenuItem"
+                                >
+                                  <button className="jun-sidebarMenuButton jun-sidebarMenuButton-offset-.5">
+                                    <span className="jun-sidebarText">
+                                      {sub.title}
+                                    </span>
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </>
                     )}
                   </li>
                 );

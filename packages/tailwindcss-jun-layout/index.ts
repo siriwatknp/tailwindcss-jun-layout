@@ -1561,7 +1561,8 @@ export default plugin(function ({
         "--item-h": "calc(var(--item-lh, 1.25rem) + 0.5rem)",
         paddingBlock: "0.25rem",
         position: "relative",
-        marginLeft: "calc(var(--icon-size, 1rem) + var(--item-gap, 0.5rem))",
+        marginLeft:
+          "calc(var(--icon-w, 1rem) + 2*var(--item-gap, 0.5rem) - 0.5rem)", // last 0.5rem is the child menu item default `pl`
         "&::before": {
           content: '""',
           display: "block",
@@ -1569,8 +1570,13 @@ export default plugin(function ({
           width: "1px",
           top: "2px",
           bottom: "2px",
-          left: "calc(1px + var(--icon-size, 1rem)/-2)",
+          left: "calc(var(--icon-w, 1rem)/-2 - var(--item-gap, 0.5rem) + 0.5rem)", // last 0.5rem is the child menu item default `pl`
           background: theme("colors.sidebar.border"),
+        },
+      }),
+      [`${layoutClasses.SidebarMenu}-nested-noLine`]: () => ({
+        "&::before": {
+          display: "none",
         },
       }),
     },
@@ -1639,8 +1645,9 @@ export default plugin(function ({
   matchUtilities(
     {
       [layoutClasses.SidebarMenuButton]: () => ({
+        "--item-gap": `var(--_collapsed, 0px) var(--_uncollapsed, 0.5rem)`,
         display: "flex",
-        gap: "var(--_collapsed, 0px) var(--_uncollapsed, var(--item-gap, 0.5rem))",
+        gap: "var(--item-gap)",
         paddingInline:
           "var(--_collapsed, var(--shrink-px, var(--item-px, 0.5rem))) var(--_uncollapsed, var(--item-px, 0.5rem))",
         paddingBlock: `var(--_collapsed, var(--shrink-py, var(--item-py, 0.375rem))) var(--_uncollapsed, var(--item-py, 0.375rem))`,
@@ -1659,9 +1666,12 @@ export default plugin(function ({
   matchUtilities(
     {
       [`${layoutClasses.SidebarMenuButton}-spacing`]: (spacing) => ({
-        gap: `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
+        "--item-gap": `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
         "--item-px": spacing,
         "--item-py": spacing,
+        [`.${layoutClasses.SidebarMenuItem}:has(> &)`]: {
+          "--item-gap": `var(--_collapsed, 0px) var(--_uncollapsed, ${spacing})`,
+        },
       }),
     },
     {
@@ -1693,6 +1703,9 @@ export default plugin(function ({
     {
       [`${layoutClasses.SidebarMenuButton}-gap`]: (size) => ({
         "--item-gap": size,
+        [`.${layoutClasses.SidebarMenuItem}:has(> &)`]: {
+          "--item-gap": size,
+        },
       }),
     },
     {
@@ -1707,6 +1720,22 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.SidebarMenuButton}-offset`]: (ratio) => ({
+        marginLeft: `calc(-${ratio} * var(--icon-w, 1rem) + var(--item-gap))`,
+        paddingLeft: `calc(${ratio} * var(--icon-w, 1rem))`,
+      }),
+    },
+    {
+      values: {
+        ".25": ".25",
+        ".5": ".5",
+        ".75": ".75",
+        "1": "1",
+      },
     }
   );
   // SidebarText
@@ -1846,8 +1875,26 @@ export default plugin(function ({
   matchUtilities(
     {
       [`${layoutClasses.SidebarIcon}-size`]: (size) => ({
+        "--icon-size": size,
         height: size,
         width: size,
+        [`.${layoutClasses.SidebarMenuItem}:has(&)`]: {
+          "--icon-w": size,
+        },
+      }),
+    },
+    {
+      values: theme("spacing"),
+    }
+  );
+  matchUtilities(
+    // split to another matcher to override the above
+    {
+      [`${layoutClasses.SidebarIcon}-min-w`]: (size) => ({
+        minWidth: size,
+        [`.${layoutClasses.SidebarMenuItem}:has(&)`]: {
+          "--icon-w": size,
+        },
       }),
     },
     {
