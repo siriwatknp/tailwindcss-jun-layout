@@ -1,0 +1,13 @@
+{
+  "name": "examples-flat-menus",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/examples-flat-menus.tsx",
+      "content": "import { Home, Users, FileText, Settings } from \"lucide-react\";\n\nexport default function ExamplesFlatMenus() {\n  return (\n    <div className=\"w-full border-4 rounded bg-background max-w-[500px]\">\n      <div className=\"jun-layout jun-layout-h-[300px] jun-layout-standalone\">\n        <header className=\"jun-header\">\n          <div className=\"p-3\">\n            <div className=\"h-4 w-32 rounded bg-muted\" />\n          </div>\n        </header>\n        <aside className=\"jun-edgeSidebar\">\n          <div className=\"jun-edgeContent bg-sidebar\">\n            <div className=\"jun-sidebarContainer\">\n              <ul className=\"jun-sidebarMenu\">\n                <li className=\"jun-sidebarMenuItem\">\n                  <button className=\"jun-sidebarMenuButton\">\n                    <Home className=\"jun-sidebarIcon jun-sidebarIcon-shrink-size-5\" />\n                    <span className=\"jun-sidebarText\">Home</span>\n                  </button>\n                </li>\n                <li className=\"jun-sidebarMenuItem\">\n                  <button className=\"jun-sidebarMenuButton\">\n                    <Users className=\"jun-sidebarIcon jun-sidebarIcon-shrink-size-5\" />\n                    <span className=\"jun-sidebarText\">Users</span>\n                  </button>\n                </li>\n                <li className=\"jun-sidebarMenuItem\">\n                  <button className=\"jun-sidebarMenuButton\">\n                    <FileText className=\"jun-sidebarIcon jun-sidebarIcon-shrink-size-5\" />\n                    <span className=\"jun-sidebarText\">Documents</span>\n                  </button>\n                </li>\n                <li className=\"jun-sidebarMenuItem\">\n                  <button className=\"jun-sidebarMenuButton\">\n                    <Settings className=\"jun-sidebarIcon jun-sidebarIcon-shrink-size-5\" />\n                    <span className=\"jun-sidebarText\">Settings</span>\n                  </button>\n                </li>\n              </ul>\n            </div>\n          </div>\n        </aside>\n        <main className=\"jun-content\">\n          <div className=\"p-4\">\n            <div className=\"h-4 w-48 rounded bg-muted\" />\n          </div>\n        </main>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

@@ -95,7 +95,10 @@ export default function SidebarMenuNestedDemo() {
                           <div>
                             <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
                               {item.items.map((sub) => (
-                                <li className="jun-sidebarMenuItem">
+                                <li
+                                  key={sub.label}
+                                  className="jun-sidebarMenuItem"
+                                >
                                   <button className="jun-sidebarMenuButton">
                                     <span className="jun-sidebarText">
                                       {sub.label}

@@ -181,4 +181,28 @@ export const demos: Registry = [
     dependencies: [],
     files: ["demo/dock-tooltip.tsx"],
   },
+  {
+    name: "examples-flat-menus",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/examples-flat-menus.tsx"],
+  },
+  {
+    name: "examples-group-menus",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/examples-group-menus.tsx"],
+  },
+  {
+    name: "examples-collapsible-menus",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/examples-collapsible-menus.tsx"],
+  },
+  {
+    name: "examples-collapsible-menus-secondary-action",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/examples-collapsible-menus-secondary-action.tsx"],
+  },
 ];

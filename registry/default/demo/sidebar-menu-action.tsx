@@ -70,7 +70,7 @@ export default function SidebarMenuActionDemo() {
 
             <div className="p-2 flex flex-col gap-4 min-h-0 overflow-auto">
               {menuGroups.map((group, index) => (
-                <ul className="jun-sidebarMenu">
+                <ul key={index} className="jun-sidebarMenu">
                   {group.items.map((item, itemIndex) => {
                     const Icon = item.icon;
                     return (
