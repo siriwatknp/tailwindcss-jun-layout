@@ -342,7 +342,7 @@ export default function Dashboard() {
           }
         >
           <svg
-            className="jun-edgeDrawerClosed-visible w-6 h-6"
+            className="jun-edgeDrawerClosed-visible w-6 h-6 dark:fill-white"
             role="presentation"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -352,7 +352,7 @@ export default function Dashboard() {
             <path d="M14 3.5H2v1h12v-1zM14 7.5H2v1h12v-1zM14 11.5H2v1h12v-1z"></path>
           </svg>
           <svg
-            className="jun-edgeDrawerOpen-visible w-6 h-6"
+            className="jun-edgeDrawerOpen-visible w-6 h-6 dark:fill-white"
             role="presentation"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
