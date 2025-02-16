@@ -494,10 +494,166 @@ export default function Dashboard() {
         </div>
       </div>
       <main className="jun-content">
-        <div className="container py-5">
-          <h2 className="text-3xl font-medium">
-            Boost your site&apos;s speed and security
-          </h2>
+        <div className="container max-w-7xl py-8 2xl:w-full 2xl:max-w-fit 2xl:mx-[128px]">
+          <div className="space-y-8">
+            {/* Header Section */}
+            <div className="flex justify-between items-start">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold">
+                  Boost your site&apos;s speed and security
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Connect your domain to start sending web traffic through
+                  Cloudflare.
+                </p>
+              </div>
+            </div>
+
+            {/* Follow Learning Path */}
+            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+              <svg className="w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M2 2h4v4H2V2zm0 6h4v4H2V8zm6-6h4v4H8V2zm0 6h4v4H8V8z" />
+              </svg>
+              <span>Follow learning path</span>
+            </div>
+
+            {/* Domain Input Section */}
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Enter an existing domain
+                </label>
+                <input
+                  type="text"
+                  placeholder="example.com"
+                  className="w-full max-w-md px-3 py-2 border rounded-md border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <a
+                  href="#"
+                  className="text-blue-600 hover:text-blue-700 text-sm flex items-center gap-1"
+                >
+                  Or register a new domain
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M4 8h8m-4-4v8"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* DNS Options */}
+            <div className="space-y-3">
+              <div className="flex gap-3">
+                <input
+                  type="radio"
+                  name="dns-option"
+                  id="quick-scan"
+                  checked
+                  className="w-4 h-4 mt-1 text-blue-600"
+                />
+                <label htmlFor="quick-scan" className="flex flex-col">
+                  <span className="flex items-center gap-2">
+                    Quick scan for DNS records
+                    <span className="px-2 py-0.5 text-xs bg-emerald-100 text-emerald-700 rounded">
+                      Recommended
+                    </span>
+                  </span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Cloudflare will find and import your DNS records for you.
+                  </span>
+                </label>
+              </div>
+
+              <div className="flex gap-3">
+                <input
+                  type="radio"
+                  name="dns-option"
+                  id="manual-entry"
+                  className="w-4 h-4 mt-1 text-blue-600"
+                />
+                <label htmlFor="manual-entry" className="flex flex-col">
+                  <span className="flex items-center gap-2">
+                    Manually enter DNS records
+                    <span className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded">
+                      Advanced
+                    </span>
+                  </span>
+                </label>
+              </div>
+
+              <div className="flex gap-3">
+                <input
+                  type="radio"
+                  name="dns-option"
+                  id="upload-zone"
+                  className="w-4 h-4 mt-1 text-blue-600"
+                />
+                <label htmlFor="upload-zone" className="flex flex-col">
+                  <span className="flex items-center gap-2">
+                    Upload a DNS zone file
+                    <span className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded">
+                      Advanced
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {/* Continue Button */}
+            <div>
+              <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors">
+                Continue
+              </button>
+            </div>
+
+            {/* Additional Options */}
+            <div className="pt-8">
+              <h3 className="text-sm text-gray-500 mb-6">
+                Looking for something else?
+              </h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="p-6 border rounded-lg space-y-4 dark:border-gray-700">
+                  <div className="w-8 h-8">
+                    <Code className="w-full h-full text-blue-600" />
+                  </div>
+                  <h4 className="font-medium">
+                    Build apps on our developer platform
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Deploy fast and secure apps globally, leaving infrastructure
+                    hassles to Cloudflare.
+                  </p>
+                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                    Start building
+                  </button>
+                </div>
+
+                <div className="p-6 border rounded-lg space-y-4 dark:border-gray-700">
+                  <div className="w-8 h-8">
+                    <Shield className="w-full h-full text-blue-600" />
+                  </div>
+                  <h4 className="font-medium">Secure your corporate network</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Replace legacy security perimeters with our global network,
+                    making the Internet faster and safer for global teams.
+                  </p>
+                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                    Set up Zero Trust
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
