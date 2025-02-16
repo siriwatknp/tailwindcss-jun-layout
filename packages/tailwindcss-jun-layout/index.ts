@@ -246,7 +246,7 @@ export default plugin(function ({
         display: "grid",
         flex: "auto", // integrating with Shadcn sidebar
         position: "relative",
-        transition: "grid-template-columns 0.3s",
+        transition: "var(--tsn, grid-template-columns 0.3s)",
         gridTemplateRows: "auto 1fr",
         gridTemplateColumns:
           "var(--_start-col, 0px) minmax(0, 1fr) var(--_end-col, 0px)", // minmax(0, 1fr) is used over `1fr` to prevent root horizontal overflow
@@ -314,6 +314,18 @@ export default plugin(function ({
     {
       values: {
         DEFAULT: "100vh",
+      },
+    }
+  );
+  matchUtilities(
+    {
+      [`${layoutClasses.Root}-noTransition`]: () => ({
+        "--tsn": "none",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
       },
     }
   );
@@ -459,7 +471,8 @@ export default plugin(function ({
   matchComponents(
     {
       [layoutClasses.Footer]: () => ({
-        transition: "all 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, color 0s",
+        transition:
+          "var(--tsn, all 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, color 0s)",
         background: theme("colors.background"),
         borderTop: `1px solid ${theme("colors.border")}`,
       }),
@@ -475,7 +488,7 @@ export default plugin(function ({
     "--anchorLeft": "var(--jun-ES-anchor,)",
     "--anchorRight": "var(--jun-ES-anchor,)",
     "--drawer-h": "var(--jun-h)",
-    transition: "width 0.3s",
+    transition: "var(--tsn, width 0.3s)",
     display: "flex",
     flexDirection: "column",
     padding: "0px", // prevent user from customizing it
@@ -496,7 +509,7 @@ export default plugin(function ({
       backgroundColor: "rgba(0, 0, 0, 0.48)",
       backdropFilter: "blur(4px)",
       zIndex: "1",
-      transition: "opacity 0.4s, visibility 0.4s",
+      transition: "var(--tsn, opacity 0.4s, visibility 0.4s)",
       visibility: "hidden",
       opacity: "var(--jun-ES-drawerOpen, 0)",
     },
@@ -652,8 +665,8 @@ export default plugin(function ({
           height: "var(--_drawer, var(--drawer-h))",
           top: "var(--_drawer, calc(var(--jun-h) - var(--drawer-h)))",
           overflowY: "var(--_drawer, auto)",
-          transition: `var(--_drawer, opacity 0.3s, transform 0.3s)
-           var(--_permanent, opacity 0.4s, width 0.3s var(--jun-EC-delay, 0s), transform 0.3s var(--jun-EC-delay, 0s), box-shadow 0.3s var(--jun-EC-delay, 0s))`,
+          transition: `var(--tsn, var(--_drawer, opacity 0.3s, transform 0.3s)
+           var(--_permanent, opacity 0.4s, width 0.3s var(--jun-EC-delay, 0s), transform 0.3s var(--jun-EC-delay, 0s), box-shadow 0.3s var(--jun-EC-delay, 0s)))`,
           transform: `var(--_drawer, var(--anchorLeft, translateX(calc((1 - var(--jun-ES-drawerOpen)) * -100%))) var(--anchorRight, translateX(calc(var(--jun-ES-drawerOpen) * -100%))))
            var(--_permanent, translateX(var(--jun-ES-permanentSlide, 0)))`,
           [`[${layoutAttrs.isEdgeSidebarContentHidden}] &`]: {
@@ -665,7 +678,8 @@ export default plugin(function ({
               visibility: "visible",
             },
           [`[${layoutAttrs.isDrawerClosing}] &`]: {
-            transition: "transform 0.3s, visibility 0.3s, opacity 0.3s",
+            transition:
+              "var(--tsn, transform 0.3s, visibility 0.3s, opacity 0.3s)",
           },
         }) as CSSRuleObject,
     },
@@ -834,7 +848,7 @@ export default plugin(function ({
               "--jun-EC-width": "var(--jun-ES-permanentWidth)",
               // TODO: make the `shadow` configurable from theme
               "--jun-EC-delay": "0s",
-              "--jun-EC-shadow": `var(--collapsed, 0 0 10px rgba(0,0,0,0.1), var(--jun-ES-line-w) 0 var(--jun-ES-line-color))`,
+              "--jun-EC-shadow": `var(--_permanent, var(--collapsed, 0 0 10px rgba(0,0,0,0.1), var(--jun-ES-line-w) 0 var(--jun-ES-line-color)))`,
             },
           },
         })[value] as CSSRuleObject,
@@ -911,7 +925,7 @@ export default plugin(function ({
           display: "var(--_drawer, flex) var(--_permanent, none)",
           visibility: "hidden",
           opacity: "0",
-          transition: "0.3s",
+          transition: "var(--tsn, 0.3s)",
           top: "calc(0.875rem)",
           right: "var(--anchorLeft, 0.875rem)",
           left: "var(--anchorRight, 0.875rem)",
@@ -1508,7 +1522,7 @@ export default plugin(function ({
       [layoutClasses.SidebarGroupLabel]: () => ({
         position: "relative",
         textOverflow: "ellipsis",
-        transition: "var(--_uncollapsed, opacity 0.4s)",
+        transition: "var(--tsn, var(--_uncollapsed, opacity 0.4s))",
         opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
         whiteSpace: "nowrap",
         overflow: "hidden",
@@ -1616,7 +1630,7 @@ export default plugin(function ({
         color: theme("colors.sidebar.foreground"),
         cursor: "pointer",
         transition:
-          "min-height var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), padding var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), gap var(--_collapsed, 0s 0.4s) var(--_uncollapsed, 0s)",
+          "var(--tsn, min-height var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), padding var(--_collapsed, 0.2s) var(--_uncollapsed, 0.3s), gap var(--_collapsed, 0s 0.4s) var(--_uncollapsed, 0s))",
         "&:hover": {
           color: theme("colors.sidebar.accent-foreground"),
           background: theme("colors.sidebar.accent"), // TODO: use theme token
@@ -1693,6 +1707,9 @@ export default plugin(function ({
     {
       [`${layoutClasses.SidebarMenuButton}-h`]: (size) => ({
         "--item-h": size,
+        [`.${layoutClasses.SidebarMenuItem}:has(> &)`]: {
+          "--item-h": size,
+        },
       }),
     },
     {
@@ -1743,7 +1760,7 @@ export default plugin(function ({
     {
       [layoutClasses.SidebarText]: () => ({
         textOverflow: "ellipsis",
-        transition: "var(--_uncollapsed, opacity 0.3s)",
+        transition: "var(--tsn, var(--_uncollapsed, opacity 0.3s))",
       }),
     },
     {
@@ -1772,7 +1789,7 @@ export default plugin(function ({
     {
       [layoutClasses.SidebarGroupText]: () => ({
         transition:
-          "grid-template-rows 0.4s, opacity 0.4s var(--_uncollapsed, 0.2s)",
+          "var(--tsn, grid-template-rows 0.4s, opacity 0.4s var(--_uncollapsed, 0.2s))",
         opacity: "var(--_collapsed, 0) var(--_uncollapsed, 1)",
       }),
     },
@@ -1816,7 +1833,7 @@ export default plugin(function ({
         alignItems: "center",
         top: "calc(var(--item-h, 2rem)/2 - var(--action-size, 1.5rem)/2)",
         color: theme("colors.sidebar.foreground"),
-        transition: "right 0.4s",
+        transition: "var(--tsn, right 0.4s)",
         borderRadius: theme("borderRadius.sm"),
         "&:hover": {
           background: theme("colors.sidebar.accent"),
@@ -1835,6 +1852,16 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
+    }
+  );
+  matchComponents(
+    {
+      [`${layoutClasses.SidebarMenuAction}-size`]: (size) => ({
+        "--action-size": size,
+      }),
+    },
+    {
+      values: theme("spacing"),
     }
   );
   matchComponents(
@@ -1862,7 +1889,7 @@ export default plugin(function ({
       [layoutClasses.SidebarIcon]: () => ({
         height: "var(--icon-size, 1rem)",
         width: "var(--icon-size, 1rem)",
-        transition: "cubic-bezier(0.4, 0, 0.2, 1) 0.15s",
+        transition: "var(--tsn, cubic-bezier(0.4, 0, 0.2, 1) 0.15s)",
         flex: "none",
       }),
     },
@@ -1953,7 +1980,7 @@ export default plugin(function ({
         ":has(:checked) ~ &": {
           // open
           transition:
-            "grid-template-rows 0.4s, visibility 0.4s, opacity 0.4s 0.2s",
+            "var(--tsn, grid-template-rows 0.4s, visibility 0.4s, opacity 0.4s 0.2s)",
           gridTemplateRows: "var(--_collapsed, 0fr) var(--_uncollapsed, 1fr)",
           [`& .${layoutClasses.SidebarMenuButton}`]: {
             visibility: "var(--_collapsed, hidden)",
@@ -1964,7 +1991,8 @@ export default plugin(function ({
           gridTemplateRows: "0fr",
           visibility: "hidden",
           opacity: "0",
-          transition: "grid-template-rows 0.4s, visibility 0.4s, opacity 0.2s",
+          transition:
+            "var(--tsn, grid-template-rows 0.4s, visibility 0.4s, opacity 0.2s)",
           [`& .${layoutClasses.SidebarMenuAction}`]: {
             visibility: "hidden",
           },
@@ -1985,7 +2013,7 @@ export default plugin(function ({
         position: "absolute",
         right: "var(--item-px, 0.5rem)",
         transition:
-          "transform cubic-bezier(0.4, 0, 0.2, 1) 0.15s, visibility 0s var(--_uncollapsed, 0.1s)",
+          "var(--tsn, transform cubic-bezier(0.4, 0, 0.2, 1) 0.15s, visibility 0s var(--_uncollapsed, 0.1s))",
         visibility: "var(--_collapsed, hidden)",
         [`:where(.${layoutClasses.SidebarMenuAction}) &`]: {
           position: "unset",
@@ -2066,7 +2094,7 @@ export default plugin(function ({
         rowGap: "2px",
         fontSize: theme("fontSize.xs"),
         lineHeight: theme("lineHeight.xs"),
-        transition: "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+        transition: "var(--tsn, 0.15s cubic-bezier(0.4, 0, 0.2, 1))",
         userSelect: "none",
         "&:where(:hover)": {
           color: theme("colors.sidebar.accent-foreground"),

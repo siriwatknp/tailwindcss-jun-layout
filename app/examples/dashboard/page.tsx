@@ -333,7 +333,7 @@ const menus = [
 
 export default function Dashboard() {
   return (
-    <div className="jun-layout">
+    <div className="jun-layout jun-layout-noTransition">
       <div className="jun-header jun-header-h-[64px] jun-header-clip-left md:px-4">
         <button
           className="jun-edgeDrawerTrigger w-[57px] grid place-items-center self-stretch border-r mr-4"
@@ -425,7 +425,7 @@ export default function Dashboard() {
                 return (
                   <li key={item.id} className="jun-sidebarMenuItem">
                     <button className="jun-sidebarMenuButton jun-sidebarMenuButton-spacing-0 jun-sidebarMenuButton-h-[40px]">
-                      <Icon className="jun-sidebarIcon jun-sidebarIcon-min-w-[55px] jun-sidebarIcon-shrink-size-[24px]" />
+                      <Icon className="jun-sidebarIcon jun-sidebarIcon-min-w-[55px] " />
                       <span className="jun-sidebarText">{item.title}</span>
                     </button>
 
@@ -433,7 +433,7 @@ export default function Dashboard() {
                       <>
                         <label
                           htmlFor={`menu-${item.id}`}
-                          className="jun-sidebarMenuAction jun-collapsibleTrigger"
+                          className="jun-sidebarMenuAction jun-sidebarMenuAction-size-[32px] jun-collapsibleTrigger"
                         >
                           <ChevronDown />
                           <input
