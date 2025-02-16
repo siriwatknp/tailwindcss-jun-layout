@@ -1,6 +1,328 @@
 "use client";
 
 import { triggerEdgeDrawer } from "@/packages/tailwindcss-jun-layout";
+import {
+  Home,
+  Lightbulb,
+  Globe,
+  PieChart,
+  Shield,
+  Network,
+  ShieldCheck,
+  CircleCheck,
+  MapPin,
+  ShieldAlert,
+  Mail,
+  Code,
+  Box,
+  Database,
+  HardDrive,
+  Sparkles,
+  Cloud,
+  Image as ImageIcon,
+  Phone,
+  Settings,
+  Bell,
+  Filter,
+} from "lucide-react";
+
+const menus = [
+  {
+    id: "account-home",
+    title: "Account Home",
+    icon: Home,
+  },
+  {
+    id: "discover",
+    title: "Discover",
+    icon: Lightbulb,
+  },
+  {
+    id: "domain-registration",
+    title: "Domain Registration",
+    icon: Globe,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "manage-domains",
+        title: "Manage Domains",
+      },
+      {
+        id: "transfer-domains",
+        title: "Transfer Domains",
+      },
+      {
+        id: "register-domains",
+        title: "Register Domains",
+      },
+    ],
+  },
+  {
+    id: "analytics",
+    title: "Analytics & Logs",
+    icon: PieChart,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "account-analytics",
+        title: "Account Analytics",
+        badge: "Beta",
+      },
+      {
+        id: "web-analytics",
+        title: "Web Analytics",
+      },
+      {
+        id: "carbon-impact",
+        title: "Carbon Impact Report",
+      },
+      {
+        id: "magic-monitoring",
+        title: "Magic Monitoring",
+      },
+    ],
+  },
+  {
+    id: "security",
+    title: "Security Center",
+    icon: Shield,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "security-insights",
+        title: "Security Insights",
+      },
+      {
+        id: "infrastructure",
+        title: "Infrastructure",
+      },
+      {
+        id: "investigate",
+        title: "Investigate",
+      },
+      {
+        id: "blocked-content",
+        title: "Blocked Content",
+        badge: "New",
+      },
+    ],
+  },
+  {
+    id: "trace",
+    title: "Trace",
+    icon: Network,
+    badge: "Beta",
+  },
+  {
+    id: "waf",
+    title: "WAF",
+    icon: ShieldCheck,
+  },
+  {
+    id: "turnstile",
+    title: "Turnstile",
+    icon: CircleCheck,
+  },
+  {
+    id: "ip-addresses",
+    title: "IP Addresses",
+    icon: MapPin,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "address-maps",
+        title: "Address Maps",
+      },
+    ],
+  },
+  {
+    id: "zero-trust",
+    title: "Zero Trust",
+    icon: ShieldAlert,
+  },
+  {
+    id: "email-security",
+    title: "Email Security",
+    icon: Mail,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "email-overview",
+        title: "Overview",
+      },
+      {
+        id: "zero-trust-email",
+        title: "Zero Trust Email Security",
+        external: true,
+      },
+      {
+        id: "retro-scan",
+        title: "Retro Scan",
+      },
+    ],
+  },
+  {
+    id: "workers-pages",
+    title: "Workers & Pages",
+    icon: Code,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "durable-objects",
+        title: "Durable Objects",
+      },
+      {
+        id: "workflows",
+        title: "Workflows",
+        badge: "Beta",
+      },
+      {
+        id: "browser-rendering",
+        title: "Browser Rendering",
+      },
+      {
+        id: "plans",
+        title: "Plans",
+      },
+    ],
+  },
+  {
+    id: "workers-platforms",
+    title: "Workers for Platforms",
+    icon: Box,
+  },
+  {
+    id: "storage-databases",
+    title: "Storage & Databases",
+    icon: Database,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "kv",
+        title: "KV",
+      },
+      {
+        id: "d1-sql",
+        title: "D1 SQL Database",
+      },
+      {
+        id: "hyperdrive",
+        title: "Hyperdrive",
+      },
+      {
+        id: "queues",
+        title: "Queues",
+      },
+    ],
+  },
+  {
+    id: "r2-object-storage",
+    title: "R2 Object Storage",
+    icon: HardDrive,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "r2-overview",
+        title: "Overview",
+      },
+      {
+        id: "data-migration",
+        title: "Data Migration",
+      },
+    ],
+  },
+  {
+    id: "ai",
+    title: "AI",
+    icon: Sparkles,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "workers-ai",
+        title: "Workers AI",
+      },
+      {
+        id: "vectorize",
+        title: "Vectorize",
+      },
+      {
+        id: "ai-gateway",
+        title: "AI Gateway",
+      },
+    ],
+  },
+  {
+    id: "stream",
+    title: "Stream",
+    icon: Cloud,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "stream-plans",
+        title: "Plans",
+      },
+    ],
+  },
+  {
+    id: "images",
+    title: "Images",
+    icon: ImageIcon,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "images-overview",
+        title: "Overview",
+      },
+      {
+        id: "transformations",
+        title: "Transformations",
+      },
+      {
+        id: "images-plans",
+        title: "Plans",
+      },
+    ],
+  },
+  {
+    id: "calls",
+    title: "Calls",
+    icon: Phone,
+    badge: "Beta",
+  },
+  {
+    id: "manage-account",
+    title: "Manage Account",
+    icon: Settings,
+    hasSubmenu: true,
+    submenu: [
+      {
+        id: "members",
+        title: "Members",
+      },
+      {
+        id: "account-api-tokens",
+        title: "Account API Tokens",
+      },
+      {
+        id: "audit-log",
+        title: "Audit Log",
+      },
+      {
+        id: "billing",
+        title: "Billing",
+      },
+      {
+        id: "configurations",
+        title: "Configurations",
+      },
+    ],
+  },
+  {
+    id: "notifications",
+    title: "Notifications",
+    icon: Bell,
+  },
+];
 
 export default function Dashboard() {
   return (
@@ -89,8 +411,44 @@ export default function Dashboard() {
           <div className="h-[60px] flex items-center justify-center">
             <h1 className="text-md font-medium">someone@gmail.com</h1>
           </div>
+          <div className="jun-sidebarContainer">
+            <ul className="jun-sidebarMenu">
+              {menus.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.id} className="jun-sidebarMenuItem">
+                    <button className="jun-sidebarMenuButton">
+                      <Icon className="jun-sidebarIcon" />
+                      <span className="jun-sidebarText">{item.title}</span>
+                    </button>
+
+                    {item.submenu && (
+                      <ul className="jun-sidebarMenu jun-sidebarMenu-nested">
+                        {item.submenu.map((sub) => (
+                          <li key={sub.id} className="jun-sidebarMenuItem">
+                            <button className="jun-sidebarMenuButton">
+                              <span className="jun-sidebarText">
+                                {sub.title}
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
+      <Tooltip
+        slotProps={{
+          paper: {
+            className: "px",
+          },
+        }}
+      />
     </div>
   );
 }
