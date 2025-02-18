@@ -2,6 +2,7 @@ import { useMDXComponent } from "@content-collections/mdx/react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { CodeBlockCommand } from "@/components/code-block-command";
 import { Callout } from "@/components/callout";
 import TechStack from "@/components/tech-stack";
 import TemplatePreview from "@/components/template-preview";
@@ -221,11 +222,9 @@ const components = {
     __withMeta__,
     __src__,
     __event__,
-    // __style__,
     __name__,
     ...props
   }: React.HTMLAttributes<HTMLPreElement> & {
-    // __style__?: Style["name"]
     __rawString__?: string;
     __npmCommand__?: string;
     __pnpmCommand__?: string;
@@ -236,6 +235,20 @@ const components = {
     __event__?: Event["name"];
     __name__?: string;
   }) => {
+    const isNpmCommand =
+      __npmCommand__ && __yarnCommand__ && __pnpmCommand__ && __bunCommand__;
+
+    if (isNpmCommand) {
+      return (
+        <CodeBlockCommand
+          __npmCommand__={__npmCommand__}
+          __yarnCommand__={__yarnCommand__}
+          __pnpmCommand__={__pnpmCommand__}
+          __bunCommand__={__bunCommand__}
+        />
+      );
+    }
+
     return (
       <>
         <pre
@@ -245,28 +258,14 @@ const components = {
           )}
           {...props}
         />
-        {__rawString__ && __src__ && __event__ && (
+        {__rawString__ && (
           <CopyButton
             value={__rawString__}
-            src={__src__}
+            src={__src__ || __rawString__}
             event={__event__}
             className={cn("absolute right-4 top-4", __withMeta__ && "top-16")}
           />
         )}
-        {__npmCommand__ &&
-          __yarnCommand__ &&
-          __pnpmCommand__ &&
-          __bunCommand__ && (
-            <CopyNpmCommandButton
-              commands={{
-                __npmCommand__,
-                __pnpmCommand__,
-                __yarnCommand__,
-                __bunCommand__,
-              }}
-              className={cn("absolute right-4 top-4", __withMeta__ && "top-16")}
-            />
-          )}
       </>
     );
   },
