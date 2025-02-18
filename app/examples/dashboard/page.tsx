@@ -26,10 +26,8 @@ import {
   Phone,
   Settings,
   Bell,
-  Filter,
   ChevronLeft,
   ChevronRight,
-  ArrowDown,
   ChevronDown,
 } from "lucide-react";
 
