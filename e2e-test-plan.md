@@ -19,10 +19,10 @@
 
 ### Phase 3: Edge Sidebar Tests
 
-- [ ] Test permanent vs drawer mode switching
-- [ ] Test collapse/expand behaviors
-- [ ] Test auto-collapse at breakpoints
-- [ ] Test hover uncollapse functionality
+- [x] Test permanent vs drawer mode switching
+- [x] Test collapse/expand behaviors
+- [x] Test auto-collapse at breakpoints
+- [x] Test hover uncollapse functionality
 - [ ] Test width customization
 - [ ] Test multiple sidebars (left + right)
 - [ ] Test state persistence

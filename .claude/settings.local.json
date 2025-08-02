@@ -4,7 +4,8 @@
       "Bash(pnpm test:e2e:*)",
       "Bash(git add:*)",
       "WebFetch(domain:playwright.dev)",
-      "Bash(pnpm typecheck:*)"
+      "Bash(pnpm typecheck:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }

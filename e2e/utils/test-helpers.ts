@@ -59,6 +59,10 @@ export async function getSidebarState(
   // Check drawer state from sidebar's data attribute, not body
   const drawerOpen = await sidebar.getAttribute("data-drawer-open");
   const isDrawerOpen = drawerOpen !== null;
+  
+  // Check collapsed state from data attribute
+  const isCollapsed = await sidebar.getAttribute("data-edge-collapsed");
+  const isCollapsedState = isCollapsed !== null;
 
   // Check if the sidebar content is actually visible
   const isVisible = await sidebar.evaluate((el) => {
@@ -95,7 +99,7 @@ export async function getSidebarState(
       (isCurrentlyPermanent &&
         isVisible &&
         !className.includes("permanent-hidden")),
-    isCollapsed: className.includes("collapsed"),
+    isCollapsed: isCollapsedState,
     isPermanent: hasPermanentClass,
     isDrawer: hasDrawerClass,
   };
