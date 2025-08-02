@@ -152,54 +152,67 @@ The action also appears on keyboard focus.
 To show a tooltip (using radix or shadcn) only when the permanent EdgeSidebar is collapsed, first wraps the layout with the `TooltipProvider`:
 
 ```jsx
-<TooltipProvider delayDuration={0}>
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+
+<TooltipPrimitive.Provider delayDuration={0}>
   <div className="jun-layout">...</div>
-</TooltipProvider>
+</TooltipPrimitive.Provider>;
 ```
 
 Then, create a `TooltipSidebar` that wraps `TooltipPrimitive.Portal` and `TooltipPrimitive.Content` to custom the `container` prop to be the EdgeSidebar element:
 
 ```jsx
+// src/components/TooltipSidebar.tsx
+import React from 'react';
+import { cn } from '@/lib/utils';
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
-function TooltipSidebar({ children }) {
-  const [container, setContainer] = React.useState(null);
+const TooltipSidebar = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & {
+    tooltip: React.ReactNode;
+  }
+>(({ className, sideOffset = 4, tooltip, children }, ref) => {
+  const [container, setContainer] = React.useState<Element | null>(null);
   React.useEffect(() => {
-    setContainer(document.querySelector(".jun-edgeSidebar"));
+    setContainer(document.querySelector('.jun-edgeSidebar'));
   }, []);
   return (
-    <TooltipPrimitive.Portal container={container}>
-      <TooltipPrimitive.Content
-        ref={ref}
-        sideOffset={4}
-        side="right"
-        className={cn(
-          "z-50 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95",
-          className
-        )}
-      >
-        {children}
-      </TooltipPrimitive.Content>
-    </TooltipPrimitive.Portal>
+    <TooltipPrimitive.Root>
+      <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
+      <TooltipPrimitive.Portal container={container}>
+        <TooltipPrimitive.Content
+          ref={ref}
+          sideOffset={sideOffset}
+          side="right"
+          align="center"
+          className={cn(
+            'jun-sidebarTooltip',
+            'z-50 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-tooltip-content-transform-origin]',
+            className
+          )}
+        >
+          {tooltip}
+        </TooltipPrimitive.Content>
+      </TooltipPrimitive.Portal>
+    </TooltipPrimitive.Root>
   );
-}
+});
+TooltipSidebar.displayName = TooltipPrimitive.Content.displayName;
+
+export { TooltipSidebar };
 ```
 
 Finally, create a tooltip for each menu and apply `.jun-sidebarTooltip` to the [TooltipContent](https://www.radix-ui.com/primitives/docs/components/tooltip#content):
 
 ```jsx
 <li className="jun-sidebarMenuItem">
-  <Tooltip>
-    <TooltipTrigger>
-      <a className="jun-sidebarMenuButton">
-        <svg className="jun-sidebarIcon" />
-        <span className="jun-sidebarText">Dashboard</span>
-      </a>
-    </TooltipTrigger>
-    <TooltipContent side="right" align="center" className="jun-sidebarTooltip">
-      <p>Dashboard</p>
-    </TooltipContent>
-  </Tooltip>
+  <TooltipSidebar tooltip={<p>Dashboard</p>}>
+    <a className="jun-sidebarMenuButton">
+      <svg className="jun-sidebarIcon" />
+      <span className="jun-sidebarText">Dashboard</span>
+    </a>
+  </TooltipSidebar>
 </li>
 ```
 
