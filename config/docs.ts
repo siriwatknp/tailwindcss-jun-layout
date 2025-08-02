@@ -52,24 +52,24 @@ export const docsConfig: DocsConfig = {
           href: "/docs/content",
         },
         {
-          title: "Dock (Bottom Nav)",
-          href: "/docs/dock",
+          title: "Edge Sidebar",
+          href: "/docs/edge-sidebar",
         },
         {
           title: "Footer",
           href: "/docs/footer",
         },
         {
-          title: "Edge Sidebar",
-          href: "/docs/edge-sidebar",
+          title: "Sidebar elements",
+          href: "/docs/sidebar-elements",
         },
         {
           title: "Inset Sidebar",
           href: "/docs/inset-sidebar",
         },
         {
-          title: "Sidebar elements",
-          href: "/docs/sidebar-elements",
+          title: "Dock (Bottom Nav)",
+          href: "/docs/dock",
         },
       ],
     },
