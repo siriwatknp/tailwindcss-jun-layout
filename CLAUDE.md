@@ -118,10 +118,12 @@ Key features:
 
 ## E2E Testing Workflow
 
-When writing E2E tests for Jun Layout components:
+When writing E2E tests for Jun Layout components, follow [Playwright Best Practices](https://playwright.dev/docs/best-practices):
 
 ### 1. Read Documentation First
+
 **IMPORTANT**: Always read the relevant documentation in `/content/docs/` before writing tests:
+
 - `/content/docs/layout.mdx` - Layout component API and modifiers
 - `/content/docs/header.mdx` - Header component and clipping behavior
 - `/content/docs/edge-sidebar.mdx` - Edge sidebar API (left: `jun-edgeSidebar`, right: `jun-edgeSidebarR`)
@@ -130,26 +132,160 @@ When writing E2E tests for Jun Layout components:
 - `/content/docs/sidebar-elements.mdx` - Sidebar menu structure
 
 ### 2. Create Test Pages
+
 Create dedicated test pages in `/app/e2e/[feature-name]/page.tsx` that:
+
 - Use the actual Jun Layout classes as documented
 - Include proper component structure (e.g., `jun-edgeContent` wrapper for sidebars)
 - Add `data-testid` attributes for test selectors
 - Provide interactive controls when testing variants/states
 
 ### 3. Write E2E Tests
-Create test files in `/e2e/[feature-name].spec.ts` that:
-- Import helper functions from `/e2e/utils/test-helpers.ts`
-- Test actual behavior, not implementation details
-- Verify responsive behavior across viewports
-- Check CSS properties and computed styles (but NOT CSS variables)
-- Test user interactions (clicks, hovers, etc.)
 
-**IMPORTANT**: Do NOT test CSS variables directly. CSS variables are implementation details. Instead, test the actual behavior and computed styles that result from those variables.
+Create test files in `/e2e/[feature-name].spec.ts` following these best practices:
+
+#### Testing Philosophy
+
+- **Test user-visible behavior**: Focus on what end users see and interact with
+- **Test isolation**: Each test must be completely independent
+- **No implementation details**: Test behavior, not internal workings
+- **Control test data**: Tests should be deterministic and repeatable
+
+#### Locator Best Practices
+
+```typescript
+// ✅ GOOD - User-facing attributes
+page.getByRole("button", { name: "Submit" });
+page.getByTestId("sidebar-trigger");
+page.getByText("Welcome");
+
+// ❌ BAD - CSS/XPath selectors
+page.locator(".btn-primary");
+page.locator('xpath=//button[@class="submit"]');
+```
+
+#### Assertions
+
+```typescript
+// ✅ GOOD - Web-first assertions (auto-wait and retry)
+await expect(page.getByTestId("sidebar")).toBeVisible();
+await expect(page.getByRole("button")).toBeEnabled();
+
+// ❌ BAD - Manual assertions without waiting
+const isVisible = await page.getByTestId("sidebar").isVisible();
+expect(isVisible).toBe(true);
+```
+
+#### Test Structure
+
+```typescript
+test.describe("Feature Name", () => {
+  test.beforeEach(async ({ page }) => {
+    // Common setup
+    await page.goto("/test-page");
+  });
+
+  test("should perform user action", async ({ page }) => {
+    // Arrange
+    const button = page.getByRole("button", { name: "Open" });
+
+    // Act
+    await button.click();
+
+    // Assert
+    await expect(page.getByTestId("modal")).toBeVisible();
+  });
+});
+```
+
+#### Responsive Testing
+
+```typescript
+// Use multiple viewport configurations
+test.describe("Mobile", () => {
+  test.use({ viewport: { width: 375, height: 667 } });
+  // Mobile-specific tests
+});
+
+// Or use custom viewport helper
+await triggerBreakpoint(page, "mobile");
+```
+
+#### Avoid Common Pitfalls
+
+- **No hard waits**: Use `waitForLayoutStable()` instead of `page.waitForTimeout()`
+- **No CSS variables**: Test computed styles, not `--jun-header-height`
+- **No brittle selectors**: Use semantic locators over CSS paths
+- **No external dependencies**: Mock or control all external data
 
 ### 4. Test Organization
+
 - `/e2e/core-layout.spec.ts` - Basic layout structure and variants
 - `/e2e/edge-sidebar.spec.ts` - Edge sidebar behaviors (permanent/drawer modes)
+- `/e2e/edge-sidebar-collapse.spec.ts` - Collapse/expand behaviors
 - `/e2e/responsive.spec.ts` - Breakpoint transitions
 - `/e2e/interactions.spec.ts` - User interaction handlers
 - `/e2e/accessibility.spec.ts` - Keyboard navigation and ARIA attributes
 
+### 5. Helper Functions
+
+Use and extend `/e2e/utils/test-helpers.ts` for common operations:
+
+```typescript
+// Layout validation
+validateLayoutStructure(page);
+
+// Sidebar state checks
+getSidebarState(page, "left" | "right");
+
+// Responsive testing
+triggerBreakpoint(page, "mobile" | "tablet" | "desktop");
+
+// Animation stability
+waitForLayoutStable(page);
+```
+
+## Git Commit Guidelines
+
+### Commit Message Format
+
+Use [Conventional Commits](https://www.conventionalcommits.org/) format:
+
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation changes
+- `style:` - Code style changes (formatting, etc.)
+- `refactor:` - Code refactoring
+- `test:` - Adding or updating tests
+- `chore:` - Maintenance tasks
+- `perf:` - Performance improvements
+
+Keep commit messages:
+
+- **Concise** - One line summary (50-72 chars)
+- **Direct** - Start with verb in imperative mood
+- **Clear** - Easy to understand the change
+- **No body** - Just the summary line, no additional content
+
+Examples:
+
+- `feat: add edge sidebar drawer mode`
+- `fix: correct header clipping behavior`
+- `test: add edge sidebar E2E tests with Playwright best practices`
+- `docs: update CLAUDE.md with testing guidelines`
+
+Note: Do not include commit body, co-author attribution, or any additional details.
+
+### When to Commit
+
+**Always ask the user as a prompt whether to commit or skip** when it's a good time to commit, such as:
+
+- After completing a feature or significant functionality
+- After fixing a bug
+- After adding comprehensive tests
+- After updating documentation
+- When switching context to a different task
+- Before making breaking changes
+- After code passes linting and type checking
+
+Example prompt: "Ready to commit the changes. Would you like to commit now or skip?"

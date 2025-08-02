@@ -2,12 +2,15 @@ import { Page, expect } from "@playwright/test";
 
 /**
  * Wait for all CSS transitions and animations to complete
+ * This is better than hard waits as it dynamically checks for animations
+ * @param page - Playwright page object
+ * @param timeout - Maximum time to wait for animations to complete (default: 1000ms)
  */
 export async function waitForLayoutStable(page: Page, timeout = 1000) {
-  // Wait for any CSS transitions to complete
-  await page.waitForTimeout(300); // Standard CSS transition time
+  // Wait a short time for transitions to start
+  await page.waitForTimeout(100);
 
-  // Wait for no animations
+  // Wait for all animations to complete
   await page.waitForFunction(
     () => {
       const animations = document.getAnimations();
@@ -15,10 +18,17 @@ export async function waitForLayoutStable(page: Page, timeout = 1000) {
     },
     { timeout },
   );
+
+  // Additional short wait to ensure layout has settled
+  await page.waitForTimeout(100);
 }
 
 /**
  * Get the current state of a sidebar (open/closed/collapsed)
+ * Checks both CSS classes and computed styles to determine actual state
+ * @param page - Playwright page object
+ * @param side - Which sidebar to check ("left" or "right")
+ * @returns Object with sidebar state properties
  */
 export async function getSidebarState(
   page: Page,
@@ -29,10 +39,7 @@ export async function getSidebarState(
   isPermanent: boolean;
   isDrawer: boolean;
 }> {
-  const selector =
-    side === "left"
-      ? '.jun-edgeSidebar'
-      : '.jun-edgeSidebarR';
+  const selector = side === "left" ? ".jun-edgeSidebar" : ".jun-edgeSidebarR";
   const sidebar = page.locator(selector).first();
 
   // Check if sidebar exists
@@ -49,22 +56,56 @@ export async function getSidebarState(
   // Get classes
   const className = (await sidebar.getAttribute("class")) || "";
 
-  // Check drawer state from data attribute
-  const drawerOpen = await page
-    .locator("body")
-    .getAttribute("data-drawer-open");
-  const isDrawerOpen = drawerOpen === side || drawerOpen === "both";
+  // Check drawer state from sidebar's data attribute, not body
+  const drawerOpen = await sidebar.getAttribute("data-drawer-open");
+  const isDrawerOpen = drawerOpen !== null;
+
+  // Check if the sidebar content is actually visible
+  const isVisible = await sidebar.evaluate((el) => {
+    const rect = el.getBoundingClientRect();
+    const style = window.getComputedStyle(el);
+
+    // Check if element is visible
+    return (
+      rect.width > 0 &&
+      rect.height > 0 &&
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      style.opacity !== "0"
+    );
+  });
+
+  // Check if sidebar is in permanent mode (considering responsive variants)
+  const computedPosition = await sidebar.evaluate((el) => {
+    return window.getComputedStyle(el).position;
+  });
+
+  // In permanent mode, sidebar has position: sticky or relative
+  // In drawer mode, sidebar has position: fixed
+  const isCurrentlyPermanent =
+    computedPosition === "sticky" || computedPosition === "relative";
+
+  // For sidebars with both classes, the active mode depends on viewport
+  const hasDrawerClass = className.includes("drawer");
+  const hasPermanentClass = className.includes("permanent");
 
   return {
-    isOpen: isDrawerOpen || className.includes("permanent-visible"),
+    isOpen:
+      isDrawerOpen ||
+      (isCurrentlyPermanent &&
+        isVisible &&
+        !className.includes("permanent-hidden")),
     isCollapsed: className.includes("collapsed"),
-    isPermanent: className.includes("permanent"),
-    isDrawer: className.includes("drawer"),
+    isPermanent: hasPermanentClass,
+    isDrawer: hasDrawerClass,
   };
 }
 
 /**
  * Trigger a specific breakpoint by resizing the viewport
+ * Useful for testing responsive behavior
+ * @param page - Playwright page object
+ * @param breakpoint - Named breakpoint or "mobile"
  */
 export async function triggerBreakpoint(
   page: Page,
@@ -85,6 +126,9 @@ export async function triggerBreakpoint(
 
 /**
  * Validate the basic layout structure
+ * Checks for presence of header, footer, sidebars, etc.
+ * @param page - Playwright page object
+ * @returns Object with boolean flags for each layout component
  */
 export async function validateLayoutStructure(page: Page) {
   // Check for main layout container
@@ -101,10 +145,8 @@ export async function validateLayoutStructure(page: Page) {
   return {
     hasHeader: (await header.count()) > 0,
     hasFooter: (await page.locator(".jun-footer").count()) > 0,
-    hasLeftSidebar:
-      (await page.locator('.jun-edgeSidebar').count()) > 0,
-    hasRightSidebar:
-      (await page.locator('.jun-edgeSidebarR').count()) > 0,
+    hasLeftSidebar: (await page.locator(".jun-edgeSidebar").count()) > 0,
+    hasRightSidebar: (await page.locator(".jun-edgeSidebarR").count()) > 0,
     hasInsetSidebar:
       (await page.locator('[class*="jun-insetSidebar"]').count()) > 0,
   };
@@ -112,6 +154,9 @@ export async function validateLayoutStructure(page: Page) {
 
 /**
  * Click on a sidebar trigger button
+ * Handles both left and right sidebar triggers
+ * @param page - Playwright page object
+ * @param side - Which sidebar trigger to click ("left" or "right")
  */
 export async function clickSidebarTrigger(
   page: Page,
@@ -129,6 +174,10 @@ export async function clickSidebarTrigger(
 
 /**
  * Measure layout performance metrics
+ * Captures timing data for animations and paint events
+ * @param page - Playwright page object
+ * @param action - Async function to measure
+ * @returns Performance metrics object
  */
 export async function measurePerformance(
   page: Page,
@@ -163,6 +212,10 @@ export async function measurePerformance(
 
 /**
  * Check if an element is in viewport
+ * Useful for testing sticky headers and scroll behavior
+ * @param page - Playwright page object
+ * @param selector - CSS selector for the element
+ * @returns Boolean indicating if element is fully in viewport
  */
 export async function isInViewport(
   page: Page,
@@ -184,6 +237,10 @@ export async function isInViewport(
 
 /**
  * Get computed CSS variable value
+ * Note: Prefer testing computed styles over CSS variables when possible
+ * @param page - Playwright page object
+ * @param varName - CSS variable name (e.g., "--jun-header-height")
+ * @returns The computed value of the CSS variable
  */
 export async function getCSSVariable(
   page: Page,
@@ -195,7 +252,9 @@ export async function getCSSVariable(
 }
 
 /**
- * Test utilities for dock navigation
+ * Get the current state of the dock navigation
+ * @param page - Playwright page object
+ * @returns Object with dock state or null if no dock exists
  */
 export async function getDockState(page: Page) {
   const dock = page.locator(".jun-dock");

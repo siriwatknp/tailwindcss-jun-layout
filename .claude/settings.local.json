@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(pnpm test:e2e:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "WebFetch(domain:playwright.dev)",
+      "Bash(pnpm typecheck:*)"
     ],
     "deny": []
   }
