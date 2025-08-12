@@ -23,8 +23,8 @@
 - [x] Test collapse/expand behaviors
 - [x] Test auto-collapse at breakpoints
 - [x] Test hover uncollapse functionality
-- [ ] Test width customization
-- [ ] Test multiple sidebars (left + right)
+- [x] Test width customization
+- [x] Test multiple sidebars (left + right)
 - [ ] Test state persistence
 
 ### Phase 4: Inset Sidebar Tests

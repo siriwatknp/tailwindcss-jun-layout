@@ -33,14 +33,21 @@ export async function waitForLayoutStable(page: Page, timeout = 1000) {
 export async function getSidebarState(
   page: Page,
   side: "left" | "right" = "left",
+  testId?: string,
 ): Promise<{
   isOpen: boolean;
   isCollapsed: boolean;
   isPermanent: boolean;
   isDrawer: boolean;
 }> {
-  const selector = side === "left" ? ".jun-edgeSidebar" : ".jun-edgeSidebarR";
-  const sidebar = page.locator(selector).first();
+  // If testId is provided, use it to find the specific sidebar
+  let sidebar;
+  if (testId) {
+    sidebar = page.getByTestId(testId);
+  } else {
+    const selector = side === "left" ? ".jun-edgeSidebar" : ".jun-edgeSidebarR";
+    sidebar = page.locator(selector).first();
+  }
 
   // Check if sidebar exists
   const exists = (await sidebar.count()) > 0;
@@ -135,12 +142,12 @@ export async function triggerBreakpoint(
  * @returns Object with boolean flags for each layout component
  */
 export async function validateLayoutStructure(page: Page) {
-  // Check for main layout container
-  await expect(page.locator(".jun-layout")).toBeVisible();
+  // Check for main layout container - use first() to handle multiple layouts
+  await expect(page.locator(".jun-layout").first()).toBeVisible();
 
   // Check for essential layout parts
-  const header = page.locator(".jun-header");
-  const content = page.locator(".jun-content");
+  const header = page.locator(".jun-header").first();
+  const content = page.locator(".jun-content").first();
 
   // At least content should be present
   await expect(content).toBeVisible();
