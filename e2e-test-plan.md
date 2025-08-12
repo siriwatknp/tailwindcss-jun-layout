@@ -25,56 +25,15 @@
 - [x] Test hover uncollapse functionality
 - [x] Test width customization
 - [x] Test multiple sidebars (left + right)
-- [ ] Test state persistence
 
 ### Phase 4: Inset Sidebar Tests
 
-- [ ] Test sticky/fixed/absolute positioning
-- [ ] Test integration with content area
-- [ ] Test width variants
-- [ ] Test visibility at different breakpoints
+- [x] Test sticky/fixed/absolute positioning
+- [x] Test integration with content area
+- [x] Test width variants
+- [x] Test visibility at different breakpoints
 
-### Phase 5: Responsive Behavior Tests
-
-- [ ] Test mobile drawer activation
-- [ ] Test tablet permanent sidebar
-- [ ] Test desktop full layout
-- [ ] Test breakpoint transitions
-- [ ] Test container query responses
-
-### Phase 6: User Interaction Tests
-
-- [ ] Test click handlers for triggers
-- [ ] Test hover behaviors
-- [ ] Test touch gestures on mobile
-- [ ] Test state synchronization
-- [ ] Test animation completion
-
-### Phase 7: Advanced Scenarios
+### Phase 5: Nested Layouts
 
 - [ ] Test nested layout scenarios
-- [ ] Test modal dialog integration
-- [ ] Test isolated app containers
-- [ ] Test state isolation between nested layouts
-
-### Phase 8: Accessibility Tests
-
-- [ ] Test keyboard navigation flow
-- [ ] Test screen reader announcements
-- [ ] Test focus management
-- [ ] Test ARIA attributes
-- [ ] Test color contrast validation
-
-### Phase 9: Dock Navigation Tests
-
-- [ ] Test menu item selection
-- [ ] Test tooltip display
-- [ ] Test float variant behavior
-- [ ] Test mobile interactions
-
-### Phase 10: Visual Regression Tests
-
-- [ ] Set up visual regression baseline
-- [ ] Test component visual consistency
-- [ ] Test theme variations
-- [ ] Test responsive visual changes
+- [ ] Test isolated app containers (standalone layouts)

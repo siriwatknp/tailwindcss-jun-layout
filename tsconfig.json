@@ -2,11 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "esnext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -25,16 +21,11 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@/components/magicui/*": [
-        "./registry/default/magicui/*"
-      ],
-      "@/components/example/*": [
-        "./registry/default/example/*"
-      ],
-      "content-collections": ["./.content-collections/generated"]
+      "@/*": ["./*"],
+      "@/components/magicui/*": ["./registry/default/magicui/*"],
+      "@/components/example/*": ["./registry/default/example/*"],
+      "content-collections": ["./.content-collections/generated"],
+      "tailwindcss-jun-layout": ["./packages/tailwindcss-jun-layout/index.ts"]
     }
   },
   "include": [
@@ -42,13 +33,13 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".content-colletions/generated",
+    ".content-colletions/generated"
   ],
   "exclude": [
     "node_modules",
     "packages/**/*",
     "scripts/**/*",
-    "scripts/build-registry.ts", 
+    "scripts/build-registry.ts",
     "__registry__"
   ]
 }
