@@ -1,0 +1,13 @@
+{
+  "name": "grid-basic",
+  "type": "registry:ui",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "demo/grid-basic.tsx",
+      "content": "export default function GridBasicDemo() {\n  return (\n    <div className=\"w-full border rounded-lg bg-background p-4\">\n      <div className=\"jun-grid\">\n        <div className=\"jun-gridItem col-span-12\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-12\n          </div>\n        </div>\n        <div className=\"jun-gridItem col-span-6\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-6\n          </div>\n        </div>\n        <div className=\"jun-gridItem col-span-6\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-6\n          </div>\n        </div>\n        <div className=\"jun-gridItem col-span-4\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-4\n          </div>\n        </div>\n        <div className=\"jun-gridItem col-span-4\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-4\n          </div>\n        </div>\n        <div className=\"jun-gridItem col-span-4\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-4\n          </div>\n        </div>\n        <div className=\"jun-gridItem col-span-3\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-3\n          </div>\n        </div>\n        <div className=\"jun-gridItem col-span-3\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-3\n          </div>\n        </div>\n        <div className=\"jun-gridItem col-span-3\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-3\n          </div>\n        </div>\n        <div className=\"jun-gridItem col-span-3\">\n          <div className=\"p-4 bg-muted rounded h-20 flex items-center justify-center text-muted-foreground\">\n            col-span-3\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

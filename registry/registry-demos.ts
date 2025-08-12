@@ -205,4 +205,28 @@ export const demos: Registry = [
     dependencies: [],
     files: ["demo/examples-collapsible-menus-secondary-action.tsx"],
   },
+  {
+    name: "grid-basic",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/grid-basic.tsx"],
+  },
+  {
+    name: "grid-dashboard",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/grid-dashboard.tsx"],
+  },
+  {
+    name: "grid-cards",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/grid-cards.tsx"],
+  },
+  {
+    name: "grid-form",
+    type: "registry:ui",
+    dependencies: [],
+    files: ["demo/grid-form.tsx"],
+  },
 ];

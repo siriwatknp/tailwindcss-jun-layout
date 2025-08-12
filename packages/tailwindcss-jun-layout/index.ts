@@ -51,6 +51,8 @@ const layoutClasses = {
   DockMenuButton: "jun-dockMenuButton",
   DockIndicator: "jun-dockIndicator",
   DockTooltip: "jun-dockTooltip",
+  Grid: "jun-grid",
+  GridItem: "jun-gridItem",
 };
 
 function internalCollapseSidebar(options: {
@@ -2192,6 +2194,111 @@ export default plugin(function ({
               lineHeight: "inherit",
             },
         }) as CSSRuleObject,
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+
+  // Grid
+  matchComponents(
+    {
+      [layoutClasses.Grid]: () => ({
+        display: "grid",
+        gap: theme("spacing.4"),
+        gridAutoFlow: "dense",
+        gridTemplateColumns: "repeat(12, 1fr)",
+        containerType: "inline-size",
+        "--1_2": "var(--cols,)",
+        "--5_7": "var(--cols,)",
+        "--1_2_1": "var(--cols,)",
+      }),
+      [`${layoutClasses.Grid}-media`]: () => ({
+        containerType: "unset",
+      }),
+      [`${layoutClasses.Grid}-dense`]: () => ({
+        gridAutoFlow: "dense",
+      }),
+      [`${layoutClasses.Grid}-5|7`]: () => ({
+        "--cols": "var(--5_7,)",
+      }),
+      [`${layoutClasses.Grid}-1|2`]: () => ({
+        "--cols": "var(--1_2,)",
+      }),
+      [`${layoutClasses.Grid}-1|2|1`]: () => ({
+        "--cols": "var(--1_2_1,)",
+      }),
+    },
+    {
+      values: {
+        DEFAULT: true,
+      },
+    }
+  );
+
+  // GridItem
+  matchComponents(
+    {
+      [layoutClasses.GridItem]: () =>
+        ({
+          display: "flex",
+          flexDirection: "column",
+          gridColumn: "1 / -1",
+          [`@container (min-width: ${theme("screens.sm")})`]: {
+            gridColumn: "var(--col-sm, span 6)",
+          },
+          [`@container (min-width: ${theme("screens.md")})`]: {
+            gridColumn:
+              "var(--col-md, var(--5_7, span 5) var(--1_2, span 4) var(--1_2_1, span 6))",
+          },
+          [`@container (min-width: ${theme("screens.lg")})`]: {
+            // For 1|1|1, and 1|2|1, the `gridColumn` default is 1, no need to specify it
+            gridColumn:
+              "var(--col-lg, var(--5_7, span 5) var(--1_2, span 4) var(--1_2_1, span 3))",
+          },
+          [`& > *`]: {
+            flexGrow: "1",
+          },
+          ".jun-grid-media > &": {
+            [`@media (min-width: ${theme("screens.sm")})`]: {
+              gridColumn: "var(--col-sm, span 6)",
+            },
+            [`@media (min-width: ${theme("screens.md")})`]: {
+              gridColumn:
+                "var(--col-md, var(--5_7, span 5) var(--1_2, span 4) var(--1_2_1, span 6))",
+            },
+            [`@media (min-width: ${theme("screens.lg")})`]: {
+              gridColumn:
+                "var(--col-lg, var(--5_7, span 5) var(--1_2, span 4) var(--1_2_1, span 3))",
+            },
+          },
+        }) as CSSRuleObject,
+      [`${layoutClasses.GridItem}-full`]: () => ({
+        "--col-sm": "span 12",
+        "--col-md": "span 12",
+        "--col-lg": "span 12",
+      }),
+      [`${layoutClasses.GridItem}-wide`]: () => ({
+        "--col-sm": "span 12",
+        "--col-md":
+          "var(--5_7, span 7) var(--1_2, span 8) var(--1_2_1, span 12)",
+        "--col-lg":
+          "var(--5_7, span 7) var(--1_2, span 8) var(--1_2_1, span 6)",
+      }),
+      [`${layoutClasses.GridItem}-narrow`]: () => ({
+        "--col-lg":
+          "var(--5_7, span 5) var(--1_2, span 4) var(--1_2_1, span 3)",
+        [`@container (min-width: ${theme("screens.md")})`]: {
+          gridRow: "span 2",
+        },
+        ".jun-grid-media > &": {
+          [`@media (min-width: ${theme("screens.md")})`]: {
+            gridRow: "span 2",
+          },
+        },
+      }),
     },
     {
       values: {

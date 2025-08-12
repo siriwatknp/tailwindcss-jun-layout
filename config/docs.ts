@@ -71,6 +71,10 @@ export const docsConfig: DocsConfig = {
           title: "Dock (Bottom Nav)",
           href: "/docs/dock",
         },
+        {
+          title: "Grid",
+          href: "/docs/grid",
+        },
       ],
     },
     {

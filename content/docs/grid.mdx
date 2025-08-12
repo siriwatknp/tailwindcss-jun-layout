@@ -1,0 +1,138 @@
+---
+title: Grid
+description: Utilities for creating responsive grid layouts
+---
+
+Grid provides a flexible 12-column grid system for creating responsive layouts. It's built on CSS Grid and offers a simple way to structure your content in a consistent, predictable manner.
+
+## Basic usage
+
+The grid system consists of two main classes:
+
+- `jun-grid` - The grid container that establishes the 12-column grid
+- `jun-gridItem` - Grid items that can span across columns
+
+```jsx
+<div className="jun-grid">
+  <div className="jun-gridItem col-span-4">
+    <!-- Spans 4 columns -->
+  </div>
+  <div className="jun-gridItem col-span-8">
+    <!-- Spans 8 columns -->
+  </div>
+</div>
+```
+
+<ComponentPreview name="grid-basic" preview />
+
+## Column spans
+
+Use Tailwind's `col-span-*` utilities to control how many columns a grid item should span:
+
+```jsx
+<div className="jun-grid">
+  <div className="jun-gridItem col-span-12">Full width</div>
+  <div className="jun-gridItem col-span-6">Half width</div>
+  <div className="jun-gridItem col-span-6">Half width</div>
+  <div className="jun-gridItem col-span-4">One third</div>
+  <div className="jun-gridItem col-span-4">One third</div>
+  <div className="jun-gridItem col-span-4">One third</div>
+</div>
+```
+
+## Responsive layouts
+
+Combine with Tailwind's responsive modifiers to create adaptive layouts:
+
+```jsx
+<div className="jun-grid">
+  <div className="jun-gridItem col-span-12 md:col-span-6 lg:col-span-4">
+    <!-- Full width on mobile, half on tablet, third on desktop -->
+  </div>
+  <div className="jun-gridItem col-span-12 md:col-span-6 lg:col-span-8">
+    <!-- Full width on mobile, half on tablet, two-thirds on desktop -->
+  </div>
+</div>
+```
+
+## Gap control
+
+The grid has a default gap of `1rem` (spacing.4). You can override this with Tailwind's gap utilities:
+
+```jsx
+<div className="jun-grid gap-2">
+  <!-- Smaller gap -->
+</div>
+
+<div className="jun-grid gap-8">
+  <!-- Larger gap -->
+</div>
+```
+
+## Nested grids
+
+Grid items can contain their own grids for more complex layouts:
+
+```jsx
+<div className="jun-grid">
+  <div className="jun-gridItem col-span-8">
+    <div className="jun-grid">
+      <div className="jun-gridItem col-span-6">Nested item</div>
+      <div className="jun-gridItem col-span-6">Nested item</div>
+    </div>
+  </div>
+  <div className="jun-gridItem col-span-4">Sidebar content</div>
+</div>
+```
+
+## Grid item content
+
+The `jun-gridItem` class automatically makes its direct children grow to fill the available space. This is useful for cards and other components that should stretch to match the grid height:
+
+```jsx
+<div className="jun-grid">
+  <div className="jun-gridItem col-span-4">
+    <div className="bg-white rounded-lg shadow p-4">
+      <!-- This card will stretch to fill the grid item -->
+      Card content
+    </div>
+  </div>
+</div>
+```
+
+## API
+
+| Class          | Description                                             |
+| -------------- | ------------------------------------------------------- |
+| `jun-grid`     | Creates a 12-column grid container with default gap     |
+| `jun-gridItem` | Grid item that can span columns and makes children grow |
+
+### Grid Properties
+
+The `jun-grid` class applies:
+
+- `display: grid`
+- `gap: 1rem` (theme spacing.4)
+- `grid-template-columns: repeat(12, 1fr)`
+
+### Grid Item Properties
+
+The `jun-gridItem` class applies:
+
+- `display: flex`
+- `flex-direction: column`
+- Direct children receive `flex-grow: 1`
+
+## Examples
+
+### Dashboard layout
+
+<ComponentPreview name="grid-dashboard" preview />
+
+### Card grid
+
+<ComponentPreview name="grid-cards" preview />
+
+### Form layout
+
+<ComponentPreview name="grid-form" preview />

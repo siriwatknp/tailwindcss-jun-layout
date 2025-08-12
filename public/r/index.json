@@ -372,5 +372,49 @@
         "type": "registry:ui"
       }
     ]
+  },
+  {
+    "name": "grid-basic",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/grid-basic.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "grid-dashboard",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/grid-dashboard.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "grid-cards",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/grid-cards.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "grid-form",
+    "type": "registry:ui",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "demo/grid-form.tsx",
+        "type": "registry:ui"
+      }
+    ]
   }
 ]

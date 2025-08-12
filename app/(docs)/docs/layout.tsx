@@ -8,7 +8,7 @@ interface DocsLayoutProps {
 
 export default function DocsLayout({ children }: DocsLayoutProps) {
   return (
-    <div className="container md:gap-6 lg:gap-10">
+    <div className="container md:gap-6 lg:gap-10 2xl:max-w-[1800px]">
       <aside className="hidden md:block jun-insetSidebar lg:jun-insetSidebar-w-[250px]">
         <ScrollArea className="h-full pr-6">
           <DocsSidebarNav items={docsConfig.sidebarNav} />

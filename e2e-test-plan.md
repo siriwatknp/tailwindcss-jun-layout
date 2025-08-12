@@ -35,5 +35,5 @@
 
 ### Phase 5: Nested Layouts
 
-- [ ] Test nested layout scenarios
-- [ ] Test isolated app containers (standalone layouts)
+- [x] Test nested layout scenarios
+- [x] Test isolated app containers (standalone layouts)

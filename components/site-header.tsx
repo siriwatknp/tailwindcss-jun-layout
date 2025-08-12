@@ -43,7 +43,7 @@ export async function SiteHeader() {
         "supports-backdrop-blur:bg-background/90 sticky top-0 z-40 w-full bg-background/40 backdrop-blur-lg jun-header"
       )}
     >
-      <div className="container flex items-center">
+      <div className="container flex items-center 2xl:max-w-[1800px]">
         <MobileNavTrigger />
         <MainNav />
         <div className="flex flex-1 items-center justify-between gap-2 md:justify-end">
