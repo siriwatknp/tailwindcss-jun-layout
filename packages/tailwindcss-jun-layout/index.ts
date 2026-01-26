@@ -111,7 +111,7 @@ function internalToggleSidebar(options: {
       sidebar.style.setProperty("--jun-ES-drawerOpen", "1");
       function handleOutsideClick(event: MouseEvent) {
         const closer = doc.querySelector(
-          `.${layoutClasses.DrawerEdgeSidebarClose}`
+          `.${layoutClasses.DrawerEdgeSidebarClose}`,
         ) as HTMLButtonElement;
         if (
           // clicking on the backdrop (psuedo element of sidebar) will close the sidebar
@@ -272,7 +272,7 @@ export default plugin(function ({
         },
       }),
     },
-    { values: { DEFAULT: true } }
+    { values: { DEFAULT: true } },
   );
   matchComponents(
     {
@@ -282,7 +282,7 @@ export default plugin(function ({
     },
     {
       values: { DEFAULT: true },
-    }
+    },
   );
   matchUtilities(
     {
@@ -307,7 +307,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -319,7 +319,7 @@ export default plugin(function ({
       values: {
         DEFAULT: "100vh",
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -331,7 +331,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
 
   // Header
@@ -346,7 +346,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchComponents(
     {
@@ -365,7 +365,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -410,7 +410,7 @@ export default plugin(function ({
         left: "left",
         right: "right",
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -425,7 +425,7 @@ export default plugin(function ({
       values: {
         DEFAULT: HEADER_HEIGHT,
       },
-    }
+    },
   );
 
   // Content
@@ -443,7 +443,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -456,7 +456,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
 
   // Footer
@@ -470,7 +470,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchComponents(
     {
@@ -485,7 +485,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
 
   const sharedSidebarStyles = {
@@ -564,6 +564,14 @@ export default plugin(function ({
               {
                 display: "var(--display, inline-flex)",
                 "--_sidebarCollapsed": "var(--collapsed, 1)",
+                [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
+                  display:
+                    "var(--collapsed, none) var(--uncollapsed, inline-flex)",
+                },
+                [`.${layoutClasses.EdgeSidebarCollapsedVisible}`]: {
+                  display:
+                    "var(--collapsed, inline-flex) var(--uncollapsed, none)",
+                },
               },
             [`&:is(${NESTED_LAYOUT}) ${LEFT_EDGE_SIDEBAR}, ${LEFT_EDGE_SIDEBAR}:not(${NESTED_LEFT_EDGE_SIDEBAR})`]:
               // `.jun-edgeCollapsed/edgeUncollapsed-visible can be used anywhere inside EdgeSidebar
@@ -623,7 +631,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchComponents(
     {
@@ -635,7 +643,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   const SHRINK_WIDTH = "100px";
   matchComponents(
@@ -654,7 +662,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -695,7 +703,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -716,7 +724,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
 
   // Left EdgeSidebar
@@ -768,7 +776,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -783,7 +791,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -807,7 +815,7 @@ export default plugin(function ({
       values: {
         DEFAULT: SIDEBAR_WIDTH_MOBILE,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -868,12 +876,12 @@ export default plugin(function ({
         "permanent-visible": "permanent-visible",
         "permanent-hoverUncollapse": "permanent-hoverUncollapse",
       },
-    }
+    },
   );
   matchUtilities(
     {
       [`${layoutClasses.EdgeSidebar}-permanent-hoverUncollapse-delay`]: (
-        delay
+        delay,
       ) => ({
         [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
           "--jun-EC-delay": delay,
@@ -884,12 +892,12 @@ export default plugin(function ({
       values: {
         DEFAULT: "0.3s",
       },
-    }
+    },
   );
   matchUtilities(
     {
       [`${layoutClasses.EdgeSidebar}-permanent-autoCollapse`]: (
-        autoCollapse
+        autoCollapse,
       ) => {
         let autoCollapseStyles = {};
         autoCollapseStyles = {
@@ -922,7 +930,7 @@ export default plugin(function ({
         return autoCollapseStyles;
       },
     },
-    { values: theme("screens") }
+    { values: theme("screens") },
   );
 
   // DrawerClose
@@ -962,7 +970,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
 
   // EdgeSidebarCollapser & Trigger
@@ -986,7 +994,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
 
   // Right EdgeSidebar
@@ -1015,6 +1023,14 @@ export default plugin(function ({
               {
                 display: "var(--display, inline-flex)",
                 "--_sidebarCollapsed": "var(--collapsed-R, 1)",
+                [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
+                  display:
+                    "var(--collapsed-R, none) var(--uncollapsed-R, inline-flex)",
+                },
+                [`.${layoutClasses.EdgeSidebarCollapsedVisible}`]: {
+                  display:
+                    "var(--collapsed-R, inline-flex) var(--uncollapsed-R, none)",
+                },
               },
             [`&:is(${NESTED_LAYOUT}) ${RIGHT_EDGE_SIDEBAR}, ${RIGHT_EDGE_SIDEBAR}:not(${NESTED_RIGHT_EDGE_SIDEBAR})`]:
               // `.jun-edgeCollapsed/edgeUncollapsed-visible can be used anywhere inside EdgeSidebar-R
@@ -1074,7 +1090,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchComponents(
     {
@@ -1087,7 +1103,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1137,7 +1153,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1152,7 +1168,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1176,7 +1192,7 @@ export default plugin(function ({
       values: {
         DEFAULT: SIDEBAR_WIDTH_MOBILE,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1237,12 +1253,12 @@ export default plugin(function ({
         "permanent-visible": "permanent-visible",
         "permanent-hoverUncollapse": "permanent-hoverUncollapse",
       },
-    }
+    },
   );
   matchUtilities(
     {
       [`${layoutClasses.EdgeSidebarRight}-permanent-hoverUncollapse-delay`]: (
-        delay
+        delay,
       ) => ({
         [`& .${layoutClasses.EdgeSidebarContent}:hover`]: {
           "--jun-EC-delay": delay,
@@ -1253,12 +1269,12 @@ export default plugin(function ({
       values: {
         DEFAULT: "0.3s",
       },
-    }
+    },
   );
   matchUtilities(
     {
       [`${layoutClasses.EdgeSidebarRight}-permanent-autoCollapse`]: (
-        autoCollapse
+        autoCollapse,
       ) => {
         let autoCollapseStyles = {};
         autoCollapseStyles = {
@@ -1291,7 +1307,7 @@ export default plugin(function ({
         return autoCollapseStyles;
       },
     },
-    { values: theme("screens") }
+    { values: theme("screens") },
   );
 
   // InsetContent
@@ -1319,7 +1335,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchComponents(
     {
@@ -1334,7 +1350,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // InsetAvoidingView
   matchUtilities(
@@ -1348,7 +1364,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // InsetSidebar
   const insetSidebarSticky = {
@@ -1395,7 +1411,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1417,7 +1433,7 @@ export default plugin(function ({
         absolute: "absolute",
         sticky: "sticky",
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1438,7 +1454,7 @@ export default plugin(function ({
       values: {
         DEFAULT: "220px",
       },
-    }
+    },
   );
 
   // SidebarContainer
@@ -1474,7 +1490,7 @@ export default plugin(function ({
       values: {
         DEFAULT: SHRINK_WIDTH,
       },
-    }
+    },
   );
   // SidebarRail
   matchComponents(
@@ -1511,7 +1527,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // SidebarGroup
   matchComponents(
@@ -1526,7 +1542,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // SidebarGroupLabel
   matchComponents(
@@ -1552,7 +1568,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // SidebarMenu
   matchComponents(
@@ -1578,7 +1594,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchComponents(
     {
@@ -1610,7 +1626,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // SidebarMenuItem
   matchComponents(
@@ -1625,7 +1641,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // SidebarMenuButton
   matchComponents(
@@ -1653,7 +1669,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchComponents(
     {
@@ -1666,7 +1682,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1687,7 +1703,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1702,7 +1718,7 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
-    }
+    },
   );
   matchUtilities(
     {
@@ -1713,7 +1729,7 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
-    }
+    },
   );
   matchUtilities(
     {
@@ -1726,7 +1742,7 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
-    }
+    },
   );
   matchUtilities(
     {
@@ -1739,7 +1755,7 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
-    }
+    },
   );
   matchUtilities(
     {
@@ -1749,7 +1765,7 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
-    }
+    },
   );
   matchUtilities(
     {
@@ -1765,7 +1781,7 @@ export default plugin(function ({
         ".75": ".75",
         "1": "1",
       },
-    }
+    },
   );
   // SidebarText
   matchComponents(
@@ -1779,7 +1795,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1794,7 +1810,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // SidebarGroupText
   matchComponents(
@@ -1809,7 +1825,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1829,7 +1845,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // SidebarMenuAction
   matchComponents(
@@ -1864,7 +1880,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchComponents(
     {
@@ -1874,7 +1890,7 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
-    }
+    },
   );
   matchComponents(
     {
@@ -1893,7 +1909,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // SidebarIcon
   matchComponents(
@@ -1909,7 +1925,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchUtilities(
     {
@@ -1924,7 +1940,7 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
-    }
+    },
   );
   matchUtilities(
     // split to another matcher to override the above
@@ -1938,7 +1954,7 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
-    }
+    },
   );
   matchUtilities(
     {
@@ -1949,7 +1965,7 @@ export default plugin(function ({
     },
     {
       values: theme("spacing"),
-    }
+    },
   );
   // SidebarTooltip
   matchUtilities(
@@ -1962,7 +1978,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
 
   // CollapsibleTrigger
@@ -1979,7 +1995,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // CollapsibleContent
   matchComponents(
@@ -2015,7 +2031,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   // CollapsibleIcon
   matchComponents(
@@ -2037,7 +2053,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
   matchComponents(
     {
@@ -2052,7 +2068,7 @@ export default plugin(function ({
         "45": "45deg",
         "180": "180deg",
       },
-    }
+    },
   );
 
   // Dock
@@ -2138,7 +2154,7 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
 
   // DockTooltip
@@ -2197,6 +2213,6 @@ export default plugin(function ({
       values: {
         DEFAULT: true,
       },
-    }
+    },
   );
 });
