@@ -252,7 +252,7 @@ module.exports = {
   },
   plugins: [
     require("tailwindcss-animate"),
-    require("./packages/tailwindcss-jun-layout"),
+    require("./packages/tailwindcss-jun-layout")({ nested: true }),
     require("@tailwindcss/container-queries"),
   ],
 };

@@ -198,26 +198,23 @@ export function triggerEdgeDrawerRight(options?: {
   internalToggleSidebar({ ...options, selector });
 }
 
-const LEFT_EDGE_SIDEBAR = `.${layoutClasses.EdgeSidebar}`;
-const NESTED_LEFT_EDGE_SIDEBAR = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.EdgeSidebar}`;
-const RIGHT_EDGE_SIDEBAR = `.${layoutClasses.EdgeSidebarRight}`;
-const NESTED_RIGHT_EDGE_SIDEBAR = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.EdgeSidebarRight}`;
-const LEFT_COLLAPSER = `.${layoutClasses.EdgeSidebarCollapser}`;
-const RIGHT_COLLAPSER = `.${layoutClasses.EdgeSidebarRightCollapser}`;
-const LEFT_DRAWER_TRIGGER = `.${layoutClasses.DrawerEdgeSidebarTrigger}`;
-const RIGHT_DRAWER_TRIGGER = `.${layoutClasses.DrawerEdgeSidebarRightTrigger}`;
-const NESTED_LAYOUT = `.${layoutClasses.Root} .${layoutClasses.Root}`;
-const NESTED_COLLAPSER = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.EdgeSidebarCollapser}`;
-const NESTED_RIGHT_COLLAPSER = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.EdgeSidebarRightCollapser}`;
-const NESTED_DRAWER_TRIGGER = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.DrawerEdgeSidebarTrigger}`;
-const NESTED_RIGHT_DRAWER_TRIGGER = `.${layoutClasses.Root} .${layoutClasses.Root} .${layoutClasses.DrawerEdgeSidebarRightTrigger}`;
+export default plugin.withOptions(
+  function (options: { nested?: boolean } = {}) {
+    const nested = options.nested ?? false;
 
-export default plugin(function ({
-  addComponents,
-  matchComponents,
-  matchUtilities,
-  theme,
-}) {
+    const NESTED_ROOT = `.${layoutClasses.Root} .${layoutClasses.Root}`;
+
+    function scopeSelector(selector: string): string {
+      if (!nested) return selector;
+      return `&:is(${NESTED_ROOT}) ${selector}, ${selector}:not(${NESTED_ROOT} ${selector})`;
+    }
+
+    return function ({
+      addComponents,
+      matchComponents,
+      matchUtilities,
+      theme,
+    }: Parameters<Parameters<typeof plugin>[0]>[0]) {
   const HEADER_HEIGHT = "3rem";
 
   /** Match Shadcn Sidebar */
@@ -235,9 +232,11 @@ export default plugin(function ({
     {
       [layoutClasses.Root]: () => ({
         "--jun-h": "calc(100svh - env(safe-area-inset-bottom))",
-        [`:where(.${layoutClasses.Root}) &`]: {
-          "--jun-h": "100%",
-        },
+        ...(nested && {
+          [`:where(.${layoutClasses.Root}) &`]: {
+            "--jun-h": "100%",
+          },
+        }),
         "--jun-H-h": "0px",
         "--jun-H-clip-h": "0px",
         "--jun-ES-line-w": "1px",
@@ -297,10 +296,12 @@ export default plugin(function ({
         ({
           paddingInline: "env(safe-area-inset-left) env(safe-area-inset-right)",
           paddingBottom: "env(safe-area-inset-bottom)",
-          [`:where(.${layoutClasses.Root}) &`]: {
-            paddingInline: "initial",
-            paddingBottom: "initial",
-          },
+          ...(nested && {
+            [`:where(.${layoutClasses.Root}) &`]: {
+              paddingInline: "initial",
+              paddingBottom: "initial",
+            },
+          }),
         }) as CSSRuleObject,
     },
     {
@@ -560,7 +561,7 @@ export default plugin(function ({
             "--uncollapsed": "var(--jun-ES-collapsible,)",
 
             /** Collapsible feature */
-            [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
+            [scopeSelector(`.${layoutClasses.EdgeSidebarCollapser}`)]:
               {
                 display: "var(--display, inline-flex)",
                 "--_sidebarCollapsed": "var(--collapsed, 1)",
@@ -573,8 +574,7 @@ export default plugin(function ({
                     "var(--collapsed, inline-flex) var(--uncollapsed, none)",
                 },
               },
-            [`&:is(${NESTED_LAYOUT}) ${LEFT_EDGE_SIDEBAR}, ${LEFT_EDGE_SIDEBAR}:not(${NESTED_LEFT_EDGE_SIDEBAR})`]:
-              // `.jun-edgeCollapsed/edgeUncollapsed-visible can be used anywhere inside EdgeSidebar
+            [scopeSelector(`.${layoutClasses.EdgeSidebar}`)]:
               {
                 [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
                   display:
@@ -738,13 +738,13 @@ export default plugin(function ({
           "--_uncollapsed": "var(--_)",
           [`.${layoutClasses.Root}:has(>&)`]: {
             "--jun-ES-variant": "var(--drawer)",
-            [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
+            [scopeSelector(`.${layoutClasses.EdgeSidebarCollapser}`)]:
               {
                 display: "none",
               },
           },
           [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isDrawerOpen}])`]: {
-            [`&:is(${NESTED_LAYOUT}) ${LEFT_DRAWER_TRIGGER}, ${LEFT_DRAWER_TRIGGER}:not(${NESTED_DRAWER_TRIGGER})`]:
+            [scopeSelector(`.${layoutClasses.DrawerEdgeSidebarTrigger}`)]:
               {
                 [`.${layoutClasses.DrawerClosedVisible}`]: {
                   display: "none",
@@ -753,7 +753,7 @@ export default plugin(function ({
           },
           [`.${layoutClasses.Root}:has(>&:not([${layoutAttrs.isDrawerOpen}]))`]:
             {
-              [`&:is(${NESTED_LAYOUT}) ${LEFT_DRAWER_TRIGGER}, ${LEFT_DRAWER_TRIGGER}:not(${NESTED_DRAWER_TRIGGER})`]:
+              [scopeSelector(`.${layoutClasses.DrawerEdgeSidebarTrigger}`)]:
                 {
                   [`.${layoutClasses.DrawerOpenVisible}`]: {
                     display: "none",
@@ -828,11 +828,11 @@ export default plugin(function ({
             "--_uncollapsed": "var(--uncollapsed)",
             [`.${layoutClasses.Root}:has(>&)`]: {
               "--jun-ES-variant": "var(--permanent)",
-              [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
+              [scopeSelector(`.${layoutClasses.EdgeSidebarCollapser}`)]:
                 {
                   display: "var(--display, inline-flex)",
                 },
-              [`&:is(${NESTED_LAYOUT}) ${LEFT_DRAWER_TRIGGER}, ${LEFT_DRAWER_TRIGGER}:not(${NESTED_DRAWER_TRIGGER})`]:
+              [scopeSelector(`.${layoutClasses.DrawerEdgeSidebarTrigger}`)]:
                 {
                   display: "none",
                 },
@@ -902,7 +902,7 @@ export default plugin(function ({
         let autoCollapseStyles = {};
         autoCollapseStyles = {
           [`.${layoutClasses.Root}:has(>&)`]: {
-            [`&:is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}, ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
+            [scopeSelector(`.${layoutClasses.EdgeSidebarCollapser}`)]:
               {
                 "--_autoCollapse": "1",
               },
@@ -913,15 +913,17 @@ export default plugin(function ({
             },
           },
           [`@media (min-width:${autoCollapse})`]: {
-            // need to split to work with media query
-            [`.${layoutClasses.Root}:has(>&):is(${NESTED_LAYOUT}) ${LEFT_COLLAPSER}`]:
-              {
-                "--_in-autoCollapse": "1",
-              },
-            [`.${layoutClasses.Root}:has(>&) ${LEFT_COLLAPSER}:not(${NESTED_COLLAPSER})`]:
-              {
-                "--_in-autoCollapse": "1",
-              },
+            ...(nested
+              ? {
+                  [`.${layoutClasses.Root}:has(>&):is(${NESTED_ROOT}) .${layoutClasses.EdgeSidebarCollapser}`]:
+                    { "--_in-autoCollapse": "1" },
+                  [`.${layoutClasses.Root}:has(>&) .${layoutClasses.EdgeSidebarCollapser}:not(${NESTED_ROOT} .${layoutClasses.EdgeSidebarCollapser})`]:
+                    { "--_in-autoCollapse": "1" },
+                }
+              : {
+                  [`.${layoutClasses.Root}:has(>&) .${layoutClasses.EdgeSidebarCollapser}`]:
+                    { "--_in-autoCollapse": "1" },
+                }),
             [`.${layoutClasses.Root}:has(>&)`]: {
               "--jun-ES-collapsible": "var(--uncollapsed)",
             },
@@ -1019,7 +1021,7 @@ export default plugin(function ({
             "--uncollapsed-R": "var(--jun-ESR-collapsible,)",
 
             /** Collapsible feature */
-            [`&:is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}, ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
+            [scopeSelector(`.${layoutClasses.EdgeSidebarRightCollapser}`)]:
               {
                 display: "var(--display, inline-flex)",
                 "--_sidebarCollapsed": "var(--collapsed-R, 1)",
@@ -1032,8 +1034,7 @@ export default plugin(function ({
                     "var(--collapsed-R, inline-flex) var(--uncollapsed-R, none)",
                 },
               },
-            [`&:is(${NESTED_LAYOUT}) ${RIGHT_EDGE_SIDEBAR}, ${RIGHT_EDGE_SIDEBAR}:not(${NESTED_RIGHT_EDGE_SIDEBAR})`]:
-              // `.jun-edgeCollapsed/edgeUncollapsed-visible can be used anywhere inside EdgeSidebar-R
+            [scopeSelector(`.${layoutClasses.EdgeSidebarRight}`)]:
               {
                 [`.${layoutClasses.EdgeSidebarUncollapsedVisible}`]: {
                   display:
@@ -1115,13 +1116,13 @@ export default plugin(function ({
           "--_uncollapsed": "var(--_)",
           [`.${layoutClasses.Root}:has(>&)`]: {
             "--jun-ESR-variant": "var(--drawer-R)",
-            [`&:is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}, ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
+            [scopeSelector(`.${layoutClasses.EdgeSidebarRightCollapser}`)]:
               {
                 display: "none",
               },
           },
           [`.${layoutClasses.Root}:has(>&[${layoutAttrs.isDrawerOpen}])`]: {
-            [`&:is(${NESTED_LAYOUT}) ${RIGHT_DRAWER_TRIGGER}, ${RIGHT_DRAWER_TRIGGER}:not(${NESTED_RIGHT_DRAWER_TRIGGER})`]:
+            [scopeSelector(`.${layoutClasses.DrawerEdgeSidebarRightTrigger}`)]:
               {
                 [`.${layoutClasses.DrawerClosedVisible}`]: {
                   display: "none",
@@ -1130,7 +1131,7 @@ export default plugin(function ({
           },
           [`.${layoutClasses.Root}:has(>&:not([${layoutAttrs.isDrawerOpen}]))`]:
             {
-              [`&:is(${NESTED_LAYOUT}) ${RIGHT_DRAWER_TRIGGER}, ${RIGHT_DRAWER_TRIGGER}:not(${NESTED_RIGHT_DRAWER_TRIGGER})`]:
+              [scopeSelector(`.${layoutClasses.DrawerEdgeSidebarRightTrigger}`)]:
                 {
                   [`.${layoutClasses.DrawerOpenVisible}`]: {
                     display: "none",
@@ -1205,11 +1206,11 @@ export default plugin(function ({
             "--_uncollapsed": "var(--uncollapsed-R)",
             [`.${layoutClasses.Root}:has(>&)`]: {
               "--jun-ESR-variant": "var(--permanent-R)",
-              [`&:is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}, ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
+              [scopeSelector(`.${layoutClasses.EdgeSidebarRightCollapser}`)]:
                 {
                   display: "var(--display, inline-flex)",
                 },
-              [`&:is(${NESTED_LAYOUT}) ${RIGHT_DRAWER_TRIGGER}, ${RIGHT_DRAWER_TRIGGER}:not(${NESTED_RIGHT_DRAWER_TRIGGER})`]:
+              [scopeSelector(`.${layoutClasses.DrawerEdgeSidebarRightTrigger}`)]:
                 {
                   display: "none",
                 },
@@ -1279,7 +1280,7 @@ export default plugin(function ({
         let autoCollapseStyles = {};
         autoCollapseStyles = {
           [`.${layoutClasses.Root}:has(>&)`]: {
-            [`&:is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}, ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
+            [scopeSelector(`.${layoutClasses.EdgeSidebarRightCollapser}`)]:
               {
                 "--_autoCollapse": "1",
               },
@@ -1290,15 +1291,17 @@ export default plugin(function ({
             },
           },
           [`@media (min-width:${autoCollapse})`]: {
-            // need to split to work with media query
-            [`.${layoutClasses.Root}:has(>&):is(${NESTED_LAYOUT}) ${RIGHT_COLLAPSER}`]:
-              {
-                "--_in-autoCollapse": "1",
-              },
-            [`.${layoutClasses.Root}:has(>&) ${RIGHT_COLLAPSER}:not(${NESTED_RIGHT_COLLAPSER})`]:
-              {
-                "--_in-autoCollapse": "1",
-              },
+            ...(nested
+              ? {
+                  [`.${layoutClasses.Root}:has(>&):is(${NESTED_ROOT}) .${layoutClasses.EdgeSidebarRightCollapser}`]:
+                    { "--_in-autoCollapse": "1" },
+                  [`.${layoutClasses.Root}:has(>&) .${layoutClasses.EdgeSidebarRightCollapser}:not(${NESTED_ROOT} .${layoutClasses.EdgeSidebarRightCollapser})`]:
+                    { "--_in-autoCollapse": "1" },
+                }
+              : {
+                  [`.${layoutClasses.Root}:has(>&) .${layoutClasses.EdgeSidebarRightCollapser}`]:
+                    { "--_in-autoCollapse": "1" },
+                }),
             [`.${layoutClasses.Root}:has(>&)`]: {
               "--jun-ESR-collapsible": "var(--uncollapsed-R)",
             },
@@ -2215,4 +2218,6 @@ export default plugin(function ({
       },
     },
   );
-});
+  };
+  },
+);
