@@ -64,7 +64,7 @@
     "jotai": "^2.10.0",
     "lodash.template": "^4.5.0",
     "lucide-react": "^0.401.0",
-    "next": "14.2.13",
+    "next": "14.2.35",
     "next-themes": "^0.3.0",
     "octokit": "^4.0.2",
     "postcss": "8.4.39",
